@@ -9,8 +9,6 @@ const REMOVE_USER = 'REMOVE_USER'
 
 const POST_DATE = 'POST_DATE'
 
-
-
 /**
  * INITIAL STATE
  */
@@ -28,16 +26,17 @@ const postDate = date => ({type: POST_DATE, date})
  * THUNK CREATORS
  */
 
-export const saveDate = (date,param2)=> async dispatch => {
-  try{
-    console.log( "Param2", new Date(param2))
-    const {data} = await axios.post('/api/party', new Date(JSON.stringify(param2)))
-  }catch(err){
+export const saveDate = (date, param2) => async dispatch => {
+  try {
+    console.log('Param2', new Date(param2))
+    // const {data} = await axios.post('/api/party', {foo: 1})
+    const {data} = await axios.post('/api/party', {
+      date: JSON.stringify(param2)
+    })
+  } catch (err) {
     console.log(err)
   }
 }
-
-
 
 export const me = () => async dispatch => {
   try {
