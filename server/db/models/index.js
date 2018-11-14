@@ -1,8 +1,12 @@
 const User = require('./user')
 const Party = require('./party')
+const Guest = require('./guest')
 
 Party.belongsTo(User)
 User.hasMany(Party)
+
+Guest.belongsTo(Party)
+Party.hasMany(Guest)
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -19,5 +23,6 @@ User.hasMany(Party)
  */
 module.exports = {
   User,
-  Party
+  Party,
+  Guest
 }

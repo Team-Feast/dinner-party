@@ -18,6 +18,10 @@ const Party = db.define('party', {
   date: {
     type: Sequelize.DATE
   },
+  status: {
+    type: Sequelize.ENUM('draft', 'upcomming', 'cancelled', 'completed'),
+    defaultValue: 'draft'
+  },
   imageUrl: {
     type: Sequelize.STRING,
     defaultValue: '/images/default-party.jpg'
