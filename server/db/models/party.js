@@ -10,7 +10,7 @@ const Party = db.define('party', {
     }
   },
   description: {
-    type: Sequelize.STRING
+    type: Sequelize.TEXT
   },
   location: {
     type: Sequelize.STRING

@@ -9,14 +9,14 @@ const Item = db.define('item', {
       notEmpty: true
     }
   },
-  description: Sequelize.STRING,
-  quantity: {
-    type: Sequelize.INTEGER,
-    defaultValue: 0,
-    validate: {
-      min: 0
-    }
-  }
+  description: Sequelize.TEXT
+  // quantity: {
+  //   type: Sequelize.INTEGER,
+  //   defaultValue: 0,
+  //   validate: {
+  //     min: 0
+  //   }
+  // }
 })
 
 module.exports = Item
