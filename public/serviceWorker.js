@@ -98,10 +98,10 @@ self.addEventListener('activate', (event) => {
   //More info - https://developers.google.com/web/updates/2017/02/navigation-preload#the-problem
 
   // Check if navigationPreload is supported or not
-  // if (self.registration.navigationPreload) { 
+  // if (self.registration.navigationPreload) {
   //   self.registration.navigationPreload.enable();
   // }
-  // else if (!self.registration.navigationPreload) { 
+  // else if (!self.registration.navigationPreload) {
   //   console.info('Your browser does not support navigation preload.');
   // }
 
@@ -118,10 +118,10 @@ self.addEventListener('activate', (event) => {
     })
     .then(function () {
       console.info("Old caches are cleared!");
-      // To tell the service worker to activate current one 
+      // To tell the service worker to activate current one
       // instead of waiting for the old one to finish.
-      return self.clients.claim(); 
-    }) 
+      return self.clients.claim();
+    })
   );
 });
 
