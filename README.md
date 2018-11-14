@@ -1,4 +1,4 @@
-# Boilermaker
+# Dinner Party
 
 _Good things come in pairs_
 
