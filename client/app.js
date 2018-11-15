@@ -8,9 +8,10 @@ import Dialog from './components/user/userTest';
 const App = () => {
   return (
     <div>
-      {/* <Navbar />
-      <Routes /> */}
-      <Dialog/>
+      <Navbar />
+      <Routes />
+      {/* <Dialog/> */}
+
     </div>
   )
 }
