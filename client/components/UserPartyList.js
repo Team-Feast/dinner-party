@@ -84,11 +84,11 @@ class AllParties extends Component {
             <ExpansionPanel>
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                 <Typography className={classes.heading}>
-                  All parties you are hosting
+                  Parties you are hosting
                 </Typography>
               </ExpansionPanelSummary>
               {parties.map(party => (
-                <ExpansionPanelDetails>
+                <ExpansionPanelDetails key={party.id}>
                   <Typography>{party.description}</Typography>
                 </ExpansionPanelDetails>
               ))}
@@ -96,7 +96,7 @@ class AllParties extends Component {
             <ExpansionPanel>
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                 <Typography className={classes.heading}>
-                  You are attending
+                  Parties you will attend
                 </Typography>
               </ExpansionPanelSummary>
               <ExpansionPanelDetails>
