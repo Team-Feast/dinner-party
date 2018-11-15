@@ -38,4 +38,15 @@ router.post('/', async (req, res, next) => {
   }
 })
 
+// GET /api/parties/user/:userId
+// Return an array of parties that this user is hosting
+router.get('/user/:userId', async (req, res, next) => {
+  try {
+    const parties = await Party.findAll({where: {userId: req.params.userId}})
+    res.json(parties)
+  } catch (err) {
+    next(err)
+  }
+})
+
 module.exports = router
