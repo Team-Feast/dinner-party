@@ -44,7 +44,8 @@ class SingleParty extends Component {
       user,
       date,
       guests,
-      items
+      items,
+      id
     } = this.props.party
 
     const {classes} = this.props
@@ -67,7 +68,7 @@ class SingleParty extends Component {
           </Button>
 
           {this.state.showGuestList && <GuestList guests={guests} />}
-          {this.state.showItemList && <ItemList items={items} />}
+          {this.state.showItemList && <ItemList items={items} partyId={id} />}
           <image />
         </div>
       )
