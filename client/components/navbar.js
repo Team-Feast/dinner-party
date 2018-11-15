@@ -35,7 +35,7 @@ const styles = {
     bottom: 0
   },
   media: {
-    height: 50
+    height: 40
   }
 }
 
@@ -155,6 +155,7 @@ const mapDispatch = dispatch => {
 }
 
 Navbar.propTypes = {
+  classes: PropTypes.object.isRequired,
   handleLogout: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired
 }
