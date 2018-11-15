@@ -17,8 +17,8 @@ import CardMedia from '@material-ui/core/CardMedia'
 import CardContent from '@material-ui/core/CardContent'
 import IconButton from '@material-ui/core/IconButton'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
-import CardActions from '@material-ui/core/CardActions'
-import Collapse from '@material-ui/core/Collapse'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
 
 const styles = theme => ({
   root: {
@@ -51,6 +51,13 @@ class AllParties extends Component {
       <React.Fragment>
         <CssBaseline>
           <div className={classes.root}>
+            <AppBar position="static" color="default">
+              <Toolbar>
+                <Typography variant="h6" color="inherit">
+                  Upcoming party you are hosting
+                </Typography>
+              </Toolbar>
+            </AppBar>
             <Card className={classes.card}>
               <CardHeader
                 action={
@@ -77,7 +84,7 @@ class AllParties extends Component {
             <ExpansionPanel>
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                 <Typography className={classes.heading}>
-                  Your are hosting
+                  All parties you are hosting
                 </Typography>
               </ExpansionPanelSummary>
               {parties.map(party => (
