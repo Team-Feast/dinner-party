@@ -23,7 +23,7 @@ import Toolbar from '@material-ui/core/Toolbar'
 const styles = theme => ({
   root: {
     width: '100%',
-    maxWidth: 360,
+    // maxWidth: 360,
     backgroundColor: theme.palette.background.paper
   },
   media: {
