@@ -3,11 +3,12 @@ import createLogger from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
 import {composeWithDevTools} from 'redux-devtools-extension'
 import user from './user'
-import party from './party'
+import party, {partiesReducer} from './party'
 
 const reducer = combineReducers({
   user,
-  party
+  party,
+  parties: partiesReducer
 })
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
