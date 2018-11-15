@@ -19,16 +19,12 @@ import {render} from 'react-dom'
 import {toClass} from 'recompose'
 import addDays from 'date-fns/add_days'
 import DPDialog from 'material-ui/DatePicker'
-import { connect } from 'react-redux'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-
-
+import {connect} from 'react-redux'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 import {saveDate} from '../../store/user'
 
-
-
-const Dialog = (props) => (
+const Dialog = props => (
   <MuiThemeProvider>
     <div>
       <DPDialog
@@ -36,7 +32,7 @@ const Dialog = (props) => (
         ref={c => (window.elem = c)}
         style={{display: 'none'}}
         minDate={addDays(new Date(), 1)}
-        onChange={(e, c) => props.saveDate(e,c)}
+        onChange={(e, c) => props.saveDate(e, c)}
         defaultDate={addDays(new Date(), 1)}
         onDismiss={c => console.log('dismissed')}
       />;

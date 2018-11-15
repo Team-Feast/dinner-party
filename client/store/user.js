@@ -31,7 +31,8 @@ export const saveDate = (date, param2) => async dispatch => {
     console.log('Param2', new Date(param2))
     // const {data} = await axios.post('/api/party', {foo: 1})
     const {data} = await axios.post('/api/party', {
-      date: JSON.stringify(param2)
+      // date: JSON.stringify(param2)
+      date: param2
     })
   } catch (err) {
     console.log(err)
