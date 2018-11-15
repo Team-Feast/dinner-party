@@ -1,13 +1,11 @@
 import axios from 'axios'
 import history from '../history'
 
-
 //ACTION TYPES
 const SET_PARTY = 'SET_PARTY'
 
-
 //ACTION CREATORS
-const setParty = party =>({
+const setParty = party => ({
   type: SET_PARTY,
   party
 })
@@ -24,12 +22,11 @@ export const fetchParty = id => async dispatch => {
 }
 
 //REDUCER
-export default function(state = {}, action){
-  switch(action.type){
+export default function(state = {}, action) {
+  switch (action.type) {
     case SET_PARTY:
       return action.party
-
     default:
-     return state
+      return state
   }
 }

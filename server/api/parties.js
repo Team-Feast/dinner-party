@@ -8,7 +8,11 @@ router.get('/:id', async (req, res, next) => {
       include: [
         {model: User, attributes: ['firstName', 'lastName']},
         {model: Guest, attributes: ['id', 'status', 'email']},
-        {model: Item, attributes: ['id', 'title', 'description', 'guestId']}
+        {
+          model: Item,
+          include: [{model: Guest, attributes: ['email']}],
+          attributes: ['id', 'title', 'description']
+        }
       ]
     })
     res.json(party)

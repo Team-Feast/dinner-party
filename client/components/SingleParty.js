@@ -56,15 +56,16 @@ class SingleParty extends Component {
         <div>
           <img width="360" src={imageUrl} />
           <h3>{title}</h3>
-          <h4>{moment(date).format('MMMM Do YYYY, h:mm')}</h4>
-          <h4>{location}</h4>
+          <h5>Date: {moment(date).format('MMMM Do YYYY, h:mm')}</h5>
+          <h5>Location: {location}</h5>
           <p>{description}</p>
           <Button className={classes.button} onClick={this.toggleGuestList}>
-            Guest List
+            {`Guest List (${guests.length})`}
           </Button>
           <Button className={classes.button} onClick={this.toggleItemList}>
             Item List
           </Button>
+
           {this.state.showGuestList && <GuestList guests={guests} />}
           {this.state.showItemList && <ItemList items={items} />}
           <image />
