@@ -1,16 +1,15 @@
-import React, {Component} from 'react'
+import React from 'react'
+import {List, ListItem, ListItemText} from '@material-ui/core'
 
 const GuestList = props => {
-  console.log("Here111", props)
   return (
-    <ul>
+    <List>
       {props.guests.map(guest => (
-        <li key={guest.id}>
-          {guest.email}
-          Status: {guest.status}
-        </li>
+        <ListItem key={guest.id}>
+          <ListItemText primary={`${guest.email} - ${guest.status}`} />
+        </ListItem>
       ))}
-    </ul>
+    </List>
   )
 }
 
