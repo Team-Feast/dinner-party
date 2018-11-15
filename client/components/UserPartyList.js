@@ -39,10 +39,23 @@ class AllParties extends Component {
       <React.Fragment>
         <CssBaseline>
           <div className={classes.root}>
+            <Typography className={classes.heading}>Your next party</Typography>
             <ExpansionPanel>
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                 <Typography className={classes.heading}>
-                  Expansion Panel A
+                  Your are hosting
+                </Typography>
+              </ExpansionPanelSummary>
+              {parties.map(party => (
+                <ExpansionPanelDetails>
+                  <Typography>{party.description}</Typography>
+                </ExpansionPanelDetails>
+              ))}
+            </ExpansionPanel>
+            <ExpansionPanel>
+              <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography className={classes.heading}>
+                  You are attending
                 </Typography>
               </ExpansionPanelSummary>
               <ExpansionPanelDetails>
@@ -55,9 +68,7 @@ class AllParties extends Component {
             </ExpansionPanel>
             <ExpansionPanel>
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography className={classes.heading}>
-                  Expansion Panel B
-                </Typography>
+                <Typography className={classes.heading}>Past events</Typography>
               </ExpansionPanelSummary>
               <ExpansionPanelDetails>
                 <Typography>
