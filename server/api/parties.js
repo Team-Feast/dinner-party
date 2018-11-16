@@ -108,7 +108,43 @@ router.get('/user/:userId', async (req, res, next) => {
       return moment.utc(left.party.date).diff(moment.utc(right.party.date))
     })
 
-    res.json({upcomingEventToHost, hosting, attending})
+    const pastHosting = await Party.findAll({
+      where: {
+        $and: [
+          {userId: user.id},
+          {
+            date: {
+              $lt: moment()
+                .utc()
+                .toDate()
+            }
+          }
+        ]
+      },
+      order: [['date', 'ASC']]
+    })
+
+    const pastAttending = await Guest.findAll({
+      where: {
+        email: user.email
+      },
+      include: [
+        {
+          model: Party,
+          where: {
+            date: {
+              $lt: moment()
+                .utc()
+                .toDate()
+            }
+          }
+        }
+      ]
+    })
+
+    const pastEvents = [...pastHosting, ...pastAttending]
+
+    res.json({upcomingEventToHost, hosting, attending, pastEvents})
   } catch (err) {
     next(err)
   }
