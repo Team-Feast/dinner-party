@@ -8,7 +8,8 @@ import {
   UserHome,
   SingleParty,
   Landing,
-  UserPartyList
+  UserPartyList,
+  AddParty
 } from './components'
 import {me} from './store'
 
@@ -30,11 +31,15 @@ class Routes extends Component {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
 
+<<<<<<< HEAD
+        <Route path="/parties/addParty" component={AddParty} />
+=======
         <Route
           exact
           path="/parties/:partyId/rsvp/:guestPartyToken"
           component={SingleParty}
         />
+>>>>>>> master
         <Route path="/parties/:id" component={SingleParty} />
         {isLoggedIn && (
           <Switch>

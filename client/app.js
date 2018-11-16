@@ -9,7 +9,11 @@ const App = () => {
   return (
     <div>
       <Navbar />
-      <Routes />
+      <Routes
+        styles={{
+          marginTop: '64px'
+        }}
+      />
       {/* <UserTest /> */}
     </div>
   )

@@ -7,6 +7,7 @@ const ADD_ITEM = 'ADD_ITEM'
 const DELETE_ITEM = 'DELETE_ITEM'
 const SET_PARTIES = 'SET_PARTIES'
 
+const CREATE_PARTY = ' CREATE_PARTY'
 const SET_GUEST_STATUS = 'SET_GUEST_STATUS'
 
 //ACTION CREATORS
@@ -27,6 +28,11 @@ const deleteItem = itemId => ({
 const setParties = parties => ({
   type: SET_PARTIES,
   parties
+})
+
+const createPartyInfo = partyInfo => ({
+  type: CREATE_PARTY,
+  partyInfo
 })
 
 const setGuestStatus = status => ({
@@ -57,6 +63,15 @@ export const sendRemoveItem = itemId => {
   }
 }
 
+export const createParty = partyInfo => async  dispatch => {
+  try{
+    const {data} = await axios.post('/api/parties', partyInfo)
+    dispatch(createPartyInfo(data))
+  }catch(err){
+    console.error(err)
+  }
+}
+
 export const fetchParty = id => async dispatch => {
   try {
     const {data} = await axios.get(`/api/parties/${id}`)
@@ -65,6 +80,7 @@ export const fetchParty = id => async dispatch => {
     console.error(err)
   }
 }
+
 export const fetchParties = userId => async dispatch => {
   try {
     const data = [
@@ -115,6 +131,10 @@ export default function(state = {}, action) {
   switch (action.type) {
     case SET_PARTY:
       return action.party
+
+    case CREATE_PARTY:
+      return action.partyInfo
+
     case ADD_ITEM:
       return {...state, items: [...state.items, action.item]}
     case DELETE_ITEM:
