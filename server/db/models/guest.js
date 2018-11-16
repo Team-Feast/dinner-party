@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
+const uuidv1 = require('uuid/v1')
 
 const Guest = db.define('guest', {
   status: {
@@ -15,7 +16,14 @@ const Guest = db.define('guest', {
   },
   phone: {
     type: Sequelize.STRING
+  },
+  guestPartyToken: {
+    type: Sequelize.STRING
   }
+})
+
+Guest.beforeCreate((userInstance, optionsObject) => {
+  userInstance.guestPartyToken = uuidv1()
 })
 
 module.exports = Guest
