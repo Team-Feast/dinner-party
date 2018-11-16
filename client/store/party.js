@@ -93,9 +93,7 @@ export const fetchGuestStatus = (
   partyId
 ) => async dispatch => {
   try {
-    const {data} = await axios.get(
-      `/api/parties/${partyId}/rsvp/${guestPartyToken}`
-    )
+    const {data} = await axios.get(`/api/parties/rsvp/${guestPartyToken}`)
     dispatch(setGuestStatus(data))
   } catch (err) {
     console.error(err)
@@ -103,10 +101,11 @@ export const fetchGuestStatus = (
 }
 export const putGuestStatus = (guestPartyToken, status) => async dispatch => {
   try {
-    const {data} = await axios.put(
-      `/api/guests/rsvp/${guestPartyToken}`,
+    console.log('status', status)
+
+    const {data} = await axios.put(`/api/parties/rsvp/${guestPartyToken}`, {
       status
-    )
+    })
     dispatch(setGuestStatus(data))
   } catch (err) {
     console.error(err)

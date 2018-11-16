@@ -65,9 +65,11 @@ class SingleParty extends Component {
     this.props.fetchGuestStatus(guestPartyToken, partyId)
   }
   handleChange = event => {
-    this.setState({selectedValue: event.target.value})
+    const rsvp = event.target.value
+
+    this.setState({selectedValue: rsvp})
     const {guestPartyToken} = this.props.match.params
-    this.props.putGuestStatus(guestPartyToken, this.state.selectedValue)
+    this.props.putGuestStatus(guestPartyToken, rsvp)
   }
 
   render() {
@@ -160,7 +162,8 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
   fetchParty: id => dispatch(fetchParty(id)),
-  putGuestStatus: guestPartyToken => dispatch(putGuestStatus(guestPartyToken)),
+  putGuestStatus: (guestPartyToken, status) =>
+    dispatch(putGuestStatus(guestPartyToken, status)),
   fetchGuestStatus: (guestPartyToken, partyId) =>
     dispatch(fetchGuestStatus(guestPartyToken, partyId))
 })
