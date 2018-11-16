@@ -24,9 +24,12 @@ describe('fetchParty', () => {
     store.clearActions()
   })
 
-  describe('describe fetchParty ', () => {
+  xdescribe('describe fetchParty ', () => {
     it('eventually dispatches the fetchParty action', async () => {
-      const party = {description: "Mu ciroono id zu noj douhu riwig kusgokow potji kemmadguz wefamij jacef pitumwah hecso neido fi komihjar wofa., description: 200"}
+      const party = {
+        description:
+          'Mu ciroono id zu noj douhu riwig kusgokow potji kemmadguz wefamij jacef pitumwah hecso neido fi komihjar wofa., description: 200'
+      }
       mockAxios.onGet('/api/parties/2').replyOnce(200, party)
       await store.dispatch(fetchParty())
       const actions = store.getActions()

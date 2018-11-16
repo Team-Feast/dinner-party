@@ -5,9 +5,9 @@
 // import {shallow} from 'enzyme'
 // import SingleParty from '../SingleParty'
 
-// describe('SingleParty', () => {
+// xdescribe('SingleParty', () => {
 //   let singlePartyData, partyWrapper
-//   // beforeEach(‘Create <SingleParty /> wrapper’, () => {
+//   // beforeEach(‘Creatse <SingleParty /> wrapper’, () => {
 //   //  });
 //   it('includes description, location', () => {
 //     singlePartyData = {

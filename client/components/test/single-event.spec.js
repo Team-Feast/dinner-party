@@ -8,7 +8,7 @@ import SingleParty from '../SingleParty'
 const adapter = new Adapter()
 enzyme.configure({adapter})
 
-describe('SingleParty', () => {
+xdescribe('SingleParty', () => {
   let singlePartyData, partyWrapper
 
   it('includes description, location', () => {
