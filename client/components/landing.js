@@ -4,22 +4,13 @@ import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
 
 import CssBaseline from '@material-ui/core/CssBaseline'
-import Card from '@material-ui/core/Card'
-import CardActions from '@material-ui/core/CardActions'
-import CardContent from '@material-ui/core/CardContent'
+import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
-import Paper from '@material-ui/core/Paper'
 
 import {withStyles} from '@material-ui/core/styles'
 
-const styles = {
-  backgroundImage: '/images/landing-background.jpg',
-  backgroundSize: 'cover',
-  backgroundRepeat: 'no-repeat',
-  overflow: 'hidden',
-  height: '200px'
-}
+const styles = {}
 
 class Landing extends Component {
   state = {}
@@ -44,12 +35,38 @@ class Landing extends Component {
             textAlign: 'center',
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'center'
+            justifyContent: 'center',
+            color: 'primary'
           }}
         >
-          <h1>Title</h1>
-          <h3>Info</h3>
-          <Link to="/add-party">Let's Feast!</Link>
+          <Grid
+            container
+            className={classes.root}
+            alignItems="center"
+            direction="column"
+            justify="flex-start"
+          >
+            <Grid item>
+              <Typography component="h1" variant="h2">
+                <b>Welcome to Feast</b>
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography component="h3" variant="h5">
+                The Worlds #1 Dinner Party Planning Tool
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Button
+                href="/parties/addParty"
+                className={classes.button}
+                variant="contained"
+                color="primary"
+              >
+                Let's Feast!
+              </Button>
+            </Grid>
+          </Grid>
         </div>
       </Fragment>
     )
