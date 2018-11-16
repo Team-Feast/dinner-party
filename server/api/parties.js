@@ -102,6 +102,12 @@ router.get('/user/:userId', async (req, res, next) => {
         }
       ]
     })
+
+    // sort ASCENDING by the party date
+    attending.sort(function(left, right) {
+      return moment.utc(left.party.date).diff(moment.utc(right.party.date))
+    })
+
     res.json({upcomingEventToHost, hosting, attending})
   } catch (err) {
     next(err)
