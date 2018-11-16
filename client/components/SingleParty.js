@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from 'react'
 import {connect} from 'react-redux'
-import {fetchParty} from '../store'
+import {fetchParty, putGuestStatus, fetchGuestStatus} from '../store'
 import {GuestList, ItemList} from '../components'
 import moment from 'moment'
 
@@ -18,6 +18,16 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
 import Typography from '@material-ui/core/Typography'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemIcon from '@material-ui/core/ListItemIcon'
+import ListItemText from '@material-ui/core/ListItemText'
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
+import Switch from '@material-ui/core/Switch'
+import green from '@material-ui/core/colors/green'
+import Radio from '@material-ui/core/Radio'
+import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked'
+import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked'
 
 const styles = theme => ({
   button: {
@@ -29,17 +39,39 @@ const styles = theme => ({
   root: {
     width: '100%',
     // maxWidth: 360,
-    backgroundColor: theme.palette.background.paper
+    backgroundColor: theme.palette.background.paper,
+    color: green[600],
+    '&$checked': {
+      color: green[500]
+    }
   },
   media: {
     height: 0,
     paddingTop: '56.25%' // 16:9
-  }
+  },
+
+  checked: {}
 })
 
 class SingleParty extends Component {
+  state = {
+    selectedValue: 'a',
+    status: null
+  }
   componentDidMount() {
     this.props.fetchParty(this.props.match.params.id)
+    console.log('math prop', this.props.match)
+
+    console.log('guest party token', this.props.match.params.guestPartyToken)
+    const {guestPartyToken} = this.props.match.params
+    this.props.fetchGuestStatus(guestPartyToken)
+  }
+  handleChange = event => {
+    console.log('value', event.target.value)
+
+    this.setState({selectedValue: event.target.value})
+    const {guestPartyToken} = this.props.match.params
+    this.props.putGuestStatus(guestPartyToken)
   }
 
   render() {
@@ -84,11 +116,46 @@ class SingleParty extends Component {
               subheader={moment(date).format('MMMM Do YYYY, h:mm')}
             />
             <CardMedia className={classes.media} image={imageUrl} />
+<<<<<<< HEAD
             {/* <List>
               <ListItem >
 
               </ListItem>
             </List> */}
+=======
+            <List>
+              <ListItem button>
+                <ListItemText primary={location} />
+              </ListItem>
+
+              <ListItem>
+                <ListItemText primary="Are you attending?" />
+                <ListItemSecondaryAction>
+                  <div>
+                    <Radio
+                      checked={this.state.selectedValue === 'attending'}
+                      onChange={this.handleChange}
+                      value="c"
+                      name="radio-button-demo"
+                      aria-label="C"
+                      classes={{
+                        root: classes.root,
+                        checked: classes.checked
+                      }}
+                    />
+                    <Radio
+                      checked={this.state.selectedValue === 'declined'}
+                      onChange={this.handleChange}
+                      value="d"
+                      color="default"
+                      name="radio-button-demo"
+                      aria-label="D"
+                    />
+                  </div>
+                </ListItemSecondaryAction>
+              </ListItem>
+            </List>
+>>>>>>> 336bc95bedb8bd3042f270645289f31e2c879d62
           </Card>
 
           <ExpansionPanel>
@@ -114,11 +181,15 @@ class SingleParty extends Component {
 }
 
 const mapState = state => ({
-  party: state.party
+  party: state.party,
+  guestStatus: state.guestStatus
 })
 
 const mapDispatch = dispatch => ({
-  fetchParty: id => dispatch(fetchParty(id))
+  fetchParty: id => dispatch(fetchParty(id)),
+  putGuestStatus: guestPartyToken => dispatch(putGuestStatus(guestPartyToken)),
+  fetchGuestStatus: guestPartyToken =>
+    dispatch(fetchGuestStatus(guestPartyToken))
 })
 
 SingleParty.propTypes = {

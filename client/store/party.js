@@ -7,6 +7,8 @@ const ADD_ITEM = 'ADD_ITEM'
 const DELETE_ITEM = 'DELETE_ITEM'
 const SET_PARTIES = 'SET_PARTIES'
 
+const SET_GUEST_STATUS = 'SET_GUEST_STATUS'
+
 //ACTION CREATORS
 const setParty = party => ({
   type: SET_PARTY,
@@ -25,6 +27,11 @@ const deleteItem = itemId => ({
 const setParties = parties => ({
   type: SET_PARTIES,
   parties
+})
+
+const setGuestStatus = status => ({
+  type: SET_GUEST_STATUS,
+  status
 })
 
 //THUNK CREATORS
@@ -81,6 +88,24 @@ export const fetchParties = userId => async dispatch => {
   }
 }
 
+export const fetchGuestStatus = guestPartyToken => async dispatch => {
+  try {
+    // const {data} = await axios.get(`/api/parties/2/rsvp/:guestPartyToken`)
+    dispatch(setGuestStatus('invited'))
+  } catch (err) {
+    console.error(err)
+  }
+}
+export const putGuestStatus = guestPartyToken => async dispatch => {
+  try {
+    // const {data} = await axios.put(`/api/parties/2/rsvp/:guestPartyToken`)
+    dispatch(setGuestStatus(guestPartyToken))
+    // dispatch(setGuestStatus('accepted'))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
 //REDUCER
 export default function(state = {}, action) {
   switch (action.type) {
@@ -102,6 +127,15 @@ export function partiesReducer(state = [], action) {
   switch (action.type) {
     case SET_PARTIES:
       return action.parties
+    default:
+      return state
+  }
+}
+
+export function guestStatusReducer(state = {}, action) {
+  switch (action.type) {
+    case SET_GUEST_STATUS:
+      return action.status
     default:
       return state
   }

@@ -29,6 +29,11 @@ class Routes extends Component {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
 
+        <Route
+          exact
+          path="/parties/:id/rsvp/:guestPartyToken"
+          component={SingleParty}
+        />
         <Route path="/parties/:id" component={SingleParty} />
         {isLoggedIn && (
           <Switch>
