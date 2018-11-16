@@ -36,13 +36,25 @@ router.post('/', async (req, res, next) => {
 })
 
 // GET /api/parties/user/:userId
-// Return an array of parties that this user is hosting
+// Return an object that will contain information
+// about a current users parties.
+// The object will look like this:
+/*
+ {
+   hosting: [...] // array of objects
+   attending: [...] // array of objects
+   past_events: [...] // array of objects past events
+ }
+*/
 router.get('/user/:userId', async (req, res, next) => {
   try {
-    const upcomingParties = await Party.findAll({
+    // upcoming parties
+    const user = await User.findById(req.params.userId)
+
+    const hosting = await Party.findAll({
       where: {
         $and: [
-          {userId: req.params.userId},
+          {userId: user.id},
           {
             date: {
               $gte: moment()
@@ -53,7 +65,18 @@ router.get('/user/:userId', async (req, res, next) => {
         ]
       }
     })
-    res.json(parties)
+
+    const attending = await Guest.findAll({
+      where: {
+        $or: [
+          {email: user.email},
+          {
+            id: 1
+          }
+        ]
+      }
+    })
+    res.json({hosting, attending})
   } catch (err) {
     next(err)
   }
