@@ -116,13 +116,6 @@ class SingleParty extends Component {
               subheader={moment(date).format('MMMM Do YYYY, h:mm')}
             />
             <CardMedia className={classes.media} image={imageUrl} />
-<<<<<<< HEAD
-            {/* <List>
-              <ListItem >
-
-              </ListItem>
-            </List> */}
-=======
             <List>
               <ListItem button>
                 <ListItemText primary={location} />
@@ -155,7 +148,6 @@ class SingleParty extends Component {
                 </ListItemSecondaryAction>
               </ListItem>
             </List>
->>>>>>> 336bc95bedb8bd3042f270645289f31e2c879d62
           </Card>
 
           <ExpansionPanel>
