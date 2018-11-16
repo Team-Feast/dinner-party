@@ -3,7 +3,8 @@ import history from '../history'
 
 //ACTION TYPES
 const SET_PARTY = 'SET_PARTY'
-const NEW_ITEM = 'NEW_ITEM'
+const ADD_ITEM = 'ADD_ITEM'
+const DELETE_ITEM = 'DELETE_ITEM'
 const SET_PARTIES = 'SET_PARTIES'
 
 //ACTION CREATORS
@@ -11,27 +12,44 @@ const setParty = party => ({
   type: SET_PARTY,
   party
 })
+const addItem = item => ({
+  type: ADD_ITEM,
+  item
+})
 
-const newItem = item => ({
-  type: NEW_ITEM,
-  item})
+const deleteItem = itemId => ({
+  type: DELETE_ITEM,
+  itemId
+})
+
 const setParties = parties => ({
   type: SET_PARTIES,
   parties
 })
 
 //THUNK CREATORS
-
 export const postItem = item => {
   return async dispatch => {
     try {
       const {data} = await axios.post('/api/items', item)
-      dispatch(newItem(data))
+      dispatch(addItem(data))
     } catch (error) {
       console.error(error)
     }
   }
 }
+
+export const sendRemoveItem = itemId => {
+  return async dispatch => {
+    try {
+      await axios.delete(`/api/items/${itemId}`)
+      dispatch(deleteItem(itemId))
+    } catch (error) {
+      console.error(error)
+    }
+  }
+}
+
 export const fetchParty = id => async dispatch => {
   try {
     const {data} = await axios.get(`/api/parties/${id}`)
@@ -68,8 +86,13 @@ export default function(state = {}, action) {
   switch (action.type) {
     case SET_PARTY:
       return action.party
-    case NEW_ITEM:
+    case ADD_ITEM:
       return {...state, items: [...state.items, action.item]}
+    case DELETE_ITEM:
+      return {
+        ...state,
+        items: state.items.filter(item => item.id !== action.itemId)
+      }
     default:
       return state
   }

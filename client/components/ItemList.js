@@ -32,6 +32,7 @@ class ItemList extends Component {
   }
 
   render() {
+    console.log('props in item list: ', this.props)
     return (
       <ExpansionPanelDetails>
         <List>
@@ -53,7 +54,7 @@ class ItemList extends Component {
           >
             Add Item
           </Button>
-          {this.state.showAddItem && <AddItem partyId={this.props.partyId} />}
+          {this.state.showAddItem && <AddItem />}
         </List>
       </ExpansionPanelDetails>
     )

@@ -4,11 +4,13 @@ const router = require('express').Router()
 router.post('/', async (req, res, next) => {
   try {
     const {title, description, partyId, email} = req.body
-    const guest = await Guest.findOne({where: {email: email}})
-
+    let guest = await Guest.findOne({where: {email: email}})
     let guestId
 
     if (guest) {
+      guestId = guest.id
+    } else {
+      guest = await Guest.create({email})
       guestId = guest.id
     }
 
@@ -20,7 +22,10 @@ router.post('/', async (req, res, next) => {
       guestId
     })
 
-    res.status(201).json(item)
+    const newItem = await Item.findById(item.id, {
+      include: [{model: Guest, attributes: ['email']}]
+    })
+    res.json(newItem)
   } catch (error) {
     next(error)
   }

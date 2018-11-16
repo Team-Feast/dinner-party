@@ -85,8 +85,13 @@ AddItem.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
+const mapStateToProps = state => ({
+  partyId: state.party.id
+})
 const mapDispatchToProps = dispatch => ({
   postItem: item => dispatch(postItem(item))
 })
 
-export default connect(null, mapDispatchToProps)(withStyles(styles)(AddItem))
+export default connect(mapStateToProps, mapDispatchToProps)(
+  withStyles(styles)(AddItem)
+)
