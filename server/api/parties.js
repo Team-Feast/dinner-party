@@ -17,6 +17,7 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
+// POST /api/parties/addParty
 router.post('/', async (req, res, next) => {
   try {
     const newParty = await Party.create({
@@ -25,8 +26,7 @@ router.post('/', async (req, res, next) => {
       location: req.body.address,
       date: req.body.date
     })
-
-    res.json(newParty)
+    res.json(newParty.dataValues)
   } catch (err) {
     next(err)
   }

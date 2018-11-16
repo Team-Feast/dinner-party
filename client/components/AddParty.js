@@ -99,21 +99,20 @@ const AddParty = (props) => {
       </Fragment>
     )
 }
+
 const mapDispatch = dispatch => {
   return {
     handleSubmit(evt) {
       evt.preventDefault()
-      console.log("Here", evt.target.title)
       const title = evt.target.title.value
       const description = evt.target.description.value
       const address = evt.target.address.value
-     const date = evt.target.date.value
+      const date = evt.target.date.value
       const info = {title, description, address, date}
       dispatch(createParty(info))
     }
   }
 }
-
 
 export default connect(null, mapDispatch)(withStyles(styles)(AddParty))
 
