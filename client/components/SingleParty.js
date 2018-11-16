@@ -84,9 +84,11 @@ class SingleParty extends Component {
               subheader={moment(date).format('MMMM Do YYYY, h:mm')}
             />
             <CardMedia className={classes.media} image={imageUrl} />
-            <List>
-              <ListItem />
-            </List>
+            {/* <List>
+              <ListItem >
+
+              </ListItem>
+            </List> */}
           </Card>
 
           <ExpansionPanel>
