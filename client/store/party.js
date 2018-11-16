@@ -5,6 +5,8 @@ import history from '../history'
 const SET_PARTY = 'SET_PARTY'
 const SET_PARTIES = 'SET_PARTIES'
 
+const CREATE_PARTY = ' CREATE_PARTY'
+
 //ACTION CREATORS
 const setParty = party => ({
   type: SET_PARTY,
@@ -16,7 +18,21 @@ const setParties = parties => ({
   parties
 })
 
+const createPartyInfo = partyInfo => ({
+  type: CREATE_PARTY,
+  partyInfo
+})
+
 //THUNK CREATORS
+
+export const createParty = partyInfo => async  dispatch => {
+  try{
+    const {data} = await axios.post('/api/parties', partyInfo)
+    dispatch(createPartyInfo(data))
+  }catch(err){
+    console.error(err)
+  }
+}
 
 export const fetchParty = id => async dispatch => {
   try {
@@ -26,6 +42,7 @@ export const fetchParty = id => async dispatch => {
     console.error(err)
   }
 }
+
 export const fetchParties = userId => async dispatch => {
   try {
     const data = [
@@ -54,6 +71,9 @@ export default function(state = {}, action) {
   switch (action.type) {
     case SET_PARTY:
       return action.party
+
+    case CREATE_PARTY:
+      return action.partyInfo
 
     default:
       return state

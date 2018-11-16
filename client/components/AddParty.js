@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component, Fragment} from 'react'
 import {connect} from 'react-redux'
 
 import PropTypes from 'prop-types'
@@ -6,133 +6,117 @@ import TextField from '@material-ui/core/TextField'
 import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
-import Button from '@material-ui/core/Button';
+import Button from '@material-ui/core/Button'
 import Input from '@material-ui/core/Input'
 import InputAdornment from '@material-ui/core/InputAdornment'
+import Typography from '@material-ui/core/Typography'
+import LockIcon from '@material-ui/icons/LockOutlined'
+import Paper from '@material-ui/core/Paper'
+import CssBaseline from '@material-ui/core/CssBaseline'
+import Avatar from '@material-ui/core/Avatar'
 import classNames from 'classnames'
 import {withStyles} from '@material-ui/core'
 
+import {createParty} from '../store/party'
+
 const styles = theme => ({
-  root: {
+  paper: {
+    marginTop: theme.spacing.unit * 8,
     display: 'flex',
-    flexWrap: 'wrap'
+    flexDirection: 'column',
+    alignItems: 'center',
+    padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme
+      .spacing.unit * 3}px`
   },
-  margin: {
-    margin: theme.spacing.unit
+  avatar: {
+    margin: theme.spacing.unit,
+    backgroundColor: theme.palette.secondary.main
   },
-  withoutLabel: {
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing.unit
+  },
+  submit: {
     marginTop: theme.spacing.unit * 3
-  },
-  textField: {
-    flexBasis: 200
   }
 })
 
-const ranges = [
-  {
-    value: 'draft',
-    label: 'Draft'
-  },
-  {
-    value: 'upcomming',
-    label: 'Upcomming'
-  },
-  {
-    value: 'cancelled',
-    label: 'Cancelled'
-  },
-  {
-    value: 'completed',
-    label: 'Completed'
-  }
-]
+const AddParty = (props) => {
 
-class AddParty extends Component {
-  constructor() {
-    super()
-    this.state = {
-      title: '',
-      time: '',
-      address: '',
-      description: '',
-      status: ''
-    }
-    this.handleChange = this.handleChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
-  }
+  const {classes} = props
 
-  handleSubmit() {}
+  return (
+      <Fragment>
+        <CssBaseline />
+        <Paper className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Create Event
+          </Typography>
+          <form className={classes.form} onSubmit={props.handleSubmit}>
 
-  handleChange = name => event => {
-    this.setState({
-      [name]: event.target.value
-    })
-    console.log('Updating State', this.state)
-  }
+          <FormControl margin="normal" required fullWidth>
+            <InputLabel htmlFor="title">Title</InputLabel>
+            <Input id="title" name="title" autoFocus />
+          </FormControl>
 
-  render() {
-    const {classes} = this.props
-    const TodayDate = new Date()
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <TextField
-          label="Title"
-          id="simple-start-adornment"
-          onChange={this.handleChange('title')}
-          className={classNames(classes.margin, classes.textField)}
-        />
+          <FormControl margin="normal" required fullWidth>
+            <InputLabel htmlFor="description">Description</InputLabel>
+            <Input name="description" id="description" />
+          </FormControl>
 
-        <TextField
-          select
-          label="Status"
-          className={classNames(classes.margin, classes.textField)}
-          value={this.state.status}
-          onChange={this.handleChange('status')}
-          InputProps={{
-            startAdornment: <InputAdornment position="start" />
+          <FormControl margin="normal" required fullWidth>
+            <InputLabel htmlFor="address">Address</InputLabel>
+            <Input name="address"  id="address" />
+          </FormControl>
+
+        <FormControl>
+          <TextField
+          id="date"
+          label="Birthday"
+          type="date"
+          defaultValue="2017-05-24"
+          className={classes.textField}
+          InputLabelProps={{
+            shrink: true,
           }}
-        >
-          {ranges.map(option => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
-        </TextField>
+          />
+        </FormControl>
 
-        <TextField
-          fullWidth
-          label="Address"
-          id="adornment-amount"
-          onChange={this.handleChange('address')}
-          className={classNames(classes.margin, classes.textField)}
-        />
-
-        <TextField
-          fullWidth
-          label="Description"
-          id="adornment-amount"
-          onChange={this.handleChange('description')}
-          className={classNames(classes.margin, classes.textField)}
-        />
-
-        <TextField
-        id="date"
-        label="Date"
-        type="date"
-        defaultValue= {TodayDate}
-        className={classes.textField}
-        InputLabelProps={{
-          shrink: true,
-        }}
-      />
-
-      </form>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+          >
+            Submit
+          </Button>
+          </form>
+        </Paper>
+      </Fragment>
     )
+}
+const mapDispatch = dispatch => {
+  return {
+    handleSubmit(evt) {
+      evt.preventDefault()
+      console.log("Here", evt.target.title)
+      const title = evt.target.title.value
+      const description = evt.target.description.value
+      const address = evt.target.address.value
+     const date = evt.target.date.value
+      const info = {title, description, address, date}
+      dispatch(createParty(info))
+    }
   }
 }
 
-const mapDispatch = dispatch => ({
-  //  createParty: (partyInfo) => dispatch(createParty(partyInfo))
-})
 
-export default withStyles(styles)(connect(null, mapDispatch)(AddParty))
+export default connect(null, mapDispatch)(withStyles(styles)(AddParty))
+
+AddParty.propTypes = {
+  classes: PropTypes.object.isRequired
+}
