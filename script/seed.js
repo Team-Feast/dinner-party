@@ -49,6 +49,14 @@ function randUser() {
 
 function generateUsers() {
   const users = doTimes(numUsers, randUser)
+  const cody = User.build({
+    firstName: 'Cody',
+    lastName: 'Puppy',
+    imageUrl: randPhoto('male'),
+    email: 'cody@email.com',
+    password: '123'
+  })
+  users.push(cody)
   console.log(`seeding ${users.length} users`)
   return users
 }
