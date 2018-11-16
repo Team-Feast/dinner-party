@@ -32,7 +32,6 @@ class ItemList extends Component {
   }
 
   render() {
-    console.log('props in item list: ', this.props)
     return (
       <ExpansionPanelDetails>
         <List>
@@ -64,5 +63,7 @@ class ItemList extends Component {
 ItemList.propTypes = {
   classes: PropTypes.object.isRequired
 }
+
+const mapDispatchToProps = dispatch => ({})
 
 export default withStyles(styles)(ItemList)

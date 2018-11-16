@@ -80,16 +80,15 @@ class SingleParty extends Component {
           <image /> */}
           <Card className={classes.card}>
             <CardHeader
-              action={
-                <IconButton>
-                  <MoreVertIcon />
-                </IconButton>
-              }
               title={title}
               subheader={moment(date).format('MMMM Do YYYY, h:mm')}
             />
             <CardMedia className={classes.media} image={imageUrl} />
+            <List>
+              <ListItem />
+            </List>
           </Card>
+
           <ExpansionPanel>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
               <Typography className={classes.heading}>
