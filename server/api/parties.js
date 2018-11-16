@@ -7,7 +7,11 @@ router.get('/:id', async (req, res, next) => {
     const party = await Party.findById(partyId, {
       include: [
         {model: User, attributes: ['firstName', 'lastName']},
-        {model: Guest, attributes: ['id', 'status', 'email']},
+        {
+          model: Guest,
+          attributes: ['id', 'status', 'email'],
+          order: [['status', 'ASC']]
+        },
         {
           model: Item,
           include: [{model: Guest, attributes: ['email']}],

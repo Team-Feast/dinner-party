@@ -11,6 +11,7 @@ import {
 import PropTypes from 'prop-types'
 import CommentIcon from '@material-ui/icons/Comment'
 import {AddItem} from '../components'
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
 
 const styles = theme => ({
   button: {
@@ -32,27 +33,29 @@ class ItemList extends Component {
 
   render() {
     return (
-      <List>
-        {this.props.items.map(item => (
-          <ListItem key={item.id}>
-            <ListItemText
-              primary={`${item.title} - ${item.guest && item.guest.email}`}
-            />
-            <ListItemSecondaryAction>
-              <IconButton aria-label="Comments">
-                <CommentIcon />
-              </IconButton>
-            </ListItemSecondaryAction>
-          </ListItem>
-        ))}
-        <Button
-          className={this.props.classes.button}
-          onClick={this.toggleAddItem}
-        >
-          Add Item
-        </Button>
-        {this.state.showAddItem && <AddItem partyId={this.props.partyId} />}
-      </List>
+      <ExpansionPanelDetails>
+        <List>
+          {this.props.items.map(item => (
+            <ListItem key={item.id}>
+              <ListItemText
+                primary={`${item.title} - ${item.guest && item.guest.email}`}
+              />
+              <ListItemSecondaryAction>
+                <IconButton aria-label="Comments">
+                  <CommentIcon />
+                </IconButton>
+              </ListItemSecondaryAction>
+            </ListItem>
+          ))}
+          <Button
+            className={this.props.classes.button}
+            onClick={this.toggleAddItem}
+          >
+            Add Item
+          </Button>
+          {this.state.showAddItem && <AddItem partyId={this.props.partyId} />}
+        </List>
+      </ExpansionPanelDetails>
     )
   }
 }
