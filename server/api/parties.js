@@ -74,7 +74,8 @@ router.get('/user/:userId', async (req, res, next) => {
             id: 1
           }
         ]
-      }
+      },
+      include: [{model: Party}]
     })
     res.json({hosting, attending})
   } catch (err) {
