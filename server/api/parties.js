@@ -41,6 +41,7 @@ router.post('/', async (req, res, next) => {
 // The object will look like this:
 /*
  {
+   upcoming: {} // an object of the closest upcoming event
    hosting: [...] // array of objects
    attending: [...] // array of objects
    past_events: [...] // array of objects past events
@@ -68,7 +69,7 @@ router.get('/user/:userId', async (req, res, next) => {
 
     const attending = await Guest.findAll({
       where: {
-        $or: [{email: user.email}]
+        email: user.email
       },
       include: [
         {
