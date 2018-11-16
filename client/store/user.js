@@ -9,8 +9,6 @@ const REMOVE_USER = 'REMOVE_USER'
 
 const POST_DATE = 'POST_DATE'
 
-
-
 /**
  * INITIAL STATE
  */
@@ -28,16 +26,17 @@ const postDate = date => ({type: POST_DATE, date})
  * THUNK CREATORS
  */
 
-export const saveDate = (date,param2)=> async dispatch => {
-  try{
-    console.log( "Param2", new Date(param2))
-    const {data} = await axios.post('/api/party', new Date(JSON.stringify(param2)))
-  }catch(err){
+export const saveDate = (date, param2) => async dispatch => {
+  try {
+    console.log('Param2', new Date(param2))
+    const {data} = await axios.post(
+      '/api/party',
+      new Date(JSON.stringify(param2))
+    )
+  } catch (err) {
     console.log(err)
   }
 }
-
-
 
 export const me = () => async dispatch => {
   try {
@@ -48,10 +47,10 @@ export const me = () => async dispatch => {
   }
 }
 
-export const auth = (email, password, method) => async dispatch => {
+export const auth = (info, method) => async dispatch => {
   let res
   try {
-    res = await axios.post(`/auth/${method}`, {email, password})
+    res = await axios.post(`/auth/${method}`, info)
   } catch (authError) {
     return dispatch(getUser({error: authError}))
   }
@@ -68,7 +67,7 @@ export const logout = () => async dispatch => {
   try {
     await axios.post('/auth/logout')
     dispatch(removeUser())
-    history.push('/login')
+    history.push('/')
   } catch (err) {
     console.error(err)
   }

@@ -30,6 +30,10 @@ const styles = {
     marginLeft: -12,
     marginRight: 20
   },
+  popper: {
+    marginTop: '8px',
+    right: '0'
+  },
   appBar: {
     top: 'auto',
     bottom: 0
@@ -60,7 +64,7 @@ class Navbar extends Component {
     return (
       <Fragment>
         <CssBaseline />
-        <AppBar className={classes.root} position="static">
+        <AppBar className={classes.root} position="fixed">
           <Toolbar>
             <Grid container justify="space-between">
               <Grid item>
@@ -82,6 +86,7 @@ class Navbar extends Component {
                   anchorEl={this.anchorEl}
                   transition
                   disablePortal
+                  className={classes.popper}
                 >
                   {({TransitionProps, placement}) => (
                     <Grow
@@ -105,7 +110,12 @@ class Navbar extends Component {
                                 <MenuItem onClick={this.handleClose}>
                                   <Link to="/home">My Events</Link>
                                 </MenuItem>
-                                <MenuItem onClick={this.props.handleLogout}>
+                                <MenuItem
+                                  onClick={() => {
+                                    this.props.handleLogout()
+                                    this.handleClose()
+                                  }}
+                                >
                                   Logout
                                 </MenuItem>
                               </div>
@@ -114,8 +124,12 @@ class Navbar extends Component {
                                 <MenuItem onClick={this.handleClose}>
                                   <Link to="/">Home</Link>
                                 </MenuItem>
-                                <Link to="/login">Login</Link>
-                                <Link to="/signup">Signup</Link>
+                                <MenuItem onClick={this.handleClose}>
+                                  <Link to="/login">Login</Link>
+                                </MenuItem>
+                                <MenuItem onClick={this.handleClose}>
+                                  <Link to="/signup">Sign Up</Link>
+                                </MenuItem>
                               </div>
                             )}
                           </MenuList>
