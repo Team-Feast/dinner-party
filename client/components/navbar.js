@@ -114,12 +114,8 @@ class Navbar extends Component {
                                 <MenuItem onClick={this.handleClose}>
                                   <Link to="/">Home</Link>
                                 </MenuItem>
-                                <MenuItem onClick={this.props.handleClick}>
-                                  Login
-                                </MenuItem>
-                                <MenuItem onClick={this.props.handleClick}>
-                                  Signup
-                                </MenuItem>
+                                <Link to="/login">Login</Link>
+                                <Link to="/signup">Signup</Link>
                               </div>
                             )}
                           </MenuList>
