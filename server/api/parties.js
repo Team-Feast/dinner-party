@@ -1,5 +1,6 @@
 const {Party, User, Guest, Item} = require('../db/models')
 const router = require('express').Router()
+const moment = require('moment')
 
 router.get('/:id', async (req, res, next) => {
   try {
@@ -38,7 +39,20 @@ router.post('/', async (req, res, next) => {
 // Return an array of parties that this user is hosting
 router.get('/user/:userId', async (req, res, next) => {
   try {
-    const parties = await Party.findAll({where: {userId: req.params.userId}})
+    const upcomingParties = await Party.findAll({
+      where: {
+        $and: [
+          {userId: req.params.userId},
+          {
+            date: {
+              $gte: moment()
+                .utc()
+                .toDate()
+            }
+          }
+        ]
+      }
+    })
     res.json(parties)
   } catch (err) {
     next(err)
