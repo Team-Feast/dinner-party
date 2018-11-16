@@ -64,7 +64,25 @@ router.get('/user/:userId', async (req, res, next) => {
             }
           }
         ]
-      }
+      },
+      order: [['date', 'ASC']]
+    })
+
+    const upcomingEventToHost = await Party.findAll({
+      where: {
+        $and: [
+          {userId: user.id},
+          {
+            date: {
+              $gte: moment()
+                .utc()
+                .toDate()
+            }
+          }
+        ]
+      },
+      limit: 1,
+      order: [['date', 'ASC']]
     })
 
     const attending = await Guest.findAll({
@@ -84,7 +102,7 @@ router.get('/user/:userId', async (req, res, next) => {
         }
       ]
     })
-    res.json({hosting, attending})
+    res.json({upcomingEventToHost, hosting, attending})
   } catch (err) {
     next(err)
   }
