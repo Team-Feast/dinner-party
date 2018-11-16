@@ -65,13 +65,10 @@ router.get('/rsvp/:guestPartyToken', async (req, res, next) => {
 router.put('/rsvp/:guestPartyToken', async (req, res, next) => {
   try {
     const {guestPartyToken} = req.params
-    console.log('re.body', req.body)
-
     const {status} = req.body
     let guest = await Guest.findOne({where: {guestPartyToken: guestPartyToken}})
     if (guest) {
       await guest.update({status})
-
       res.json(guest.status)
     }
   } catch (error) {

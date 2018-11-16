@@ -101,8 +101,6 @@ export const fetchGuestStatus = (
 }
 export const putGuestStatus = (guestPartyToken, status) => async dispatch => {
   try {
-    console.log('status', status)
-
     const {data} = await axios.put(`/api/parties/rsvp/${guestPartyToken}`, {
       status
     })
