@@ -55,23 +55,19 @@ const styles = theme => ({
 
 class SingleParty extends Component {
   state = {
-    selectedValue: 'a',
-    status: null
+    selectedValue: this.props.guestStatus
   }
-  componentDidMount() {
-    this.props.fetchParty(this.props.match.params.id)
-    console.log('math prop', this.props.match)
 
-    console.log('guest party token', this.props.match.params.guestPartyToken)
-    const {guestPartyToken} = this.props.match.params
-    this.props.fetchGuestStatus(guestPartyToken)
+  componentDidMount() {
+    const {guestPartyToken, partyId} = this.props.match.params
+    this.props.fetchParty(partyId)
+
+    this.props.fetchGuestStatus(guestPartyToken, partyId)
   }
   handleChange = event => {
-    console.log('value', event.target.value)
-
     this.setState({selectedValue: event.target.value})
     const {guestPartyToken} = this.props.match.params
-    this.props.putGuestStatus(guestPartyToken)
+    this.props.putGuestStatus(guestPartyToken, this.state.selectedValue)
   }
 
   render() {
@@ -95,21 +91,6 @@ class SingleParty extends Component {
     } else {
       return (
         <Fragment>
-          {/* <img width="360" src={imageUrl} />
-          <h3>{title}</h3>
-          <h5>Date: {moment(date).format('MMMM Do YYYY, h:mm')}</h5>
-          <h5>Location: {location}</h5>
-          <p>{description}</p>
-          <Button className={classes.button} onClick={this.toggleGuestList}>
-            {`Guest List (${guests.length})`}
-          </Button>
-          <Button className={classes.button} onClick={this.toggleItemList}>
-            Item List
-          </Button>
-
-          {this.state.showGuestList && <GuestList guests={guests} />}
-          {this.state.showItemList && <ItemList items={items} partyId={id} />}
-          <image /> */}
           <Card className={classes.card}>
             <CardHeader
               title={title}
@@ -128,7 +109,7 @@ class SingleParty extends Component {
                     <Radio
                       checked={this.state.selectedValue === 'attending'}
                       onChange={this.handleChange}
-                      value="c"
+                      value="attending"
                       name="radio-button-demo"
                       aria-label="C"
                       classes={{
@@ -139,7 +120,7 @@ class SingleParty extends Component {
                     <Radio
                       checked={this.state.selectedValue === 'declined'}
                       onChange={this.handleChange}
-                      value="d"
+                      value="declined"
                       color="default"
                       name="radio-button-demo"
                       aria-label="D"
@@ -180,8 +161,8 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
   fetchParty: id => dispatch(fetchParty(id)),
   putGuestStatus: guestPartyToken => dispatch(putGuestStatus(guestPartyToken)),
-  fetchGuestStatus: guestPartyToken =>
-    dispatch(fetchGuestStatus(guestPartyToken))
+  fetchGuestStatus: (guestPartyToken, partyId) =>
+    dispatch(fetchGuestStatus(guestPartyToken, partyId))
 })
 
 SingleParty.propTypes = {

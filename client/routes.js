@@ -32,7 +32,7 @@ class Routes extends Component {
 
         <Route
           exact
-          path="/parties/:id/rsvp/:guestPartyToken"
+          path="/parties/:partyId/rsvp/:guestPartyToken"
           component={SingleParty}
         />
         <Route path="/parties/:id" component={SingleParty} />

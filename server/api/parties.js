@@ -53,4 +53,14 @@ router.get('/user/:userId', async (req, res, next) => {
   }
 })
 
+router.get('/:partyId/rsvp/:guestPartyToken', async (req, res, next) => {
+  try {
+    const {guestPartyToken} = req.params
+    let guest = await Guest.findOne({where: {guestPartyToken: guestPartyToken}})
+    res.json(guest.status)
+  } catch (error) {
+    next(error)
+  }
+})
+
 module.exports = router

@@ -88,19 +88,26 @@ export const fetchParties = userId => async dispatch => {
   }
 }
 
-export const fetchGuestStatus = guestPartyToken => async dispatch => {
+export const fetchGuestStatus = (
+  guestPartyToken,
+  partyId
+) => async dispatch => {
   try {
-    // const {data} = await axios.get(`/api/parties/2/rsvp/:guestPartyToken`)
-    dispatch(setGuestStatus('invited'))
+    const {data} = await axios.get(
+      `/api/parties/${partyId}/rsvp/${guestPartyToken}`
+    )
+    dispatch(setGuestStatus(data))
   } catch (err) {
     console.error(err)
   }
 }
-export const putGuestStatus = guestPartyToken => async dispatch => {
+export const putGuestStatus = (guestPartyToken, status) => async dispatch => {
   try {
-    // const {data} = await axios.put(`/api/parties/2/rsvp/:guestPartyToken`)
-    dispatch(setGuestStatus(guestPartyToken))
-    // dispatch(setGuestStatus('accepted'))
+    const {data} = await axios.put(
+      `/api/guests/rsvp/${guestPartyToken}`,
+      status
+    )
+    dispatch(setGuestStatus(data))
   } catch (err) {
     console.error(err)
   }
