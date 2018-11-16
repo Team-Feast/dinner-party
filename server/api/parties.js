@@ -68,14 +68,20 @@ router.get('/user/:userId', async (req, res, next) => {
 
     const attending = await Guest.findAll({
       where: {
-        $or: [
-          {email: user.email},
-          {
-            id: 1
-          }
-        ]
+        $or: [{email: user.email}]
       },
-      include: [{model: Party}]
+      include: [
+        {
+          model: Party,
+          where: {
+            date: {
+              $gte: moment()
+                .utc()
+                .toDate()
+            }
+          }
+        }
+      ]
     })
     res.json({hosting, attending})
   } catch (err) {
