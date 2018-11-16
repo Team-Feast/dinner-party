@@ -30,8 +30,8 @@ class Routes extends Component {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
 
-        <Route path="/parties/:id" component={SingleParty} />
         <Route path="/parties/addParty" component={AddParty} />
+        <Route path="/parties/:id" component={SingleParty} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
