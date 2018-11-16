@@ -7,8 +7,16 @@ router.get('/:id', async (req, res, next) => {
     const party = await Party.findById(partyId, {
       include: [
         {model: User, attributes: ['firstName', 'lastName']},
-        {model: Guest, attributes: ['id', 'status', 'email']},
-        {model: Item, attributes: ['id', 'title', 'description', 'guestId']}
+        {
+          model: Guest,
+          attributes: ['id', 'status', 'email'],
+          order: [['status', 'ASC']]
+        },
+        {
+          model: Item,
+          include: [{model: Guest, attributes: ['email']}],
+          attributes: ['id', 'title', 'description']
+        }
       ]
     })
     res.json(party)
@@ -42,6 +50,29 @@ router.get('/user/:userId', async (req, res, next) => {
     res.json(parties)
   } catch (err) {
     next(err)
+  }
+})
+
+router.get('/rsvp/:guestPartyToken', async (req, res, next) => {
+  try {
+    const {guestPartyToken} = req.params
+    let guest = await Guest.findOne({where: {guestPartyToken: guestPartyToken}})
+    res.json(guest.status)
+  } catch (error) {
+    next(error)
+  }
+})
+router.put('/rsvp/:guestPartyToken', async (req, res, next) => {
+  try {
+    const {guestPartyToken} = req.params
+    const {status} = req.body
+    let guest = await Guest.findOne({where: {guestPartyToken: guestPartyToken}})
+    if (guest) {
+      await guest.update({status})
+      res.json(guest.status)
+    }
+  } catch (error) {
+    next(error)
   }
 })
 
