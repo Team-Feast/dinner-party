@@ -54,9 +54,11 @@ class AddParty extends Component {
     const info = {title, description, location, date, userId}
 
     const guestEmails = evt.target.emails.value
-    console.log(guestEmails)
-    // await this.props.createParty({info, guestEmails})
-    // history.push('/home')
+      .split(',')
+      .map(email => email.trim())
+
+    await this.props.createParty({info, guestEmails})
+    history.push('/home')
   }
 
   render() {
@@ -104,7 +106,7 @@ class AddParty extends Component {
               <InputLabel htmlFor="location">
                 Guest Emails (separated by ,)
               </InputLabel>
-              <Input multiple type="email" name="emails" id="emails" />
+              <Input type="text" name="emails" id="emails" />
             </FormControl>
             <Button
               type="submit"

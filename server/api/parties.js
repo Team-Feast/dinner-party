@@ -28,15 +28,21 @@ router.get('/:id', async (req, res, next) => {
 // POST /api/parties/addParty
 router.post('/', async (req, res, next) => {
   try {
-    console.log(req.body)
-    // const newParty = await Party.create({
-    //   title: req.body.title,
-    //   description: req.body.description,
-    //   location: req.body.location,
-    //   date: req.body.date,
-    //   userId: req.body.userId
-    // })
-    // res.json(newParty)
+    const newParty = await Party.create({
+      title: req.body.info.title,
+      description: req.body.info.description,
+      location: req.body.info.location,
+      date: req.body.info.date,
+      userId: req.body.info.userId
+    })
+
+    Promise.all(
+      req.body.guestEmails.forEach(email => {
+        Guest.create({email, partyId: newParty.id})
+      })
+    )
+
+    res.json(newParty)
   } catch (err) {
     next(err)
   }
