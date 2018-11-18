@@ -185,10 +185,10 @@ const seed = async () => {
     console.log(`Successfully Seeded Guests`)
 
     await createCategories()
-    console.log(`Successfully Seeded Parties`)
+    console.log(`Successfully Seeded Categories`)
 
     await createItems()
-    console.log(`Successfully Seeded Parties`)
+    console.log(`Successfully Seeded Items`)
 
     console.log(`seeding successfully`)
   } catch (err) {
