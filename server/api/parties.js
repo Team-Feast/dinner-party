@@ -31,10 +31,11 @@ router.post('/', async (req, res, next) => {
     const newParty = await Party.create({
       title: req.body.title,
       description: req.body.description,
-      location: req.body.address,
-      date: req.body.date
+      location: req.body.location,
+      date: req.body.date,
+      userId: req.body.userId
     })
-    res.json(newParty.dataValues)
+    res.json(newParty)
   } catch (err) {
     next(err)
   }

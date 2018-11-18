@@ -1,5 +1,6 @@
 import React, {Component, Fragment} from 'react'
 import {connect} from 'react-redux'
+import history from '../history'
 
 import PropTypes from 'prop-types'
 import TextField from '@material-ui/core/TextField'
@@ -41,11 +42,23 @@ const styles = theme => ({
   }
 })
 
-const AddParty = (props) => {
+class AddParty extends Component {
+  handleSubmit = async evt => {
+    evt.preventDefault()
+    const title = evt.target.title.value
+    const description = evt.target.description.value
+    const location = evt.target.location.value
+    const date = `${evt.target.date.value} ${evt.target.time.value}`
+    const userId = this.props.user.id
+    const info = {title, description, location, date, userId}
 
-  const {classes} = props
+    await this.props.createParty(info)
+    history.push('/home')
+  }
 
-  return (
+  render() {
+    const {classes} = this.props
+    return (
       <Fragment>
         <CssBaseline />
         <Paper className={classes.paper}>
@@ -55,66 +68,73 @@ const AddParty = (props) => {
           <Typography component="h1" variant="h5">
             Create Event
           </Typography>
-          <form className={classes.form} onSubmit={props.handleSubmit}>
+          <form className={classes.form} onSubmit={this.handleSubmit}>
+            <FormControl margin="normal" required fullWidth>
+              <InputLabel htmlFor="title">Title</InputLabel>
+              <Input id="title" name="title" autoFocus />
+            </FormControl>
 
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="title">Title</InputLabel>
-            <Input id="title" name="title" autoFocus />
-          </FormControl>
+            <FormControl margin="normal" required fullWidth>
+              <InputLabel htmlFor="description">Description</InputLabel>
+              <Input name="description" id="description" />
+            </FormControl>
 
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="description">Description</InputLabel>
-            <Input name="description" id="description" />
-          </FormControl>
+            <FormControl margin="normal" required fullWidth>
+              <InputLabel htmlFor="location">Location</InputLabel>
+              <Input name="location" id="location" />
+            </FormControl>
 
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="address">Address</InputLabel>
-            <Input name="address"  id="address" />
-          </FormControl>
+            <FormControl>
+              <TextField
+                id="date"
+                label="Date"
+                type="date"
+                defaultValue="2017-05-24"
+                className={classes.textField}
+                InputLabelProps={{
+                  shrink: true
+                }}
+              />
+            </FormControl>
+            <FormControl>
+              <TextField
+                id="time"
+                label="Time"
+                type="time"
+                className={classes.textField}
+                InputLabelProps={{
+                  shrink: true
+                }}
+              />
+            </FormControl>
 
-        <FormControl>
-          <TextField
-          id="date"
-          label="Birthday"
-          type="date"
-          defaultValue="2017-05-24"
-          className={classes.textField}
-          InputLabelProps={{
-            shrink: true,
-          }}
-          />
-        </FormControl>
-
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Submit
-          </Button>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Submit
+            </Button>
           </form>
         </Paper>
       </Fragment>
     )
-}
-
-const mapDispatch = dispatch => {
-  return {
-    handleSubmit(evt) {
-      evt.preventDefault()
-      const title = evt.target.title.value
-      const description = evt.target.description.value
-      const address = evt.target.address.value
-      const date = evt.target.date.value
-      const info = {title, description, address, date}
-      dispatch(createParty(info))
-    }
   }
 }
 
-export default connect(null, mapDispatch)(withStyles(styles)(AddParty))
+const mapDispatch = dispatch => ({
+  createParty: partyInfo => dispatch(createParty(partyInfo))
+})
+
+const mapStateToProps = state => ({
+  user: state.user
+})
+
+export default connect(mapStateToProps, mapDispatch)(
+  withStyles(styles)(AddParty)
+)
 
 AddParty.propTypes = {
   classes: PropTypes.object.isRequired
