@@ -67,6 +67,7 @@ export const createParty = partyInfo => async dispatch => {
   try {
     const {data} = await axios.post('/api/parties', partyInfo)
     dispatch(createPartyInfo(data))
+    history.push(`/parties/${data.id}`)
   } catch (err) {
     console.error(err)
   }

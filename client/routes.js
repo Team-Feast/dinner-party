@@ -36,7 +36,7 @@ class Routes extends Component {
           path="/parties/:partyId/rsvp/:guestPartyToken"
           component={SingleParty}
         />
-        <Route path="/parties/:id" component={SingleParty} />
+        <Route path="/parties/:partyId" component={SingleParty} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}

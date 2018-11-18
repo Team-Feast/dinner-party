@@ -60,13 +60,12 @@ class SingleParty extends Component {
 
   componentDidMount() {
     const {guestPartyToken, partyId} = this.props.match.params
+    console.log(partyId)
     this.props.fetchParty(partyId)
-
-    this.props.fetchGuestStatus(guestPartyToken, partyId)
+    if (guestPartyToken) this.props.fetchGuestStatus(guestPartyToken, partyId)
   }
   handleChange = event => {
     const rsvp = event.target.value
-
     this.setState({selectedValue: rsvp})
     const {guestPartyToken} = this.props.match.params
     this.props.putGuestStatus(guestPartyToken, rsvp)

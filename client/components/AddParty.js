@@ -59,7 +59,6 @@ class AddParty extends Component {
       .map(email => email.trim())
 
     await this.props.createParty({info, guestEmails})
-    history.push('/home')
   }
 
   render() {
