@@ -85,6 +85,8 @@ class SingleParty extends Component {
       id
     } = this.props.party
 
+    const {guestPartyToken} = this.props.match.params
+
     const {classes} = this.props
 
     if (!this.props.party.id) {
@@ -102,33 +104,34 @@ class SingleParty extends Component {
               <ListItem button>
                 <ListItemText primary={location} />
               </ListItem>
-
-              <ListItem>
-                <ListItemText primary="Are you attending?" />
-                <ListItemSecondaryAction>
-                  <div>
-                    <Radio
-                      checked={this.state.selectedValue === 'attending'}
-                      onChange={this.handleChange}
-                      value="attending"
-                      name="radio-button-demo"
-                      aria-label="C"
-                      classes={{
-                        root: classes.root,
-                        checked: classes.checked
-                      }}
-                    />
-                    <Radio
-                      checked={this.state.selectedValue === 'declined'}
-                      onChange={this.handleChange}
-                      value="declined"
-                      color="default"
-                      name="radio-button-demo"
-                      aria-label="D"
-                    />
-                  </div>
-                </ListItemSecondaryAction>
-              </ListItem>
+              {guestPartyToken && (
+                <ListItem>
+                  <ListItemText primary="Are you attending?" />
+                  <ListItemSecondaryAction>
+                    <div>
+                      <Radio
+                        checked={this.state.selectedValue === 'attending'}
+                        onChange={this.handleChange}
+                        value="attending"
+                        name="radio-button-demo"
+                        aria-label="C"
+                        classes={{
+                          root: classes.root,
+                          checked: classes.checked
+                        }}
+                      />
+                      <Radio
+                        checked={this.state.selectedValue === 'declined'}
+                        onChange={this.handleChange}
+                        value="declined"
+                        color="default"
+                        name="radio-button-demo"
+                        aria-label="D"
+                      />
+                    </div>
+                  </ListItemSecondaryAction>
+                </ListItem>
+              )}
             </List>
           </Card>
 
