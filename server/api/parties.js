@@ -33,7 +33,8 @@ router.post('/', async (req, res, next) => {
       description: req.body.info.description,
       location: req.body.info.location,
       date: req.body.info.date,
-      userId: req.body.info.userId
+      userId: req.body.info.userId,
+      imageUrl: req.body.info.imageUrl
     })
 
     //Creates guests using email and party id

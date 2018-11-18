@@ -50,8 +50,9 @@ class AddParty extends Component {
     const description = evt.target.description.value
     const location = evt.target.location.value
     const date = evt.target.date.value
+    const imageUrl = evt.target.imageUrl.value
     const userId = this.props.user.id
-    const info = {title, description, location, date, userId}
+    const info = {title, description, location, date, imageUrl, userId}
 
     const guestEmails = evt.target.emails.value
       .split(',')
@@ -87,6 +88,11 @@ class AddParty extends Component {
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="location">Location</InputLabel>
               <Input name="location" id="location" />
+            </FormControl>
+
+            <FormControl margin="normal" required fullWidth>
+              <InputLabel htmlFor="imageUrl">Image URL</InputLabel>
+              <Input type="url" name="imageUrl" id="imageUrl" />
             </FormControl>
 
             <FormControl>
