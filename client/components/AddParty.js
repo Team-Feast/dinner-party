@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from 'react'
 import {connect} from 'react-redux'
 import history from '../history'
+import moment from 'moment'
 
 import PropTypes from 'prop-types'
 import TextField from '@material-ui/core/TextField'
@@ -48,12 +49,14 @@ class AddParty extends Component {
     const title = evt.target.title.value
     const description = evt.target.description.value
     const location = evt.target.location.value
-    const date = `${evt.target.date.value} ${evt.target.time.value}`
+    const date = evt.target.date.value
     const userId = this.props.user.id
     const info = {title, description, location, date, userId}
 
-    await this.props.createParty(info)
-    history.push('/home')
+    const guestEmails = evt.target.emails.value
+    console.log(guestEmails)
+    // await this.props.createParty({info, guestEmails})
+    // history.push('/home')
   }
 
   render() {
@@ -88,19 +91,8 @@ class AddParty extends Component {
               <TextField
                 id="date"
                 label="Date"
-                type="date"
-                defaultValue="2017-05-24"
-                className={classes.textField}
-                InputLabelProps={{
-                  shrink: true
-                }}
-              />
-            </FormControl>
-            <FormControl>
-              <TextField
-                id="time"
-                label="Time"
-                type="time"
+                type="datetime-local"
+                defaultValue={moment(Date.now()).format('YYYY-MM-DDTHH:mm')}
                 className={classes.textField}
                 InputLabelProps={{
                   shrink: true
@@ -108,6 +100,12 @@ class AddParty extends Component {
               />
             </FormControl>
 
+            <FormControl margin="normal" required fullWidth>
+              <InputLabel htmlFor="location">
+                Guest Emails (separated by ,)
+              </InputLabel>
+              <Input multiple type="email" name="emails" id="emails" />
+            </FormControl>
             <Button
               type="submit"
               fullWidth
