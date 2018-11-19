@@ -29,10 +29,10 @@ const removeGuest = guestId => ({
 })
 
 //THUNK CREATORS
-export const getGuests = () => {
+export const getGuests = partyId => {
   return async dispatch => {
     try {
-      const {data} = await axios.get('/api/guests')
+      const {data} = await axios.get(`/api/parties/${partyId}/guests`)
       dispatch(setGuests(data))
     } catch (error) {
       console.error(error)

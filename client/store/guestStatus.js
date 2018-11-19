@@ -40,7 +40,7 @@ export const putGuestStatus = (token, status) => async dispatch => {
 /**
  * REDUCER
  */
-export function guestStatusReducer(state = {}, action) {
+export default function(state = {}, action) {
   switch (action.type) {
     case SET_GUEST_STATUS:
       return action.status

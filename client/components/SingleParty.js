@@ -1,6 +1,12 @@
 import React, {Component, Fragment} from 'react'
 import {connect} from 'react-redux'
-import {fetchParty, putGuestStatus, fetchGuestStatus} from '../store'
+import {
+  getParty,
+  putGuestStatus,
+  getGuestStatus,
+  getGuests,
+  getItems
+} from '../store'
 import {GuestList, ItemList} from '../components'
 import moment from 'moment'
 
@@ -60,9 +66,12 @@ class SingleParty extends Component {
 
   componentDidMount() {
     const {guestPartyToken, partyId} = this.props.match.params
-    console.log(partyId)
-    this.props.fetchParty(partyId)
-    if (guestPartyToken) this.props.fetchGuestStatus(guestPartyToken, partyId)
+
+    this.props.getParty(partyId)
+    this.props.getGuests(partyId)
+    this.props.getItems(partyId)
+
+    if (guestPartyToken) this.props.getGuestStatus(guestPartyToken, partyId)
   }
   handleChange = event => {
     const rsvp = event.target.value
@@ -80,10 +89,10 @@ class SingleParty extends Component {
       status,
       user,
       date,
-      guests,
-      items,
       id
     } = this.props.party
+
+    const {guests, items} = this.props
 
     const {guestPartyToken} = this.props.match.params
 
@@ -159,15 +168,19 @@ class SingleParty extends Component {
 
 const mapState = state => ({
   party: state.party,
+  guests: state.guests,
+  items: state.items,
   guestStatus: state.guestStatus
 })
 
 const mapDispatch = dispatch => ({
-  fetchParty: id => dispatch(fetchParty(id)),
+  getParty: partyId => dispatch(getParty(partyId)),
+  getGuests: partyId => dispatch(getGuests(partyId)),
+  getItems: partyId => dispatch(getItems(partyId)),
   putGuestStatus: (guestPartyToken, status) =>
     dispatch(putGuestStatus(guestPartyToken, status)),
-  fetchGuestStatus: (guestPartyToken, partyId) =>
-    dispatch(fetchGuestStatus(guestPartyToken, partyId))
+  getGuestStatus: (guestPartyToken, partyId) =>
+    dispatch(getGuestStatus(guestPartyToken, partyId))
 })
 
 SingleParty.propTypes = {

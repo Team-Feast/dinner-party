@@ -29,10 +29,10 @@ const removeItem = itemId => ({
 })
 
 //THUNK CREATORS
-export const getItems = () => {
+export const getItems = partyId => {
   return async dispatch => {
     try {
-      const {data} = await axios.get('/api/items')
+      const {data} = await axios.get(`/api/parties/${partyId}/items`)
       dispatch(setItems(data))
     } catch (error) {
       console.error(error)

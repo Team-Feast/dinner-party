@@ -13,7 +13,7 @@ const setParties = parties => ({
 //THUNK CREATORS
 export const getParties = userId => async dispatch => {
   try {
-    const {data} = await axios.get(`/user/${userId}/parties`)
+    const {data} = await axios.get(`/parties/user/${userId}/`)
     dispatch(setParties(data))
   } catch (err) {
     console.error(err)

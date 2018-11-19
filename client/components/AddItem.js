@@ -29,7 +29,6 @@ class AddItem extends Component {
     this.state = {
       title: '',
       description: '',
-      email: '',
       partyId: this.props.partyId
     }
   }
@@ -62,16 +61,6 @@ class AddItem extends Component {
           name="description"
           className={classes.textField}
           value={this.state.description}
-          onChange={this.handleChange}
-          margin="normal"
-        />
-
-        <TextField
-          placeholder="Email"
-          name="email"
-          className={classes.textField}
-          value={this.state.email}
-          type="email"
           onChange={this.handleChange}
           margin="normal"
         />

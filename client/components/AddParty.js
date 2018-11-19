@@ -19,7 +19,7 @@ import Avatar from '@material-ui/core/Avatar'
 import classNames from 'classnames'
 import {withStyles} from '@material-ui/core'
 
-import {createParty} from '../store/party'
+import {postParty} from '../store/party'
 
 const styles = theme => ({
   paper: {
@@ -58,7 +58,7 @@ class AddParty extends Component {
       .split(',')
       .map(email => email.trim())
 
-    await this.props.createParty({info, guestEmails})
+    await this.props.postParty({info, guestEmails})
   }
 
   render() {
@@ -130,7 +130,7 @@ class AddParty extends Component {
 }
 
 const mapDispatch = dispatch => ({
-  createParty: partyInfo => dispatch(createParty(partyInfo))
+  postParty: partyInfo => dispatch(postParty(partyInfo))
 })
 
 const mapStateToProps = state => ({
