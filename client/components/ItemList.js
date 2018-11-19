@@ -38,7 +38,9 @@ class ItemList extends Component {
           {this.props.items.map(item => (
             <ListItem key={item.id}>
               <ListItemText
-                primary={`${item.title} - ${item.guest && item.guest.email}`}
+                primary={`${item.title}  ${
+                  item.guest !== null ? '-' + item.guest.email : ''
+                }`}
               />
               <ListItemSecondaryAction>
                 <IconButton aria-label="Comments">
