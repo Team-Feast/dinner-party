@@ -1,6 +1,9 @@
 const router = require('express').Router()
 const Guest = require('../db/models/guest')
+const Party = require('../db/models/party')
+const User = require('../db/models/user')
 const nodemailer = require('nodemailer')
+const moment = require('moment')
 
 // GET /api/guests/
 router.get('/', async (req, res, next) => {
@@ -49,32 +52,44 @@ router.post('/', async function(req, res, next) {
 
 router.post('/:id/invite', async function(req, res, next) {
   try {
-    await Guest.findById(req.params.id).then(guest => {
-      if (!guest) {
-        console.log('No guest with that email address exists.')
-      } else {
-        let transporter = nodemailer.createTransport({
-          service: 'Gmail',
-          auth: {
-            user: '1809teamfeast@gmail.com',
-            pass: process.env.GMAILPW
-          }
-        })
-        let mailOptions = {
-          to: guest.email,
-          from: '1809teamfeast@gmail.com',
-          subject: "You're Invited",
-          text: `You are receiving this because you have been invited to a dinner party through Feast! Use the attached link to accept or decline your invitation. \n\nhttp://${
-            req.headers.host
-          }/parties/${guest.partyId}/rsvp/${
-            guest.guestPartyToken
-          }\n\nIf you did not request this, please ignore this email.`
+    const guest = await Guest.findById(req.params.id)
+
+    if (!guest) {
+      console.log('No guest with that email address exists.')
+    } else {
+      const party = await Party.findById(guest.partyId, {
+        include: [{model: User, attributes: ['firstName', 'lastName']}]
+      })
+
+      const {user, title, location, date} = party
+
+      let transporter = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+          user: '1809teamfeast@gmail.com',
+          pass: process.env.GMAILPW
         }
-        transporter.sendMail(mailOptions, function(err) {
-          err ? next(err) : res.sendStatus(200)
-        })
+      })
+      let mailOptions = {
+        to: guest.email,
+        from: '1809teamfeast@gmail.com',
+        subject: "You're Invited",
+        text: `You are receiving this because you have been invited by ${
+          user.firstName
+        } ${user.lastName} to ${title} through Feast! It's on ${moment(
+          date
+        ).format(
+          'LLLL'
+        )} at ${location}. Use the attached link to accept or decline your invitation. \n\nhttp://${
+          req.headers.host
+        }/parties/${guest.partyId}/rsvp/${
+          guest.guestPartyToken
+        }\n\nIf you did not request this, please ignore this email.`
       }
-    })
+      transporter.sendMail(mailOptions, function(err) {
+        err ? next(err) : res.sendStatus(200)
+      })
+    }
   } catch (err) {
     next(err)
   }

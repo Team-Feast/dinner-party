@@ -10,6 +10,8 @@ User.hasMany(Party)
 Guest.belongsTo(Party)
 Party.hasMany(Guest)
 
+Guest.belongsTo(User)
+
 Item.belongsTo(Party)
 Item.belongsTo(Guest)
 Guest.hasMany(Item)

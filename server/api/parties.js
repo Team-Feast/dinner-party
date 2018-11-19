@@ -50,14 +50,6 @@ router.post('/', async (req, res, next) => {
       imageUrl: req.body.info.imageUrl
     })
 
-    //Creates guests using email and party id
-    Promise.all(
-      req.body.guestEmails.forEach(async email => {
-        const guest = await Guest.create({email, partyId: newParty.id})
-        //TODO need to send guest an email with guest token
-      })
-    )
-
     res.json(newParty)
   } catch (err) {
     next(err)
