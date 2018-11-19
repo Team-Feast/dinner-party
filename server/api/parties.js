@@ -1,5 +1,6 @@
 const {Party, User, Guest, Item} = require('../db/models')
 const router = require('express').Router()
+const nodemailer = require('nodemailer')
 
 router.get('/:id', async (req, res, next) => {
   try {
@@ -51,10 +52,29 @@ router.post('/', async (req, res, next) => {
     })
 
     //Creates guests using email and party id
+    let transporter = nodemailer.createTransport({
+      service: 'Gmail',
+      auth: {
+        user: '1809teamfeast@gmail.com',
+        pass: process.env.GMAILPW
+      }
+    })
+    //Creates guests using email and party id
     Promise.all(
       req.body.guestEmails.forEach(async email => {
         const guest = await Guest.create({email, partyId: newParty.id})
         //TODO need to send guest an email with guest token
+        let mailOptions = {
+          to: `${email}`,
+          from: '1809teamfeast@gmail.com',
+          subject: "You're Invited",
+          text: `You are receiving this because you have been invited to a dinner party through Feast! Use the attached link to accept or decline your invitation. \n\nhttp://${
+            req.headers.host
+          }/parties/${newParty.id}/rsvp/${
+            guest.guestPartyToken
+          }\n\nIf you did not request this, please ignore this email.`
+        }
+        transporter.sendMail(mailOptions)
       })
     )
 
