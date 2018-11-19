@@ -2,17 +2,18 @@
 
 const db = require('../server/db')
 const {User, Party, Guest, Item, Category} = require('../server/db/models')
+const moment = require('moment')
 
 // Random Data Creators
 const chance = require('chance')(123)
 const Promise = require('bluebird')
 const toonAvatar = require('cartoon-avatar')
 
-const numUsers = 3
+const numUsers = 10
 const numParties = 5
-const numGuests = 3
+const numGuests = 10
 const numItems = 3
-const numCategories = 2
+const numCategories = 3
 
 const userEmails = chance.unique(chance.email, numUsers)
 const guestEmails = chance.unique(chance.email, numGuests)
@@ -83,11 +84,27 @@ const userData = [
 const partyData = [
   {
     location: '901 Riil Ave, Kukicbav, OR, SE, 49806',
-    status: 'upcomming',
+    status: 'upcoming',
     userId: 1,
     id: 1,
-    title: 'Pan muvfiwu rojgaf icewecaw aggazdo.',
-    date: '2018-11-19 11:49:55.506-06',
+    title: 'Party 1 - Cody',
+    date: moment()
+      .add(3, 'days')
+      .toDate(),
+    imageUrl: '/images/default-party.jpg',
+    updatedAt: '2018-11-19 11:49:55.512-06',
+    description:
+      'Vapefdov ihoizo hih boeki de begeh cukbu ko nubfuswus ve wekpiw cegu ruloglaj navkiw pelpu nikpap. Pun ji ak pentake kefjuz licikat jorkib ec tetil he ni apkifak oh netetuv welpu. Cukuke nafuci oboneg ri kemehwur fi botlepak ce le ozbom je raubona juhusom utu ma raruceoz. Seek zi obvib mepsijel iddoc jokkuwud zuzanfok aja so wojemik depabib omiur vuwumor gaw duwtiab zaj. Kumo zigigahe hub ji gavi cal ize di gec jefume nep wupufu livurnu duz sevo ovuzju di dob. Zuzohem nose asomuwrep umvukco igej komgebiko paknefad pidagof zu mefat ufbe homvicko lomzuzjec.'
+  },
+  {
+    location: '901 Riil Ave, Kukicbav, OR, SE, 49806',
+    status: 'upcoming',
+    userId: 1,
+    id: 3,
+    title: 'Party 1B (old party) - Cody',
+    date: moment()
+      .subtract(1, 'days')
+      .toDate(),
     imageUrl: '/images/default-party.jpg',
     updatedAt: '2018-11-19 11:49:55.512-06',
     description:
@@ -98,12 +115,164 @@ const partyData = [
     status: 'completed',
     userId: 2,
     id: 2,
-    title: 'Buepu vej vi bob ro.',
-    date: '2018-11-19 11:49:55.502-06',
+    title: 'Party 2 (old party) - Lillian',
+    date: moment()
+      .subtract(1, 'days')
+      .toDate(),
     imageUrl: '/images/default-party.jpg',
     updatedAt: '2018-11-19 11:49:55.512-06',
     description:
       'Luttugi ginkizec ife lugo isredit fo piehjuz ivtov fuphut subobbi wepokmod virvil bo waruldo zelovo siuv fah uwuazza. Duv vipka nag runer ruve de ocibizu hikog saovufef wop fuigojip vuwivnad ot kijan zogu. Pa jufuk difji kasno ucetivone hahvatfuj gonter ewtibvif ri wudlowe uze ni res revzaf. Ru tamsikir ovuzepe jo asdo suvmaproz limaw ro nez et lusauf itcahre wubodaug go sediojo. Ejrib ewehej larveif zakse dulic vuul vuc bizfewlih taghaf riptikmiv vegbefnik hovlurun roitoul ahtove.'
+  },
+  {
+    location: '208 Etodun Blvd, Gebijteh, DC, FJ, 37575',
+    status: 'completed',
+    userId: 2,
+    id: 4,
+    title: 'Party 2B (future party) - Lillian',
+    date: moment()
+      .add(1, 'days')
+      .toDate(),
+    imageUrl: '/images/default-party.jpg',
+    updatedAt: '2018-11-19 11:49:55.512-06',
+    description:
+      'Luttugi ginkizec ife lugo isredit fo piehjuz ivtov fuphut subobbi wepokmod virvil bo waruldo zelovo siuv fah uwuazza. Duv vipka nag runer ruve de ocibizu hikog saovufef wop fuigojip vuwivnad ot kijan zogu. Pa jufuk difji kasno ucetivone hahvatfuj gonter ewtibvif ri wudlowe uze ni res revzaf. Ru tamsikir ovuzepe jo asdo suvmaproz limaw ro nez et lusauf itcahre wubodaug go sediojo. Ejrib ewehej larveif zakse dulic vuul vuc bizfewlih taghaf riptikmiv vegbefnik hovlurun roitoul ahtove.'
+  }
+]
+
+const guestData = [
+  {
+    status: 'invited',
+    phone: '3147278836',
+    guestPartyToken: '68264670-ec39-11e8-a2d2-758fc26097cb',
+    id: 1,
+    partyId: 1,
+    email: 'iwaciwe@en.im'
+  },
+  {
+    status: 'invited',
+    phone: '3678326353',
+    guestPartyToken: '68264671-ec39-11e8-a2d2-758fc26097cb',
+    id: 2,
+    partyId: 1,
+    email: 'cod@zivu.cl'
+  },
+  {
+    status: 'attending',
+    phone: '3159662982',
+    guestPartyToken: '68264673-ec39-11e8-a2d2-758fc26097cb',
+    id: 3,
+    partyId: 1,
+    email: 'lat@johvidvi.tl'
+  },
+  {
+    status: 'declined',
+    phone: '5324896085',
+    guestPartyToken: '68264672-ec39-11e8-a2d2-758fc26097cb',
+    id: 4,
+    partyId: 1,
+    email: 'mifco@javsul.ge'
+  },
+  {
+    status: 'declined',
+    phone: '2519885065',
+    guestPartyToken: '68264674-ec39-11e8-a2d2-758fc26097cb',
+    id: 5,
+    partyId: 2,
+    email: 'gabawsa@zipak.pg'
+  },
+  {
+    status: 'attending',
+    phone: '7255943268',
+    guestPartyToken: '68264675-ec39-11e8-a2d2-758fc26097cb',
+    id: 6,
+    partyId: 4,
+    email: 'cody@email.com'
+  },
+  {
+    status: 'attending',
+    phone: '7879734793',
+    guestPartyToken: '68264676-ec39-11e8-a2d2-758fc26097cb',
+    id: 7,
+    partyId: 2,
+    email: 'jim@jun.dk'
+  },
+  {
+    status: 'attending',
+    phone: '2346372441',
+    guestPartyToken: '68264678-ec39-11e8-a2d2-758fc26097cb',
+    id: 8,
+    partyId: 2,
+    email: 'avi@kujfit.an'
+  }
+]
+
+const categoryData = [
+  {
+    id: 1,
+    imageUrl: '/images/default-category.jpg',
+    name: 'entrees'
+  },
+  {
+    id: 2,
+    imageUrl: '/images/default-category.jpg',
+    name: 'beverages'
+  },
+  {
+    id: 3,
+    imageUrl: '/images/default-category.jpg',
+    name: 'desserts'
+  }
+]
+
+const itemData = [
+  {
+    partyId: 1,
+    title: 'item 1',
+    guestId: null,
+    categoryId: 1,
+    description:
+      'Kicamali bobki tujtona kupioz vet ucivokhac wemi ob tu mejene du zedlaz eji.'
+  },
+  {
+    partyId: 1,
+    title: 'item 2',
+    guestId: null,
+    categoryId: 1,
+    description:
+      'Nozwiv dahupoh lulas gucebi ewik difji kasno ucetivone hahvatfuj gonter ewtibvif ri wudlowe uze ni res.'
+  },
+  {
+    partyId: 1,
+    title: 'item 3',
+    guestId: 2,
+    categoryId: 3,
+    description:
+      'Nozwiv dahupoh lulas gucebi ewik difji kasno ucetivone hahvatfuj gonter ewtibvif ri wudlowe uze ni res.'
+  },
+  {
+    partyId: 2,
+    title: 'item 1B',
+    guestId: null,
+    categoryId: 1,
+    description:
+      'Kicamali bobki tujtona kupioz vet ucivokhac wemi ob tu mejene du zedlaz eji.'
+  },
+  {
+    partyId: 2,
+    title: 'item 2B',
+    guestId: null,
+    categoryId: 1,
+    description:
+      'Nozwiv dahupoh lulas gucebi ewik difji kasno ucetivone hahvatfuj gonter ewtibvif ri wudlowe uze ni res.'
+  },
+  {
+    partyId: 2,
+    title: 'item 3B',
+    guestId: 7,
+    categoryId: 1,
+    description:
+      'Nozwiv dahupoh lulas gucebi ewik difji kasno ucetivone hahvatfuj gonter ewtibvif ri wudlowe uze ni res.'
   }
 ]
 
@@ -274,12 +443,15 @@ const seed = async () => {
     console.log(`Successfully Seeded Parties`)
 
     // await createGuests()
+    await Guest.bulkCreate(guestData)
     console.log(`Successfully Seeded Guests`)
 
     // await createCategories()
+    await Category.bulkCreate(categoryData)
     console.log(`Successfully Seeded Categories`)
 
     // await createItems()
+    await Item.bulkCreate(itemData)
     console.log(`Successfully Seeded Items`)
 
     console.log(`seeding successfully`)
