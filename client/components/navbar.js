@@ -64,7 +64,7 @@ class Navbar extends Component {
     return (
       <Fragment>
         <CssBaseline />
-        <AppBar className={classes.root} position="sticky">
+        <AppBar className={classes.root} position="fixed">
           <Toolbar>
             <Grid container justify="space-between">
               <Grid item>
