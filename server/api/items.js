@@ -1,6 +1,7 @@
 const {Party, User, Guest, Item} = require('../db/models')
 const router = require('express').Router()
 
+//GET /api/items/
 router.get('/', async (req, res, next) => {
   try {
     let items = await Item.findAll()
@@ -10,7 +11,7 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-
+//
 router.put('/:id', async (req, res, next) => {
   try {
     let item = await Item.findById(req.params.id)
@@ -25,7 +26,7 @@ router.delete('/:id', async (req, res, next) => {
   try {
     let item = await Item.destroy({
       where: {
-        id: req.params.itemId
+        id: req.params.id
       }
     })
     if (item) {
