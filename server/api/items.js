@@ -10,14 +10,6 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.post('/', async (req, res, next) => {
-  try {
-    let item = await Item.create(req.body)
-    res.json(item)
-  } catch (err) {
-    next(err)
-  }
-})
 
 router.put('/:id', async (req, res, next) => {
   try {
@@ -33,7 +25,7 @@ router.delete('/:id', async (req, res, next) => {
   try {
     let item = await Item.destroy({
       where: {
-        id: req.params.id
+        id: req.params.itemId
       }
     })
     if (item) {

@@ -14,13 +14,22 @@ router.get('/', async (req, res, next) =>{
 })
 
 // GET /api/guests/:id
-
 router.get('/:id', async (req, res, next) =>{
   try{
     const id = req.params.id
     let guest = await Guest.findById(id)
     res.json(guest)
   }catch(err){
+    next(err)
+  }
+})
+
+router.put('/:id', async (req, res, next) => {
+  try {
+    let guest = await Guest.findById(req.params.id)
+    let result = await guest.update(req.body)
+    res.json(result)
+  } catch (err) {
     next(err)
   }
 })
