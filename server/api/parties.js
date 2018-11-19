@@ -52,8 +52,8 @@ router.post('/', async (req, res, next) => {
 
     //Creates guests using email and party id
     Promise.all(
-      req.body.guestEmails.forEach(email => {
-        const guest = Guest.create({email, partyId: newParty.id})
+      req.body.guestEmails.forEach(async email => {
+        const guest = await Guest.create({email, partyId: newParty.id})
         //TODO need to send guest an email with guest token
       })
     )

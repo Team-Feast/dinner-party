@@ -57,7 +57,7 @@ class AddParty extends Component {
     const guestEmails = evt.target.emails.value
       .split(',')
       .map(email => email.trim())
-
+    console.log(info)
     await this.props.postParty({info, guestEmails})
   }
 
