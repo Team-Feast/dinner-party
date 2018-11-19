@@ -19,7 +19,7 @@ const Party = db.define('party', {
     type: Sequelize.DATE
   },
   status: {
-    type: Sequelize.ENUM('draft', 'upcomming', 'cancelled', 'completed'),
+    type: Sequelize.ENUM('draft', 'upcoming', 'cancelled', 'completed'),
     defaultValue: 'draft'
   },
   imageUrl: {
