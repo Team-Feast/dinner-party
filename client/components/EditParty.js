@@ -39,16 +39,35 @@ const styles = theme => ({
 })
 
 class EditParty extends Component {
+  constructor(){
+    super()
+    this.state = {
+      title: '',
+      description: '',
+      location: '',
+      date: ''
+    }
+  }
 
   componentDidMount(){
-    const id = this.props.match.params
-    console.log("Here", id)
-    this.props.getParty(2)
+    const id = Number(this.props.match.params.id)
+    this.props.getParty(id)
+    this.setState({
+      title: this.props.party.title,
+      description: this.props.party.description,
+      location: this.props.party.location,
+      date: this.props.party.date
+    })
 
+  }
+
+  handleChange(e){
+    e.preventDefault()
   }
 
   render() {
     const {classes} = this.props
+    console.log("in the component", this.props)
     return (
       <Fragment>
         <CssBaseline />
@@ -106,15 +125,15 @@ class EditParty extends Component {
   }
 }
 
-// const mapState = state => ({
-
-// })
+const mapState = state => ({
+  party: state.party
+})
 
 const mapDispatch = dispatch => ({
   getParty: partyId => dispatch(getParty(partyId))
 })
 
-export default connect(null, mapDispatch)(
+export default connect(mapState, mapDispatch)(
   withStyles(styles)(EditParty)
 )
 
