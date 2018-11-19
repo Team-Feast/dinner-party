@@ -7,8 +7,6 @@ import history from '../history'
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
 
-const POST_DATE = 'POST_DATE'
-
 /**
  * INITIAL STATE
  */
@@ -20,24 +18,9 @@ const defaultUser = {}
 const getUser = user => ({type: GET_USER, user})
 const removeUser = () => ({type: REMOVE_USER})
 
-const postDate = date => ({type: POST_DATE, date})
-
 /**
  * THUNK CREATORS
  */
-
-export const saveDate = (date, param2) => async dispatch => {
-  try {
-    console.log('Param2', new Date(param2))
-    const {data} = await axios.post(
-      '/api/party',
-      new Date(JSON.stringify(param2))
-    )
-  } catch (err) {
-    console.log(err)
-  }
-}
-
 export const me = () => async dispatch => {
   try {
     const res = await axios.get('/auth/me')

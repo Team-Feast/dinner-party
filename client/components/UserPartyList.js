@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {fetchParties} from '../store'
+import {getParties} from '../store'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 
@@ -42,7 +42,7 @@ class AllParties extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchInitialParties()
+    this.props.getParties(this.props.user.id)
   }
 
   render() {
@@ -87,11 +87,13 @@ class AllParties extends Component {
                   Parties you are hosting
                 </Typography>
               </ExpansionPanelSummary>
-              {parties.map(party => (
-                <ExpansionPanelDetails key={party.id}>
-                  <Typography>{party.description}</Typography>
-                </ExpansionPanelDetails>
-              ))}
+              {parties.hosting &&
+                parties.hosting.length &&
+                parties.hosting.map(party => (
+                  <ExpansionPanelDetails key={party.id}>
+                    <Typography>{party.description}</Typography>
+                  </ExpansionPanelDetails>
+                ))}
             </ExpansionPanel>
             <ExpansionPanel>
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
@@ -128,16 +130,17 @@ class AllParties extends Component {
 
 const mapDispatch = dispatch => {
   return {
-    fetchInitialParties: () => {
-      dispatch(fetchParties(1))
+    getParties: id => {
+      dispatch(getParties(id))
     }
   }
 }
 
 const mapState = state => {
-  const {parties} = state
+  const {parties, user} = state
   return {
-    parties
+    parties,
+    user
   }
 }
 

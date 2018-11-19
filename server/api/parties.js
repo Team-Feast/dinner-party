@@ -3,21 +3,8 @@ const router = require('express').Router()
 
 router.get('/:id', async (req, res, next) => {
   try {
-    let partyId = req.params.id
-    const party = await Party.findById(partyId, {
-      include: [
-        {model: User, attributes: ['firstName', 'lastName']},
-        {
-          model: Guest,
-          attributes: ['id', 'status', 'email'],
-          order: [['status', 'ASC']]
-        },
-        {
-          model: Item,
-          include: [{model: Guest, attributes: ['email']}],
-          attributes: ['id', 'title', 'description']
-        }
-      ]
+    const party = await Party.findById(req.params.id, {
+      include: [{model: User, attributes: ['firstName', 'lastName']}]
     })
     res.json(party)
   } catch (err) {
@@ -25,7 +12,33 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
-// POST /api/parties/addParty
+router.get('/:id/items', async (req, res, next) => {
+  try {
+    const items = await Item.findAll({
+      where: {
+        partyId: req.params.id
+      },
+      include: [Guest]
+    })
+    res.json(items)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.get('/:id/guests', async (req, res, next) => {
+  try {
+    const guests = await Guest.findAll({
+      where: {
+        partyId: req.params.id
+      }
+    })
+    res.json(guests)
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.post('/', async (req, res, next) => {
   try {
     const newParty = await Party.create({
@@ -39,24 +52,13 @@ router.post('/', async (req, res, next) => {
 
     //Creates guests using email and party id
     Promise.all(
-      req.body.guestEmails.forEach(email => {
-        const guest = Guest.create({email, partyId: newParty.id})
+      req.body.guestEmails.forEach(async email => {
+        const guest = await Guest.create({email, partyId: newParty.id})
         //TODO need to send guest an email with guest token
       })
     )
 
     res.json(newParty)
-  } catch (err) {
-    next(err)
-  }
-})
-
-// GET /api/parties/user/:userId
-// Return an array of parties that this user is hosting
-router.get('/user/:userId', async (req, res, next) => {
-  try {
-    const parties = await Party.findAll({where: {userId: req.params.userId}})
-    res.json(parties)
   } catch (err) {
     next(err)
   }
@@ -71,6 +73,7 @@ router.get('/rsvp/:guestPartyToken', async (req, res, next) => {
     next(error)
   }
 })
+
 router.put('/rsvp/:guestPartyToken', async (req, res, next) => {
   try {
     const {guestPartyToken} = req.params
