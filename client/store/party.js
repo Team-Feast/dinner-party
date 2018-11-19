@@ -3,12 +3,26 @@ import history from '../history'
 
 //ACTION TYPES
 const SET_PARTY = 'SET_PARTY'
+const ADD_ITEM = 'ADD_ITEM'
+const DELETE_ITEM = 'DELETE_ITEM'
 const SET_PARTIES = 'SET_PARTIES'
+
+const CREATE_PARTY = ' CREATE_PARTY'
+const SET_GUEST_STATUS = 'SET_GUEST_STATUS'
 
 //ACTION CREATORS
 const setParty = party => ({
   type: SET_PARTY,
   party
+})
+const addItem = item => ({
+  type: ADD_ITEM,
+  item
+})
+
+const deleteItem = itemId => ({
+  type: DELETE_ITEM,
+  itemId
 })
 
 const setParties = parties => ({
@@ -16,7 +30,47 @@ const setParties = parties => ({
   parties
 })
 
+const createPartyInfo = partyInfo => ({
+  type: CREATE_PARTY,
+  partyInfo
+})
+
+const setGuestStatus = status => ({
+  type: SET_GUEST_STATUS,
+  status
+})
+
 //THUNK CREATORS
+export const postItem = item => {
+  return async dispatch => {
+    try {
+      const {data} = await axios.post('/api/items', item)
+      dispatch(addItem(data))
+    } catch (error) {
+      console.error(error)
+    }
+  }
+}
+
+export const sendRemoveItem = itemId => {
+  return async dispatch => {
+    try {
+      await axios.delete(`/api/items/${itemId}`)
+      dispatch(deleteItem(itemId))
+    } catch (error) {
+      console.error(error)
+    }
+  }
+}
+
+export const createParty = partyInfo => async  dispatch => {
+  try{
+    const {data} = await axios.post('/api/parties', partyInfo)
+    dispatch(createPartyInfo(data))
+  }catch(err){
+    console.error(err)
+  }
+}
 
 export const fetchParty = id => async dispatch => {
   try {
@@ -26,6 +80,7 @@ export const fetchParty = id => async dispatch => {
     console.error(err)
   }
 }
+
 export const fetchParties = userId => async dispatch => {
   try {
     const data = [
@@ -49,12 +104,44 @@ export const fetchParties = userId => async dispatch => {
   }
 }
 
+export const fetchGuestStatus = (
+  guestPartyToken,
+  partyId
+) => async dispatch => {
+  try {
+    const {data} = await axios.get(`/api/parties/rsvp/${guestPartyToken}`)
+    dispatch(setGuestStatus(data))
+  } catch (err) {
+    console.error(err)
+  }
+}
+export const putGuestStatus = (guestPartyToken, status) => async dispatch => {
+  try {
+    const {data} = await axios.put(`/api/parties/rsvp/${guestPartyToken}`, {
+      status
+    })
+    dispatch(setGuestStatus(data))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
 //REDUCER
 export default function(state = {}, action) {
   switch (action.type) {
     case SET_PARTY:
       return action.party
 
+    case CREATE_PARTY:
+      return action.partyInfo
+
+    case ADD_ITEM:
+      return {...state, items: [...state.items, action.item]}
+    case DELETE_ITEM:
+      return {
+        ...state,
+        items: state.items.filter(item => item.id !== action.itemId)
+      }
     default:
       return state
   }
@@ -64,6 +151,15 @@ export function partiesReducer(state = [], action) {
   switch (action.type) {
     case SET_PARTIES:
       return action.parties
+    default:
+      return state
+  }
+}
+
+export function guestStatusReducer(state = {}, action) {
+  switch (action.type) {
+    case SET_GUEST_STATUS:
+      return action.status
     default:
       return state
   }
