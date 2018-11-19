@@ -8,9 +8,9 @@ const chance = require('chance')(123)
 const Promise = require('bluebird')
 const toonAvatar = require('cartoon-avatar')
 
-const numUsers = 3
+const numUsers = 10
 const numParties = 5
-const numGuests = 3
+const numGuests = 10
 const numItems = 3
 const numCategories = 2
 
@@ -104,6 +104,75 @@ const partyData = [
     updatedAt: '2018-11-19 11:49:55.512-06',
     description:
       'Luttugi ginkizec ife lugo isredit fo piehjuz ivtov fuphut subobbi wepokmod virvil bo waruldo zelovo siuv fah uwuazza. Duv vipka nag runer ruve de ocibizu hikog saovufef wop fuigojip vuwivnad ot kijan zogu. Pa jufuk difji kasno ucetivone hahvatfuj gonter ewtibvif ri wudlowe uze ni res revzaf. Ru tamsikir ovuzepe jo asdo suvmaproz limaw ro nez et lusauf itcahre wubodaug go sediojo. Ejrib ewehej larveif zakse dulic vuul vuc bizfewlih taghaf riptikmiv vegbefnik hovlurun roitoul ahtove.'
+  }
+]
+
+const guestData = [
+  {
+    status: 'invited',
+    phone: '3147278836',
+    guestPartyToken: '68264670-ec39-11e8-a2d2-758fc26097cb',
+    id: 1,
+    partyId: 1,
+    email: 'iwaciwe@en.im'
+  },
+  {
+    status: 'invited',
+    phone: '3678326353',
+    guestPartyToken: '68264671-ec39-11e8-a2d2-758fc26097cb',
+    id: 2,
+    partyId: 1,
+    email: 'cod@zivu.cl'
+  },
+  {
+    status: 'attending',
+    phone: '3159662982',
+    guestPartyToken: '68264673-ec39-11e8-a2d2-758fc26097cb',
+    id: 3,
+    partyId: 1,
+    email: 'lat@johvidvi.tl'
+  },
+  {
+    status: 'declined',
+    phone: '5324896085',
+    guestPartyToken: '68264672-ec39-11e8-a2d2-758fc26097cb',
+    id: 4,
+    partyId: 1,
+    email: 'mifco@javsul.ge'
+  },
+  {
+    status: 'declined',
+    phone: '2519885065',
+    guestPartyToken: '68264674-ec39-11e8-a2d2-758fc26097cb',
+    id: 5,
+    partyId: 2,
+    email: 'gabawsa@zipak.pg'
+  },
+  {
+    status: 'invited',
+    phone: '7255943268',
+    guestPartyToken: '68264675-ec39-11e8-a2d2-758fc26097cb',
+    id: 6,
+    partyId: 2,
+    email: 'pujtofan@lutcigu.ir',
+    updatedAt: '2018-11-19 14:26:33.929-06',
+    createdAt: '2018-11-19 14:26:33.929-06'
+  },
+  {
+    status: 'attending',
+    phone: '7879734793',
+    guestPartyToken: '68264676-ec39-11e8-a2d2-758fc26097cb',
+    id: 7,
+    partyId: 2,
+    email: 'jim@jun.dk'
+  },
+  {
+    status: 'attending',
+    phone: '2346372441',
+    guestPartyToken: '68264678-ec39-11e8-a2d2-758fc26097cb',
+    id: 8,
+    partyId: 2,
+    email: 'avi@kujfit.an'
   }
 ]
 
@@ -274,6 +343,7 @@ const seed = async () => {
     console.log(`Successfully Seeded Parties`)
 
     // await createGuests()
+    await Guest.bulkCreate(guestData)
     console.log(`Successfully Seeded Guests`)
 
     // await createCategories()
