@@ -1,5 +1,6 @@
 const {Party, User, Guest, Item} = require('../db/models')
 const router = require('express').Router()
+const moment = require('moment')
 
 router.get('/:id', async (req, res, next) => {
   try {
@@ -113,7 +114,7 @@ router.get('/user/:userId', async (req, res, next) => {
       order: [['date', 'ASC']]
     })
 
-    const upcomingEventToHost = await Party.findAll({
+    let upcomingEventToHost = await Party.findAll({
       where: {
         $and: [
           {userId: user.id},
@@ -129,6 +130,9 @@ router.get('/user/:userId', async (req, res, next) => {
       limit: 1,
       order: [['date', 'ASC']]
     })
+
+    if (upcomingEventToHost.length === 1)
+      upcomingEventToHost = upcomingEventToHost[0]
 
     const attending = await Guest.findAll({
       where: {
