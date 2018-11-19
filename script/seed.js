@@ -2,6 +2,7 @@
 
 const db = require('../server/db')
 const {User, Party, Guest, Item, Category} = require('../server/db/models')
+const moment = require('moment')
 
 // Random Data Creators
 const chance = require('chance')(123)
@@ -83,11 +84,27 @@ const userData = [
 const partyData = [
   {
     location: '901 Riil Ave, Kukicbav, OR, SE, 49806',
-    status: 'upcomming',
+    status: 'upcoming',
     userId: 1,
     id: 1,
     title: 'Party 1 - Cody',
-    date: '2018-11-19 11:49:55.506-06',
+    date: moment()
+      .add(3, 'days')
+      .toDate(),
+    imageUrl: '/images/default-party.jpg',
+    updatedAt: '2018-11-19 11:49:55.512-06',
+    description:
+      'Vapefdov ihoizo hih boeki de begeh cukbu ko nubfuswus ve wekpiw cegu ruloglaj navkiw pelpu nikpap. Pun ji ak pentake kefjuz licikat jorkib ec tetil he ni apkifak oh netetuv welpu. Cukuke nafuci oboneg ri kemehwur fi botlepak ce le ozbom je raubona juhusom utu ma raruceoz. Seek zi obvib mepsijel iddoc jokkuwud zuzanfok aja so wojemik depabib omiur vuwumor gaw duwtiab zaj. Kumo zigigahe hub ji gavi cal ize di gec jefume nep wupufu livurnu duz sevo ovuzju di dob. Zuzohem nose asomuwrep umvukco igej komgebiko paknefad pidagof zu mefat ufbe homvicko lomzuzjec.'
+  },
+  {
+    location: '901 Riil Ave, Kukicbav, OR, SE, 49806',
+    status: 'upcoming',
+    userId: 1,
+    id: 3,
+    title: 'Party 1B (old party) - Cody',
+    date: moment()
+      .subtract(1, 'days')
+      .toDate(),
     imageUrl: '/images/default-party.jpg',
     updatedAt: '2018-11-19 11:49:55.512-06',
     description:
@@ -99,7 +116,9 @@ const partyData = [
     userId: 2,
     id: 2,
     title: 'Party 2 - Lillian',
-    date: '2018-11-19 11:49:55.502-06',
+    date: moment()
+      .subtract(1, 'days')
+      .toDate(),
     imageUrl: '/images/default-party.jpg',
     updatedAt: '2018-11-19 11:49:55.512-06',
     description:
