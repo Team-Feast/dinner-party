@@ -8,14 +8,104 @@ const chance = require('chance')(123)
 const Promise = require('bluebird')
 const toonAvatar = require('cartoon-avatar')
 
-const numUsers = 50
-const numParties = 200
-const numGuests = 2000
-const numItems = 1500
-const numCategories = 10
+const numUsers = 3
+const numParties = 5
+const numGuests = 3
+const numItems = 3
+const numCategories = 2
 
 const userEmails = chance.unique(chance.email, numUsers)
 const guestEmails = chance.unique(chance.email, numGuests)
+
+const userData = [
+  {
+    googleId: null,
+    password:
+      '0775bc0b1e5ee94fa2b1fdceca49f2a794efe7db14f62369534d35ce3f68d8f8',
+    firstName: 'Cody',
+    id: 1,
+    imageUrl:
+      'https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/5.png',
+    email: 'cody@email.com',
+    salt: 'WqTlTsCk94j5z+AEqFKMtg==',
+    lastName: 'Puppy'
+  },
+  {
+    googleId: null,
+    password:
+      '56f6c0305cd4b858cdf5196bf449e88b2f59f660edd1b1a1604e47db61134fce',
+    firstName: 'Dorothy',
+    id: 31,
+    imageUrl:
+      'https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/female/58.png',
+    email: 'iwaciwe@en.im',
+    salt: 'pj3hGQb9QLUbewVjbPlQhA==',
+    lastName: 'Benelli'
+  },
+  {
+    googleId: null,
+    password:
+      'b4b02880bc63ac3b91ba5f5819ee7ee684b1a2fd67111bcf5d2d9db12936cd3b',
+    firstName: 'Lillian',
+    id: 2,
+    imageUrl:
+      'https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/female/13.png',
+    email: 'cod@zivu.cl',
+    salt: 'j0VBA5wygT0o5YjRhYkpMQ==',
+    lastName: 'Bonini'
+  },
+  {
+    googleId: null,
+    password:
+      '716a057da3ee6c16e0128dc458c6fdbdff787689415e615b3ef1d63c789fa273',
+    firstName: 'Christian',
+    id: 3,
+    imageUrl:
+      'https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/124.png',
+    email: 'mifco@javsul.ge',
+    salt: '9vQ1cjo8Pso4P9KhSXuRgQ==',
+    lastName: 'Underwood'
+  },
+  {
+    googleId: null,
+    password:
+      '53ac53a1f8f35579b3961629f7d284766d0709963bf16b80e570000f701aa188',
+    firstName: 'Joseph',
+    id: 4,
+    imageUrl:
+      'https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/7.png',
+    email: 'lat@johvidvi.tl',
+    salt: 'cqa8jGRL7J04RwrjIrSmlw==',
+    lastName: 'Ford'
+  }
+]
+
+const partyData = [
+  {
+    location: '901 Riil Ave, Kukicbav, OR, SE, 49806',
+    status: 'upcomming',
+    userId: 1,
+    id: 1,
+    title: 'Pan muvfiwu rojgaf icewecaw aggazdo.',
+    date: '2018-11-19 11:49:55.506-06',
+    imageUrl: '/images/default-party.jpg',
+    updatedAt: '2018-11-19 11:49:55.512-06',
+    description:
+      'Vapefdov ihoizo hih boeki de begeh cukbu ko nubfuswus ve wekpiw cegu ruloglaj navkiw pelpu nikpap. Pun ji ak pentake kefjuz licikat jorkib ec tetil he ni apkifak oh netetuv welpu. Cukuke nafuci oboneg ri kemehwur fi botlepak ce le ozbom je raubona juhusom utu ma raruceoz. Seek zi obvib mepsijel iddoc jokkuwud zuzanfok aja so wojemik depabib omiur vuwumor gaw duwtiab zaj. Kumo zigigahe hub ji gavi cal ize di gec jefume nep wupufu livurnu duz sevo ovuzju di dob. Zuzohem nose asomuwrep umvukco igej komgebiko paknefad pidagof zu mefat ufbe homvicko lomzuzjec.'
+  },
+  {
+    location: '208 Etodun Blvd, Gebijteh, DC, FJ, 37575',
+    status: 'completed',
+    userId: 2,
+    id: 2,
+    title: 'Buepu vej vi bob ro.',
+    date: '2018-11-19 11:49:55.502-06',
+    imageUrl: '/images/default-party.jpg',
+    updatedAt: '2018-11-19 11:49:55.512-06',
+    description:
+      'Luttugi ginkizec ife lugo isredit fo piehjuz ivtov fuphut subobbi wepokmod virvil bo waruldo zelovo siuv fah uwuazza. Duv vipka nag runer ruve de ocibizu hikog saovufef wop fuigojip vuwivnad ot kijan zogu. Pa jufuk difji kasno ucetivone hahvatfuj gonter ewtibvif ri wudlowe uze ni res revzaf. Ru tamsikir ovuzepe jo asdo suvmaproz limaw ro nez et lusauf itcahre wubodaug go sediojo. Ejrib ewehej larveif zakse dulic vuul vuc bizfewlih taghaf riptikmiv vegbefnik hovlurun roitoul ahtove.'
+  }
+]
 
 //helper functions
 function doTimes(n, fn) {
@@ -175,19 +265,21 @@ const seed = async () => {
     await db.sync({force: true})
     console.log('db synced!')
 
-    await createUsers()
+    // await createUsers()
+    await User.bulkCreate(userData)
     console.log(`Successfully Seeded Users`)
 
-    await createParties()
+    // await createParties()
+    await Party.bulkCreate(partyData)
     console.log(`Successfully Seeded Parties`)
 
-    await createGuests()
+    // await createGuests()
     console.log(`Successfully Seeded Guests`)
 
-    await createCategories()
+    // await createCategories()
     console.log(`Successfully Seeded Categories`)
 
-    await createItems()
+    // await createItems()
     console.log(`Successfully Seeded Items`)
 
     console.log(`seeding successfully`)
