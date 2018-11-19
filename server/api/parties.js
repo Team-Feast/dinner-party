@@ -1,6 +1,5 @@
 const {Party, User, Guest, Item} = require('../db/models')
 const router = require('express').Router()
-const axios = require('axios')
 
 router.get('/:id', async (req, res, next) => {
   try {
