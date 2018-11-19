@@ -3,28 +3,14 @@ const router = require('express').Router()
 
 router.post('/', async (req, res, next) => {
   try {
-    const {title, description, partyId, email} = req.body
-    let guest = await Guest.findOne({where: {email: email}})
-    let guestId
+    const {title, description, partyId} = req.body
 
-    if (guest) {
-      guestId = guest.id
-    } else {
-      guest = await Guest.create({email})
-      guestId = guest.id
-    }
-
-    const item = await Item.create({
+    const newItem = await Item.create({
       title,
       description,
-      partyId,
-      email,
-      guestId
+      partyId
     })
 
-    const newItem = await Item.findById(item.id, {
-      include: [{model: Guest, attributes: ['email']}]
-    })
     res.json(newItem)
   } catch (error) {
     next(error)
