@@ -12,7 +12,7 @@ const numUsers = 10
 const numParties = 5
 const numGuests = 10
 const numItems = 3
-const numCategories = 2
+const numCategories = 3
 
 const userEmails = chance.unique(chance.email, numUsers)
 const guestEmails = chance.unique(chance.email, numGuests)
@@ -173,6 +173,75 @@ const guestData = [
     id: 8,
     partyId: 2,
     email: 'avi@kujfit.an'
+  }
+]
+
+const categoryData = [
+  {
+    id: 1,
+    imageUrl: '/images/default-category.jpg',
+    name: 'entrees'
+  },
+  {
+    id: 2,
+    imageUrl: '/images/default-category.jpg',
+    name: 'beverages'
+  },
+  {
+    id: 3,
+    imageUrl: '/images/default-category.jpg',
+    name: 'desserts'
+  }
+]
+
+const itemData = [
+  {
+    partyId: 1,
+    title: 'item 1',
+    guestId: null,
+    categoryId: 1,
+    description:
+      'Kicamali bobki tujtona kupioz vet ucivokhac wemi ob tu mejene du zedlaz eji.'
+  },
+  {
+    partyId: 1,
+    title: 'item 2',
+    guestId: null,
+    categoryId: 1,
+    description:
+      'Nozwiv dahupoh lulas gucebi ewik difji kasno ucetivone hahvatfuj gonter ewtibvif ri wudlowe uze ni res.'
+  },
+  {
+    partyId: 1,
+    title: 'item 3',
+    guestId: 2,
+    categoryId: 3,
+    description:
+      'Nozwiv dahupoh lulas gucebi ewik difji kasno ucetivone hahvatfuj gonter ewtibvif ri wudlowe uze ni res.'
+  },
+  {
+    partyId: 2,
+    title: 'item 1B',
+    guestId: null,
+    categoryId: 1,
+    description:
+      'Kicamali bobki tujtona kupioz vet ucivokhac wemi ob tu mejene du zedlaz eji.'
+  },
+  {
+    partyId: 2,
+    title: 'item 2B',
+    guestId: null,
+    categoryId: 1,
+    description:
+      'Nozwiv dahupoh lulas gucebi ewik difji kasno ucetivone hahvatfuj gonter ewtibvif ri wudlowe uze ni res.'
+  },
+  {
+    partyId: 2,
+    title: 'item 3B',
+    guestId: 7,
+    categoryId: 1,
+    description:
+      'Nozwiv dahupoh lulas gucebi ewik difji kasno ucetivone hahvatfuj gonter ewtibvif ri wudlowe uze ni res.'
   }
 ]
 
@@ -347,9 +416,11 @@ const seed = async () => {
     console.log(`Successfully Seeded Guests`)
 
     // await createCategories()
+    await Category.bulkCreate(categoryData)
     console.log(`Successfully Seeded Categories`)
 
     // await createItems()
+    await Item.bulkCreate(itemData)
     console.log(`Successfully Seeded Items`)
 
     console.log(`seeding successfully`)
