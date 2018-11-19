@@ -41,7 +41,6 @@ export const getParty = id => async dispatch => {
 export const postParty = ({info, guestEmails}) => {
   return async dispatch => {
     try {
-      console.log('info in thunk', guestEmails)
       const {data} = await axios.post('/api/parties', {
         info: info,
         guestEmails: guestEmails
