@@ -115,9 +115,23 @@ const partyData = [
     status: 'completed',
     userId: 2,
     id: 2,
-    title: 'Party 2 - Lillian',
+    title: 'Party 2 (old party) - Lillian',
     date: moment()
       .subtract(1, 'days')
+      .toDate(),
+    imageUrl: '/images/default-party.jpg',
+    updatedAt: '2018-11-19 11:49:55.512-06',
+    description:
+      'Luttugi ginkizec ife lugo isredit fo piehjuz ivtov fuphut subobbi wepokmod virvil bo waruldo zelovo siuv fah uwuazza. Duv vipka nag runer ruve de ocibizu hikog saovufef wop fuigojip vuwivnad ot kijan zogu. Pa jufuk difji kasno ucetivone hahvatfuj gonter ewtibvif ri wudlowe uze ni res revzaf. Ru tamsikir ovuzepe jo asdo suvmaproz limaw ro nez et lusauf itcahre wubodaug go sediojo. Ejrib ewehej larveif zakse dulic vuul vuc bizfewlih taghaf riptikmiv vegbefnik hovlurun roitoul ahtove.'
+  },
+  {
+    location: '208 Etodun Blvd, Gebijteh, DC, FJ, 37575',
+    status: 'completed',
+    userId: 2,
+    id: 4,
+    title: 'Party 2B (future party) - Lillian',
+    date: moment()
+      .add(1, 'days')
       .toDate(),
     imageUrl: '/images/default-party.jpg',
     updatedAt: '2018-11-19 11:49:55.512-06',
@@ -168,14 +182,12 @@ const guestData = [
     email: 'gabawsa@zipak.pg'
   },
   {
-    status: 'invited',
+    status: 'attending',
     phone: '7255943268',
     guestPartyToken: '68264675-ec39-11e8-a2d2-758fc26097cb',
     id: 6,
-    partyId: 2,
-    email: 'pujtofan@lutcigu.ir',
-    updatedAt: '2018-11-19 14:26:33.929-06',
-    createdAt: '2018-11-19 14:26:33.929-06'
+    partyId: 4,
+    email: 'cody@email.com'
   },
   {
     status: 'attending',
