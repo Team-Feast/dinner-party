@@ -13,8 +13,8 @@ import { withStyles } from '@material-ui/core';
 import PropTypes from 'prop-types'
 import TextField from '@material-ui/core/TextField'
 import moment from 'moment'
+import {getParty, getGuests} from '../store/'
 
-import {getParty} from '../store/party'
 
 const styles = theme => ({
   paper: {
@@ -52,21 +52,18 @@ class EditParty extends Component {
   componentDidMount(){
     const id = Number(this.props.match.params.id)
     this.props.getParty(id)
-    this.setState({
-      title: this.props.party.title,
-      description: this.props.party.description,
-      location: this.props.party.location,
-      date: this.props.party.date
-    })
-
+    this.props.getGuests(id)
   }
 
-  handleChange(e){
-    e.preventDefault()
+  handleChange = name => event =>{
+    this.setState({
+      [name]: event.target.value
+    })
   }
 
   render() {
     const {classes} = this.props
+    const {party} = this.props
     console.log("in the component", this.props)
     return (
       <Fragment>
@@ -83,17 +80,29 @@ class EditParty extends Component {
 
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="title">Title</InputLabel>
-            <Input id="title" name="title" autoFocus />
+            <Input id="title" name="title"
+            value={party.title}
+            onChange={this.handleChange('title')}
+            />
           </FormControl>
 
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="description">Description</InputLabel>
-            <Input id="description" name="description" autoFocus />
+            <Input
+            id="description"
+            name="description"
+            value={party.description}
+            onChange={this.handleChange('description')}
+            />
           </FormControl>
 
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="location">Location</InputLabel>
-            <Input id="location" name="location" autoFocus />
+          <FormControl  fullWidth>
+            {/* <InputLabel htmlFor="location">Location</InputLabel> */}
+            <TextField
+                id="location"
+                label="location"
+                className={classes.textField}
+                value={party.location}  />
           </FormControl>
 
           <FormControl>
@@ -101,7 +110,8 @@ class EditParty extends Component {
                 id="date"
                 label="Date"
                 type="datetime-local"
-                defaultValue={moment(Date.now()).format('YYYY-MM-DDTHH:mm')}
+                onChange={this.handleChange('date')}
+                defaultValue={moment(party.date).format('YYYY-MM-DDTHH:mm')}
                 className={classes.textField}
                 InputLabelProps={{
                   shrink: true
@@ -126,11 +136,14 @@ class EditParty extends Component {
 }
 
 const mapState = state => ({
-  party: state.party
+  party: state.party,
+  guests: state.guests
 })
 
 const mapDispatch = dispatch => ({
-  getParty: partyId => dispatch(getParty(partyId))
+  getParty: partyId => dispatch(getParty(partyId)),
+  getGuests: partyId => dispatch(getGuests(partyId))
+
 })
 
 export default connect(mapState, mapDispatch)(
