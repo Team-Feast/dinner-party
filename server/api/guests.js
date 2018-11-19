@@ -41,7 +41,6 @@ router.post('/', async function(req, res, next) {
         partyId: req.body.partyId
       }
     })
-    console.log(data)
     res.json(data)
   } catch (err) {
     next(err)
@@ -50,7 +49,7 @@ router.post('/', async function(req, res, next) {
 
 router.post('/:id/invite', async function(req, res, next) {
   try {
-    const data = await Guest.findById(req.params.id).then(guest => {
+    await Guest.findById(req.params.id).then(guest => {
       if (!guest) {
         console.log('No guest with that email address exists.')
       } else {
@@ -72,11 +71,10 @@ router.post('/:id/invite', async function(req, res, next) {
           }\n\nIf you did not request this, please ignore this email.`
         }
         transporter.sendMail(mailOptions, function(err) {
-          err ? next(err) : console.log('Mail Sent')
+          err ? next(err) : res.sendStatus(200)
         })
       }
     })
-    data ? res.json(data) : res.sendStatus(500)
   } catch (err) {
     next(err)
   }

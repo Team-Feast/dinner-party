@@ -38,10 +38,13 @@ export const getParty = id => async dispatch => {
   }
 }
 
-export const postParty = party => {
+export const postParty = (info, guestEmails) => {
   return async dispatch => {
     try {
-      const {data} = await axios.post('/api/parties', party)
+      const {data} = await axios.post('/api/parties', {
+        info: info,
+        guestEmails: guestEmails
+      })
       dispatch(addParty(data))
       history.push(`/parties/${data.id}`)
     } catch (error) {
