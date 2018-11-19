@@ -60,13 +60,12 @@ class SingleParty extends Component {
 
   componentDidMount() {
     const {guestPartyToken, partyId} = this.props.match.params
+    console.log(partyId)
     this.props.fetchParty(partyId)
-
-    this.props.fetchGuestStatus(guestPartyToken, partyId)
+    if (guestPartyToken) this.props.fetchGuestStatus(guestPartyToken, partyId)
   }
   handleChange = event => {
     const rsvp = event.target.value
-
     this.setState({selectedValue: rsvp})
     const {guestPartyToken} = this.props.match.params
     this.props.putGuestStatus(guestPartyToken, rsvp)
@@ -86,6 +85,8 @@ class SingleParty extends Component {
       id
     } = this.props.party
 
+    const {guestPartyToken} = this.props.match.params
+
     const {classes} = this.props
 
     if (!this.props.party.id) {
@@ -103,33 +104,34 @@ class SingleParty extends Component {
               <ListItem button>
                 <ListItemText primary={location} />
               </ListItem>
-
-              <ListItem>
-                <ListItemText primary="Are you attending?" />
-                <ListItemSecondaryAction>
-                  <div>
-                    <Radio
-                      checked={this.state.selectedValue === 'attending'}
-                      onChange={this.handleChange}
-                      value="attending"
-                      name="radio-button-demo"
-                      aria-label="C"
-                      classes={{
-                        root: classes.root,
-                        checked: classes.checked
-                      }}
-                    />
-                    <Radio
-                      checked={this.state.selectedValue === 'declined'}
-                      onChange={this.handleChange}
-                      value="declined"
-                      color="default"
-                      name="radio-button-demo"
-                      aria-label="D"
-                    />
-                  </div>
-                </ListItemSecondaryAction>
-              </ListItem>
+              {guestPartyToken && (
+                <ListItem>
+                  <ListItemText primary="Are you attending?" />
+                  <ListItemSecondaryAction>
+                    <div>
+                      <Radio
+                        checked={this.state.selectedValue === 'attending'}
+                        onChange={this.handleChange}
+                        value="attending"
+                        name="radio-button-demo"
+                        aria-label="C"
+                        classes={{
+                          root: classes.root,
+                          checked: classes.checked
+                        }}
+                      />
+                      <Radio
+                        checked={this.state.selectedValue === 'declined'}
+                        onChange={this.handleChange}
+                        value="declined"
+                        color="default"
+                        name="radio-button-demo"
+                        aria-label="D"
+                      />
+                    </div>
+                  </ListItemSecondaryAction>
+                </ListItem>
+              )}
             </List>
           </Card>
 

@@ -29,12 +29,23 @@ router.get('/:id', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
   try {
     const newParty = await Party.create({
-      title: req.body.title,
-      description: req.body.description,
-      location: req.body.address,
-      date: req.body.date
+      title: req.body.info.title,
+      description: req.body.info.description,
+      location: req.body.info.location,
+      date: req.body.info.date,
+      userId: req.body.info.userId,
+      imageUrl: req.body.info.imageUrl
     })
-    res.json(newParty.dataValues)
+
+    //Creates guests using email and party id
+    Promise.all(
+      req.body.guestEmails.forEach(email => {
+        const guest = Guest.create({email, partyId: newParty.id})
+        //TODO need to send guest an email with guest token
+      })
+    )
+
+    res.json(newParty)
   } catch (err) {
     next(err)
   }

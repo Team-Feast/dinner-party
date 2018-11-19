@@ -30,9 +30,9 @@ const setParties = parties => ({
   parties
 })
 
-const createPartyInfo = partyInfo => ({
+const createPartyInfo = party => ({
   type: CREATE_PARTY,
-  partyInfo
+  party
 })
 
 const setGuestStatus = status => ({
@@ -63,11 +63,12 @@ export const sendRemoveItem = itemId => {
   }
 }
 
-export const createParty = partyInfo => async  dispatch => {
-  try{
+export const createParty = partyInfo => async dispatch => {
+  try {
     const {data} = await axios.post('/api/parties', partyInfo)
     dispatch(createPartyInfo(data))
-  }catch(err){
+    history.push(`/parties/${data.id}`)
+  } catch (err) {
     console.error(err)
   }
 }
@@ -131,10 +132,8 @@ export default function(state = {}, action) {
   switch (action.type) {
     case SET_PARTY:
       return action.party
-
     case CREATE_PARTY:
-      return action.partyInfo
-
+      return action.party
     case ADD_ITEM:
       return {...state, items: [...state.items, action.item]}
     case DELETE_ITEM:
@@ -151,6 +150,8 @@ export function partiesReducer(state = [], action) {
   switch (action.type) {
     case SET_PARTIES:
       return action.parties
+    case CREATE_PARTY:
+      return [...state, action.party]
     default:
       return state
   }
