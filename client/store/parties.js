@@ -13,7 +13,8 @@ const setParties = parties => ({
 //THUNK CREATORS
 export const getParties = userId => async dispatch => {
   try {
-    const {data} = await axios.get(`/parties/user/${userId}/`)
+    const {data} = await axios.get(`/api/parties/user/${userId}`)
+
     dispatch(setParties(data))
   } catch (err) {
     console.error(err)
@@ -23,10 +24,10 @@ export const getParties = userId => async dispatch => {
 //REDUCER
 export default function(
   state = {
-    upcoming: {},
+    upcomingEventToHost: {},
     hosting: [],
     attending: [],
-    history: []
+    pastEvents: []
   },
   action
 ) {
