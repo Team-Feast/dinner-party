@@ -15,6 +15,13 @@ import TextField from '@material-ui/core/TextField'
 import moment from 'moment'
 import CardMedia from '@material-ui/core/CardMedia'
 
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import Checkbox from '@material-ui/core/Checkbox';
+
 import {getParty, getGuests} from '../store/'
 
 const styles = theme => ({
@@ -50,9 +57,16 @@ class EditParty extends Component {
       title: '',
       description: '',
       location: '',
-      date: ''
+      date: '',
+      checked: true
     }
   }
+
+  handleToggle = () => {
+    this.setState({
+      checked: false,
+    });
+  };
 
   componentDidMount() {
     const id = Number(this.props.match.params.id)
@@ -74,14 +88,11 @@ class EditParty extends Component {
       <Fragment>
         <CssBaseline />
         <Paper className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            {/* <LockIcon /> */}
-          </Avatar>
           <Typography component="h1" variant="h5">
             Edit Event
           </Typography>
 
-        <CardMedia image={party.imageUrl} />
+          <CardMedia image={party.imageUrl} />
           <form className={classes.form} onSubmit={this.handleSubmit}>
 
             <FormControl margin="normal" required fullWidth>
@@ -127,18 +138,31 @@ class EditParty extends Component {
                 }}
               />
             </FormControl>
-            <FormControl margin="normal" required >
 
+            <ExpansionPanel>
+              <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography className={classes.heading}>GUESTS</Typography>
+            </ExpansionPanelSummary>
             {
               this.props.guests.map(guest =>
-              <TextField
-                // id="Guests"
+              <ExpansionPanelDetails
+               key={guest.id}
+              >
+            <TextField
                 key={guest.id}
                 className={classes.textField}
                 value={guest.email}
-              />)
-            }
-            </FormControl>
+            />
+              <ListItemSecondaryAction>
+                <Checkbox
+                  onChange={this.handleToggle}
+                />
+              </ListItemSecondaryAction>
+            </ExpansionPanelDetails>
+
+               )
+             }
+            </ExpansionPanel>
 
             <Button
               type="submit"
