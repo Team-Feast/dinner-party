@@ -454,6 +454,23 @@ const seed = async () => {
     await Item.bulkCreate(itemData)
     console.log(`Successfully Seeded Items`)
 
+    await db.query(
+      `ALTER SEQUENCE "parties_id_seq" RESTART WITH ${partyData.length + 1};`
+    )
+    await db.query(
+      `ALTER SEQUENCE "guests_id_seq" RESTART WITH ${guestData.length + 1};`
+    )
+    await db.query(
+      `ALTER SEQUENCE "users_id_seq" RESTART WITH ${userData.length + 1};`
+    )
+    await db.query(
+      `ALTER SEQUENCE "categories_id_seq" RESTART WITH ${categoryData.length +
+        1};`
+    )
+    await db.query(
+      `ALTER SEQUENCE "items_id_seq" RESTART WITH ${itemData.length + 1};`
+    )
+
     console.log(`seeding successfully`)
   } catch (err) {
     console.log('Error while seeding')
