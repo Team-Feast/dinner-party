@@ -56,8 +56,6 @@ class ItemList extends Component {
 
   render() {
     const {guest, items} = this.props
-    console.log('guest in list: ', items)
-
     return (
       <ExpansionPanelDetails>
         <List>
