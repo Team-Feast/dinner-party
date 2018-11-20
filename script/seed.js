@@ -83,7 +83,7 @@ const userData = [
 
 const partyData = [
   {
-    location: '901 Riil Ave, Kukicbav, OR, SE, 49806',
+    location: '901 Riil Ave, Kukicbav, SE, 49806',
     status: 'upcoming',
     userId: 1,
     id: 1,
@@ -94,10 +94,10 @@ const partyData = [
     imageUrl: '/images/default-party.jpg',
     updatedAt: '2018-11-19 11:49:55.512-06',
     description:
-      'Vapefdov ihoizo hih boeki de begeh cukbu ko nubfuswus ve wekpiw cegu ruloglaj navkiw pelpu nikpap. Pun ji ak pentake kefjuz licikat jorkib ec tetil he ni apkifak oh netetuv welpu. Cukuke nafuci oboneg ri kemehwur fi botlepak ce le ozbom je raubona juhusom utu ma raruceoz. Seek zi obvib mepsijel iddoc jokkuwud zuzanfok aja so wojemik depabib omiur vuwumor gaw duwtiab zaj. Kumo zigigahe hub ji gavi cal ize di gec jefume nep wupufu livurnu duz sevo ovuzju di dob. Zuzohem nose asomuwrep umvukco igej komgebiko paknefad pidagof zu mefat ufbe homvicko lomzuzjec.'
+      'Vapefdov ihoizo hih boeki de begeh cukbu ko nubfuswus ve wekpiw cegu ruloglaj navkiw pelpu nikpap. Pun ji ak pentake kefjuz licikat jorkib ec tetil he ni apkifak oh netetuv welpu. Cukuke nafuci oboneg ri kemehwur fi botlepak ce le ozbom je '
   },
   {
-    location: '901 Riil Ave, Kukicbav, OR, SE, 49806',
+    location: '901 Riil Ave, Kukicbav, OR, 49806',
     status: 'upcoming',
     userId: 1,
     id: 3,
@@ -108,10 +108,10 @@ const partyData = [
     imageUrl: '/images/default-party.jpg',
     updatedAt: '2018-11-19 11:49:55.512-06',
     description:
-      'Vapefdov ihoizo hih boeki de begeh cukbu ko nubfuswus ve wekpiw cegu ruloglaj navkiw pelpu nikpap. Pun ji ak pentake kefjuz licikat jorkib ec tetil he ni apkifak oh netetuv welpu. Cukuke nafuci oboneg ri kemehwur fi botlepak ce le ozbom je raubona juhusom utu ma raruceoz. Seek zi obvib mepsijel iddoc jokkuwud zuzanfok aja so wojemik depabib omiur vuwumor gaw duwtiab zaj. Kumo zigigahe hub ji gavi cal ize di gec jefume nep wupufu livurnu duz sevo ovuzju di dob. Zuzohem nose asomuwrep umvukco igej komgebiko paknefad pidagof zu mefat ufbe homvicko lomzuzjec.'
+      'Vapefdov ihoizo hih boeki de begeh cukbu ko nubfuswus ve wekpiw cegu ruloglaj navkiw pelpu nikpap. Pun ji ak pentake kefjuz licikat jorkib ec tetil he ni apkifak oh netetuv welpu. Cukuke nafuci oboneg ri kemehwur fi botlepak ce le ozbom je '
   },
   {
-    location: '208 Etodun Blvd, Gebijteh, DC, FJ, 37575',
+    location: '208 Etodun Blvd, Gebijteh, DC, 37575',
     status: 'completed',
     userId: 2,
     id: 2,
@@ -122,10 +122,10 @@ const partyData = [
     imageUrl: '/images/default-party.jpg',
     updatedAt: '2018-11-19 11:49:55.512-06',
     description:
-      'Luttugi ginkizec ife lugo isredit fo piehjuz ivtov fuphut subobbi wepokmod virvil bo waruldo zelovo siuv fah uwuazza. Duv vipka nag runer ruve de ocibizu hikog saovufef wop fuigojip vuwivnad ot kijan zogu. Pa jufuk difji kasno ucetivone hahvatfuj gonter ewtibvif ri wudlowe uze ni res revzaf. Ru tamsikir ovuzepe jo asdo suvmaproz limaw ro nez et lusauf itcahre wubodaug go sediojo. Ejrib ewehej larveif zakse dulic vuul vuc bizfewlih taghaf riptikmiv vegbefnik hovlurun roitoul ahtove.'
+      'Luttugi ginkizec ife lugo isredit fo piehjuz ivtov fuphut subobbi wepokmod virvil bo waruldo zelovo siuv fah uwuazza. Duv vipka nag runer ruve de ocibizu hikog saovufef wop fuigojip vuwivnad ot kijan zogu. Pa jufuk difji kasno '
   },
   {
-    location: '208 Etodun Blvd, Gebijteh, DC, FJ, 37575',
+    location: '208 Etodun Blvd, Gebijteh, IL, 37575',
     status: 'completed',
     userId: 2,
     id: 4,
@@ -136,7 +136,7 @@ const partyData = [
     imageUrl: '/images/default-party.jpg',
     updatedAt: '2018-11-19 11:49:55.512-06',
     description:
-      'Luttugi ginkizec ife lugo isredit fo piehjuz ivtov fuphut subobbi wepokmod virvil bo waruldo zelovo siuv fah uwuazza. Duv vipka nag runer ruve de ocibizu hikog saovufef wop fuigojip vuwivnad ot kijan zogu. Pa jufuk difji kasno ucetivone hahvatfuj gonter ewtibvif ri wudlowe uze ni res revzaf. Ru tamsikir ovuzepe jo asdo suvmaproz limaw ro nez et lusauf itcahre wubodaug go sediojo. Ejrib ewehej larveif zakse dulic vuul vuc bizfewlih taghaf riptikmiv vegbefnik hovlurun roitoul ahtove.'
+      'Luttugi ginkizec ife lugo isredit fo piehjuz ivtov fuphut subobbi wepokmod virvil bo waruldo zelovo siuv fah uwuazza. Duv vipka nag runer ruve de ocibizu hikog saovufef wop fuigojip vuwivnad ot kijan zogu. Pa jufuk difji kasno ucetivone hahvatfuj gonter ewtibvif ri wudlowe uze ni res '
   }
 ]
 
