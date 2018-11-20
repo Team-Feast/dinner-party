@@ -161,6 +161,8 @@ class SingleParty extends Component {
             <ItemList
               items={items}
               guest={guests.find(guest => {
+                console.log('a', guest.guestPartyToken)
+                console.log('b', guestPartyToken)
                 return guest.guestPartyToken === guestPartyToken
               })}
             />
