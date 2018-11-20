@@ -2,6 +2,7 @@ import React, {Fragment, Component} from 'react'
 import PropTypes from 'prop-types'
 // import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
+import {connect} from 'react-redux'
 
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Grid from '@material-ui/core/Grid'
@@ -18,7 +19,7 @@ class Landing extends Component {
   handleClick = event => {}
 
   render() {
-    const {classes} = this.props
+    const {classes, user} = this.props
 
     return (
       <Fragment>
@@ -57,14 +58,27 @@ class Landing extends Component {
               </Typography>
             </Grid>
             <Grid item>
-              <Button
-                href="/parties/addParty"
-                className={classes.button}
-                variant="contained"
-                color="primary"
-              >
-                Let's Feast!
-              </Button>
+              {user.id ? (
+                <Button
+                  component={Link}
+                  to="/addparty"
+                  className={classes.button}
+                  variant="contained"
+                  color="primary"
+                >
+                  Let's Feast!
+                </Button>
+              ) : (
+                <Button
+                  component={Link}
+                  to="/login"
+                  className={classes.button}
+                  variant="contained"
+                  color="primary"
+                >
+                  Let's Feast!
+                </Button>
+              )}
             </Grid>
           </Grid>
         </div>
@@ -86,6 +100,10 @@ Landing.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(Landing)
+const mapStateToProps = state => ({
+  user: state.user
+})
+
+export default connect(mapStateToProps)(withStyles(styles)(Landing))
 
 // export default connect(mapState, null)(withStyles(styles)(Landing))
