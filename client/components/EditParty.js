@@ -19,9 +19,6 @@ import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import Checkbox from '@material-ui/core/Checkbox';
-import {GuestList} from '../components'
 import Delete from '@material-ui/icons/Delete'
 import IconButton from '@material-ui/core/IconButton'
 
@@ -62,6 +59,7 @@ class EditParty extends Component {
   constructor() {
     super()
     this.state = {
+      id: 0,
       title: '',
       description: '',
       location: '',
@@ -81,10 +79,11 @@ class EditParty extends Component {
   componentDidUpdate(prevProps){
     if(prevProps.party !== this.props.party){
       this.setState({
+        id: this.props.party.id,
         title: this.props.party.title,
         description: this.props.party.description,
         location: this.props.party.location,
-        date: this.props.party.date
+        date: this.props.party.date,
       })
     }
   }
@@ -92,19 +91,15 @@ class EditParty extends Component {
   handleChange(evt){
     evt.preventDefault()
     this.setState({[evt.target.name]: evt.target.value})
-    console.log("How is the state", this.state)
   }
 
   handleSubmit(evt){
-    const id = Number(this.props.match.params.id)
     evt.preventDefault()
-    this.props.putParty(id, this.state)
+    this.props.putParty(this.state)
   }
 
-  handleDelete(evt){
-    evt.preventDefault()
-    console.log("In the delete", evt)
-
+  handleDelete(guestId){
+    console.log("hadeling delete", guestId)
   }
 
   render() {
@@ -184,7 +179,7 @@ class EditParty extends Component {
                 // value={guest.email}
                 placeholder={guest.email}
               />
-              <IconButton onClick={this.handleDelete}>
+              <IconButton onClick={this.handleDelete(guest.id)}>
                   <Delete className={classes.icon} />
               </IconButton>
              </ExpansionPanelDetails>

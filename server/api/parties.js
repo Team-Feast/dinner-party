@@ -67,6 +67,16 @@ router.get('/rsvp/:guestPartyToken', async (req, res, next) => {
   }
 })
 
+router.put('/:id', async (req, res, next) => {
+  try{
+    let party = await Party.findById(req.params.id)
+    let result  = await party.update(req.body)
+    res.json(result)
+  }catch(err){
+    next(err)
+  }
+})
+
 router.put('/rsvp/:guestPartyToken', async (req, res, next) => {
   try {
     const {guestPartyToken} = req.params
