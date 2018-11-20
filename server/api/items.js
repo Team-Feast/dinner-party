@@ -16,7 +16,8 @@ router.put('/:id', async (req, res, next) => {
   try {
     let item = await Item.findById(req.params.id)
     let result = await item.update(req.body)
-    res.json(result)
+    let data = await Item.findById(result.id, {include: [Guest]})
+    res.json(data)
   } catch (err) {
     next(err)
   }

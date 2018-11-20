@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {connect} from 'react-redux'
 import {
   List,
   ListItem,
@@ -9,9 +10,13 @@ import {
   withStyles
 } from '@material-ui/core'
 import PropTypes from 'prop-types'
-import CommentIcon from '@material-ui/icons/Comment'
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline'
+import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline'
+
 import {AddItem} from '../components'
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
+
+import {putItem} from '../store'
 
 const styles = theme => ({
   button: {
@@ -31,21 +36,58 @@ class ItemList extends Component {
     this.setState({showAddItem: !this.state.showAddItem})
   }
 
+  toggleAddGuestToItem = item => {
+    if (this.props.guest) {
+      this.props.putItem({...item, guestId: this.props.guest.id})
+    } else {
+      //TODO error control
+      console.log('ERROR: YOU CANNOT DO THIS')
+    }
+  }
+
+  toggleRemoveGuestFromItem = item => {
+    if (this.props.guest) {
+      this.props.putItem({...item, guestId: null})
+    } else {
+      //TODO error control
+      console.log('ERROR: YOU CANNOT DO THIS')
+    }
+  }
+
   render() {
+    const {guest, items} = this.props
+    console.log('guest in list: ', items)
+
     return (
       <ExpansionPanelDetails>
         <List>
-          {this.props.items.map(item => (
+          {items.map(item => (
             <ListItem key={item.id}>
               <ListItemText
                 primary={`${item.title}  ${
-                  item.guest !== null ? '-' + item.guest.email : ''
+                  item.guest !== null ? ' - ' + item.guest.email : ''
                 }`}
               />
               <ListItemSecondaryAction>
-                <IconButton aria-label="Comments">
-                  <CommentIcon />
-                </IconButton>
+                {item.guest && guest ? (
+                  item.guest.id === guest.id ? (
+                    <IconButton
+                      aria-label="Remove"
+                      onClick={this.toggleRemoveGuestFromItem.bind(this, item)}
+                    >
+                      <RemoveCircleOutlineIcon />
+                    </IconButton>
+                  ) : (
+                    <span />
+                  )
+                ) : (
+                  <IconButton
+                    aria-label="Add"
+                    onClick={this.toggleAddGuestToItem.bind(this, item)}
+                  >
+                    <AddCircleOutlineIcon />
+                  </IconButton>
+                )}
               </ListItemSecondaryAction>
             </ListItem>
           ))}
@@ -66,6 +108,8 @@ ItemList.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-const mapDispatchToProps = dispatch => ({})
+const mapDispatchToProps = dispatch => ({
+  putItem: item => dispatch(putItem(item))
+})
 
-export default withStyles(styles)(ItemList)
+export default connect(null, mapDispatchToProps)(withStyles(styles)(ItemList))
