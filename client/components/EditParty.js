@@ -21,8 +21,12 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import Checkbox from '@material-ui/core/Checkbox';
+import {GuestList} from '../components'
+import Delete from '@material-ui/icons/Delete'
+import IconButton from '@material-ui/core/IconButton'
 
-import {getParty, getGuests} from '../store/'
+import {getParty, getGuests, deleteGuest, putParty} from '../store/'
+import { isThisSecond } from 'date-fns';
 
 const styles = theme => ({
   paper: {
@@ -48,6 +52,10 @@ const styles = theme => ({
     height: 0,
     paddingTop: '56.25%' // 16:9
   },
+  icon: {
+    margin: theme.spacing.unit
+    // fontSize: 32
+  }
 })
 
 class EditParty extends Component {
@@ -58,15 +66,11 @@ class EditParty extends Component {
       description: '',
       location: '',
       date: '',
-      checked: true
     }
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+    this.handleDelete = this.handleDelete.bind(isThisSecond)
   }
-
-  handleToggle = () => {
-    this.setState({
-      checked: false,
-    });
-  };
 
   componentDidMount() {
     const id = Number(this.props.match.params.id)
@@ -74,54 +78,80 @@ class EditParty extends Component {
     this.props.getGuests(id)
   }
 
-  handleChange = name => event => {
-    this.setState({
-      [name]: event.target.value
-    })
+  componentDidUpdate(prevProps){
+    if(prevProps.party !== this.props.party){
+      this.setState({
+        title: this.props.party.title,
+        description: this.props.party.description,
+        location: this.props.party.location,
+        date: this.props.party.date
+      })
+    }
+  }
+
+  handleChange(evt){
+    evt.preventDefault()
+    this.setState({[evt.target.name]: evt.target.value})
+    console.log("How is the state", this.state)
+  }
+
+  handleSubmit(evt){
+    const id = Number(this.props.match.params.id)
+    evt.preventDefault()
+    this.props.putParty(id, this.state)
+  }
+
+  handleDelete(evt){
+    evt.preventDefault()
+    console.log("In the delete", evt)
+
   }
 
   render() {
     const {classes} = this.props
     const {party} = this.props
-    console.log('in the component', this.props)
     return (
       <Fragment>
         <CssBaseline />
+        <CardMedia image={party.imageUrl} />
         <Paper className={classes.paper}>
           <Typography component="h1" variant="h5">
             Edit Event
           </Typography>
 
-          <CardMedia image={party.imageUrl} />
           <form className={classes.form} onSubmit={this.handleSubmit}>
-
             <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="title">Title</InputLabel>
+              {/* <InputLabel htmlFor="title">Title</InputLabel> */}
               <Input
                 id="title"
+                label="title"
                 name="title"
-                value={party.title || ''}
-                onChange={this.handleChange('title')}
-              />
+                onChange={this.handleChange}
+                placeholder={party.title}
+                />
             </FormControl>
 
             <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="description">Description</InputLabel>
+              {/* <InputLabel htmlFor="description">Description</InputLabel> */}
               <Input
                 id="description"
+                label="description"
                 name="description"
-                value={party.description || ''}
-                onChange={this.handleChange('description')}
+                placeholder={party.description}
+                // value={party.description || ''}
+                onChange={this.handleChange}
               />
             </FormControl>
 
             <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="location">Location</InputLabel>
+              {/* <InputLabel htmlFor="location">Location</InputLabel> */}
               <Input
                 id="location"
+                label="location"
                 name="location"
-                value={party.location || ''}
-                onChange={this.handleChange('location')}
+                // value={party.location || ''}
+                placeholder={party.location}
+                onChange={this.handleChange}
                 />
             </FormControl>
 
@@ -130,7 +160,7 @@ class EditParty extends Component {
                 id="date"
                 label="Date"
                 type="datetime-local"
-                onChange={this.handleChange('date')}
+                onChange={this.handleChange}
                 defaultValue={moment(party.date).format('YYYY-MM-DDTHH:mm')}
                 className={classes.textField}
                 InputLabelProps={{
@@ -145,25 +175,22 @@ class EditParty extends Component {
             </ExpansionPanelSummary>
             {
               this.props.guests.map(guest =>
-              <ExpansionPanelDetails
-               key={guest.id}
-              >
-            <TextField
+                <ExpansionPanelDetails
+                key={guest.id}
+                >
+             <TextField
                 key={guest.id}
                 className={classes.textField}
-                value={guest.email}
-            />
-              <ListItemSecondaryAction>
-                <Checkbox
-                  onChange={this.handleToggle}
-                />
-              </ListItemSecondaryAction>
-            </ExpansionPanelDetails>
-
-               )
+                // value={guest.email}
+                placeholder={guest.email}
+              />
+              <IconButton onClick={this.handleDelete}>
+                  <Delete className={classes.icon} />
+              </IconButton>
+             </ExpansionPanelDetails>
+              )
              }
             </ExpansionPanel>
-
             <Button
               type="submit"
               fullWidth
@@ -186,7 +213,9 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
   getParty: partyId => dispatch(getParty(partyId)),
-  getGuests: partyId => dispatch(getGuests(partyId))
+  getGuests: partyId => dispatch(getGuests(partyId)),
+  deleteGuest: guestId => dispatch(deleteGuest(guestId)),
+  putParty: party => dispatch(putParty(party))
 })
 
 export default connect(mapState, mapDispatch)(withStyles(styles)(EditParty))

@@ -33,8 +33,6 @@ export const getGuests = partyId => {
   return async dispatch => {
     try {
       const {data} = await axios.get(`/api/parties/${partyId}/guests`)
-      console.log("in the thunk", data)
-
       dispatch(setGuests(data))
     } catch (error) {
       console.error(error)

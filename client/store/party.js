@@ -63,6 +63,7 @@ export const postParty = ({info, guestEmails}) => {
 export const putParty = party => {
   return async dispatch => {
     try {
+      console.log("in the thunk", party)
       const {data} = await axios.put(`/api/parties/${party.id}`, party)
       dispatch(editParty(data))
       history.push(`/parties/${data.id}`)
