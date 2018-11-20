@@ -12,7 +12,7 @@ import {
 import PropTypes from 'prop-types'
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline'
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline'
-
+import Card from '@material-ui/core/Card'
 import {AddItem} from '../components'
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
 
@@ -56,10 +56,9 @@ class ItemList extends Component {
 
   render() {
     const {guest, items} = this.props
-    console.log('guest in list: ', items)
 
     return (
-      <ExpansionPanelDetails>
+      <Card>
         <List>
           {items.map(item => (
             <ListItem key={item.id}>
@@ -91,15 +90,15 @@ class ItemList extends Component {
               </ListItemSecondaryAction>
             </ListItem>
           ))}
+          {this.state.showAddItem && <AddItem />}
           <Button
             className={this.props.classes.button}
             onClick={this.toggleAddItem}
           >
             Add Item
           </Button>
-          {this.state.showAddItem && <AddItem />}
         </List>
-      </ExpansionPanelDetails>
+      </Card>
     )
   }
 }

@@ -24,6 +24,9 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
 import Typography from '@material-ui/core/Typography'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import Checkbox from '@material-ui/core/Checkbox'
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank'
+import CheckBoxIcon from '@material-ui/icons/CheckBox'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
@@ -31,6 +34,7 @@ import ListItemText from '@material-ui/core/ListItemText'
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import Switch from '@material-ui/core/Switch'
 import green from '@material-ui/core/colors/green'
+import red from '@material-ui/core/colors/red'
 import Radio from '@material-ui/core/Radio'
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked'
 import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked'
@@ -42,26 +46,28 @@ const styles = theme => ({
   input: {
     display: 'none'
   },
-  root: {
-    width: '100%',
-    // maxWidth: 360,
-    backgroundColor: theme.palette.background.paper,
+  green: {
     color: green[600],
     '&$checked': {
       color: green[500]
     }
   },
+  red: {
+    color: red[600],
+    '&$checked': {
+      color: red[500]
+    }
+  },
+  checked: {},
   media: {
     height: 0,
     paddingTop: '56.25%' // 16:9
-  },
-
-  checked: {}
+  }
 })
 
 class SingleParty extends Component {
   state = {
-    selectedValue: this.props.guestStatus
+    selectedValue: 'invited'
   }
 
   componentDidMount() {
@@ -73,8 +79,14 @@ class SingleParty extends Component {
 
     if (guestPartyToken) this.props.getGuestStatus(guestPartyToken, partyId)
   }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.guestStatus !== prevProps.guestStatus) {
+      this.setState({selectedValue: this.props.guestStatus})
+    }
+  }
   handleChange = event => {
-    const rsvp = event.target.value
+    const rsvp = event.target.name
     this.setState({selectedValue: rsvp})
     const {guestPartyToken} = this.props.match.params
     this.props.putGuestStatus(guestPartyToken, rsvp)
@@ -127,23 +139,28 @@ class SingleParty extends Component {
                   <ListItemText primary="Are you attending?" />
                   <ListItemSecondaryAction>
                     <div>
-                      <Radio
+                      <Checkbox
                         checked={this.state.selectedValue === 'attending'}
                         onChange={this.handleChange}
-                        value="attending"
-                        name="radio-button-demo"
+                        value={this.state.selectedValue}
+                        name="attending"
                         aria-label="C"
                         classes={{
-                          root: classes.root,
+                          root: classes.green,
                           checked: classes.checked
                         }}
                       />
-                      <Radio
+
+                      <Checkbox
                         checked={this.state.selectedValue === 'declined'}
                         onChange={this.handleChange}
-                        value="declined"
-                        color="default"
-                        name="radio-button-demo"
+                        value={this.state.selectedValue}
+                        name="declined"
+                        color="primary"
+                        classes={{
+                          root: classes.red,
+                          checked: classes.checked
+                        }}
                         aria-label="D"
                       />
                     </div>
