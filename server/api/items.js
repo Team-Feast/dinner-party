@@ -47,8 +47,12 @@ router.post('/', async (req, res, next) => {
       description,
       partyId
     })
+    const newItemWithGuest = await Item.findOne({
+      where: {id: newItem.id},
+      include: [Guest]
+    })
 
-    res.json(newItem)
+    res.json(newItemWithGuest)
   } catch (error) {
     next(error)
   }
