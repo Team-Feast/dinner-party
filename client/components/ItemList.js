@@ -10,14 +10,13 @@ import {
   withStyles
 } from '@material-ui/core'
 import PropTypes from 'prop-types'
-import CommentIcon from '@material-ui/icons/Comment'
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline'
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline'
 
 import {AddItem} from '../components'
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
 
-import {postItem} from '../store'
+import {putItem} from '../store'
 
 const styles = theme => ({
   button: {
@@ -39,22 +38,26 @@ class ItemList extends Component {
 
   toggleAddGuestToItem = item => {
     if (this.props.guest) {
-      this.props.postItem({...item, guestId: this.props.guest.id})
+      this.props.putItem({...item, guestId: this.props.guest.id})
     } else {
+      //TODO error control
       console.log('ERROR: YOU CANNOT DO THIS')
     }
   }
 
   toggleRemoveGuestFromItem = item => {
     if (this.props.guest) {
-      this.props.postItem({...item, guestId: null})
+      this.props.putItem({...item, guestId: null})
     } else {
+      //TODO error control
       console.log('ERROR: YOU CANNOT DO THIS')
     }
   }
 
   render() {
     const {guest, items} = this.props
+    console.log('guest in list: ', items)
+
     return (
       <ExpansionPanelDetails>
         <List>
@@ -66,14 +69,10 @@ class ItemList extends Component {
                 }`}
               />
               <ListItemSecondaryAction>
-                {/* <IconButton aria-label="Comments">
-                  <CommentIcon />
-                </IconButton> */}
                 {item.guest && guest ? (
                   item.guest.id === guest.id ? (
                     <IconButton
                       aria-label="Remove"
-                      value={item.id}
                       onClick={this.toggleRemoveGuestFromItem.bind(this, item)}
                     >
                       <RemoveCircleOutlineIcon />
@@ -84,7 +83,6 @@ class ItemList extends Component {
                 ) : (
                   <IconButton
                     aria-label="Add"
-                    value={item.id}
                     onClick={this.toggleAddGuestToItem.bind(this, item)}
                   >
                     <AddCircleOutlineIcon />
@@ -111,7 +109,7 @@ ItemList.propTypes = {
 }
 
 const mapDispatchToProps = dispatch => ({
-  postItem: item => dispatch(postItem(item))
+  putItem: item => dispatch(putItem(item))
 })
 
 export default connect(null, mapDispatchToProps)(withStyles(styles)(ItemList))
