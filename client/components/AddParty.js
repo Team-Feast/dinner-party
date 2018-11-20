@@ -72,7 +72,7 @@ class AddParty extends Component {
             <LockIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Create Event
+            Create Feast
           </Typography>
           <form className={classes.form} onSubmit={this.handleSubmit}>
             <FormControl margin="normal" required fullWidth>

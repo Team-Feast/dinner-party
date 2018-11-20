@@ -106,9 +106,12 @@ class Navbar extends Component {
                               <div>
                                 <MenuItem onClick={this.handleClose}>
                                   <Link to="/">Home</Link>
+                                </MenuItem>{' '}
+                                <MenuItem onClick={this.handleClose}>
+                                  <Link to="/addparty">Create Feast</Link>
                                 </MenuItem>
                                 <MenuItem onClick={this.handleClose}>
-                                  <Link to="/home">My Events</Link>
+                                  <Link to="/home">My Feasts</Link>
                                 </MenuItem>
                                 <MenuItem
                                   onClick={() => {
