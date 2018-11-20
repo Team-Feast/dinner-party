@@ -43,9 +43,9 @@ const styles = theme => ({
     display: 'none'
   },
   root: {
-    width: '100%',
-    // maxWidth: 360,
-    backgroundColor: theme.palette.background.paper,
+    // width: '100%',
+    // // maxWidth: 360,
+    // backgroundColor: theme.palette.background.paper,
     color: green[600],
     '&$checked': {
       color: green[500]
@@ -61,7 +61,7 @@ const styles = theme => ({
 
 class SingleParty extends Component {
   state = {
-    selectedValue: this.props.guestStatus
+    selectedValue: 'invited'
   }
 
   componentDidMount() {
@@ -73,8 +73,14 @@ class SingleParty extends Component {
 
     if (guestPartyToken) this.props.getGuestStatus(guestPartyToken, partyId)
   }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.guestStatus !== prevProps.guestStatus) {
+      this.setState({selectedValue: this.props.guestStatus})
+    }
+  }
   handleChange = event => {
-    const rsvp = event.target.value
+    const rsvp = event.target.name
     this.setState({selectedValue: rsvp})
     const {guestPartyToken} = this.props.match.params
     this.props.putGuestStatus(guestPartyToken, rsvp)
@@ -130,8 +136,9 @@ class SingleParty extends Component {
                       <Radio
                         checked={this.state.selectedValue === 'attending'}
                         onChange={this.handleChange}
-                        value="attending"
-                        name="radio-button-demo"
+                        value={this.state.selectedValue}
+                        name="attending"
+                        color="green"
                         aria-label="C"
                         classes={{
                           root: classes.root,
@@ -141,9 +148,9 @@ class SingleParty extends Component {
                       <Radio
                         checked={this.state.selectedValue === 'declined'}
                         onChange={this.handleChange}
-                        value="declined"
-                        color="default"
-                        name="radio-button-demo"
+                        value={this.state.selectedValue}
+                        color="red"
+                        name="declined"
                         aria-label="D"
                       />
                     </div>
