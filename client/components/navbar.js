@@ -67,7 +67,7 @@ class Navbar extends Component {
         <AppBar className={classes.root} position="sticky">
           <Toolbar>
             <Grid container justify="space-between">
-              <Grid item>
+              <Grid item component={Link} to="/">
                 <img className={classes.media} src="/images/logo-full.jpg" />
               </Grid>
               <Grid item>
