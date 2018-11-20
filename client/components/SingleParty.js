@@ -93,9 +93,7 @@ class SingleParty extends Component {
     } = this.props.party
 
     const {guests, items} = this.props
-
     const {guestPartyToken} = this.props.match.params
-
     const {classes} = this.props
 
     if (!this.props.party.id) {

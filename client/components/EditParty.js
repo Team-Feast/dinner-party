@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, {Component, Fragment} from 'react'
 import {connect} from 'react-redux'
 import Button from '@material-ui/core/Button'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -9,12 +9,13 @@ import Avatar from '@material-ui/core/Avatar'
 import InputLabel from '@material-ui/core/InputLabel'
 import Input from '@material-ui/core/Input'
 import Paper from '@material-ui/core/Paper'
-import { withStyles } from '@material-ui/core';
+import {withStyles} from '@material-ui/core'
 import PropTypes from 'prop-types'
 import TextField from '@material-ui/core/TextField'
 import moment from 'moment'
-import {getParty, getGuests} from '../store/'
+import CardMedia from '@material-ui/core/CardMedia'
 
+import {getParty, getGuests} from '../store/'
 
 const styles = theme => ({
   paper: {
@@ -35,11 +36,15 @@ const styles = theme => ({
   },
   submit: {
     marginTop: theme.spacing.unit * 3
-  }
+  },
+  media: {
+    height: 0,
+    paddingTop: '56.25%' // 16:9
+  },
 })
 
 class EditParty extends Component {
-  constructor(){
+  constructor() {
     super()
     this.state = {
       title: '',
@@ -49,13 +54,13 @@ class EditParty extends Component {
     }
   }
 
-  componentDidMount(){
+  componentDidMount() {
     const id = Number(this.props.match.params.id)
     this.props.getParty(id)
     this.props.getGuests(id)
   }
 
-  handleChange = name => event =>{
+  handleChange = name => event => {
     this.setState({
       [name]: event.target.value
     })
@@ -64,48 +69,52 @@ class EditParty extends Component {
   render() {
     const {classes} = this.props
     const {party} = this.props
-    console.log("in the component", this.props)
+    console.log('in the component', this.props)
     return (
       <Fragment>
         <CssBaseline />
         <Paper className={classes.paper}>
           <Avatar className={classes.avatar}>
-            <LockIcon />
+            {/* <LockIcon /> */}
           </Avatar>
           <Typography component="h1" variant="h5">
             Edit Event
           </Typography>
 
+        <CardMedia image={party.imageUrl} />
           <form className={classes.form} onSubmit={this.handleSubmit}>
 
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="title">Title</InputLabel>
-            <Input id="title" name="title"
-            value={party.title}
-            onChange={this.handleChange('title')}
-            />
-          </FormControl>
+            <FormControl margin="normal" required fullWidth>
+              <InputLabel htmlFor="title">Title</InputLabel>
+              <Input
+                id="title"
+                name="title"
+                value={party.title || ''}
+                onChange={this.handleChange('title')}
+              />
+            </FormControl>
 
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="description">Description</InputLabel>
-            <Input
-            id="description"
-            name="description"
-            value={party.description}
-            onChange={this.handleChange('description')}
-            />
-          </FormControl>
+            <FormControl margin="normal" required fullWidth>
+              <InputLabel htmlFor="description">Description</InputLabel>
+              <Input
+                id="description"
+                name="description"
+                value={party.description || ''}
+                onChange={this.handleChange('description')}
+              />
+            </FormControl>
 
-          <FormControl  fullWidth>
-            {/* <InputLabel htmlFor="location">Location</InputLabel> */}
-            <TextField
+            <FormControl margin="normal" required fullWidth>
+              <InputLabel htmlFor="location">Location</InputLabel>
+              <Input
                 id="location"
-                label="location"
-                className={classes.textField}
-                value={party.location}  />
-          </FormControl>
+                name="location"
+                value={party.location || ''}
+                onChange={this.handleChange('location')}
+                />
+            </FormControl>
 
-          <FormControl>
+            <FormControl>
               <TextField
                 id="date"
                 label="Date"
@@ -118,6 +127,18 @@ class EditParty extends Component {
                 }}
               />
             </FormControl>
+            <FormControl margin="normal" required >
+
+            {
+              this.props.guests.map(guest =>
+              <TextField
+                // id="Guests"
+                key={guest.id}
+                className={classes.textField}
+                value={guest.email}
+              />)
+            }
+            </FormControl>
 
             <Button
               type="submit"
@@ -125,13 +146,12 @@ class EditParty extends Component {
               variant="contained"
               color="primary"
               className={classes.submit}
-            >
-              Submit
+            >Submit
             </Button>
           </form>
         </Paper>
       </Fragment>
-    );
+    )
   }
 }
 
@@ -143,12 +163,9 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
   getParty: partyId => dispatch(getParty(partyId)),
   getGuests: partyId => dispatch(getGuests(partyId))
-
 })
 
-export default connect(mapState, mapDispatch)(
-  withStyles(styles)(EditParty)
-)
+export default connect(mapState, mapDispatch)(withStyles(styles)(EditParty))
 
 EditParty.PropTypes = {
   classes: PropTypes.object.isRequired
