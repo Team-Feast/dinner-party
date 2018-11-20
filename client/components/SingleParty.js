@@ -108,7 +108,9 @@ class SingleParty extends Component {
               title={title}
               subheader={moment(date).format('MMMM Do YYYY, h:mm')}
             />
-            <CardMedia className={classes.media} image={imageUrl} />
+            {imageUrl && (
+              <CardMedia className={classes.media} image={imageUrl} />
+            )}
             <List>
               <ListItem button>
                 <ListItemText primary={location} />
