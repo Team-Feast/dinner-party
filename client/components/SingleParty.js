@@ -89,10 +89,11 @@ class SingleParty extends Component {
       status,
       user,
       date,
-      id
+      id,
+      userId
     } = this.props.party
 
-    const {guests, items} = this.props
+    const {guests, items, loggedInUser} = this.props
 
     const {guestPartyToken} = this.props.match.params
 
@@ -106,14 +107,22 @@ class SingleParty extends Component {
           <Card className={classes.card}>
             <CardHeader
               title={title}
-              subheader={moment(date).format('MMMM Do YYYY, h:mm')}
+              subheader={`hosted by ${user.firstName} ${user.lastName}`}
             />
-            <CardMedia className={classes.media} image={imageUrl} />
+            {imageUrl && (
+              <CardMedia className={classes.media} image={imageUrl} />
+            )}
+            <CardContent>
+              <Typography component="p">{description}</Typography>
+            </CardContent>
             <List>
               <ListItem button>
-                <ListItemText primary={location} />
+                <ListItemText
+                  primary={moment(date).format('MMMM Do YYYY, h:mm A')}
+                  secondary={location}
+                />
               </ListItem>
-              {guestPartyToken && (
+              {(userId === loggedInUser.id || guestPartyToken) && (
                 <ListItem>
                   <ListItemText primary="Are you attending?" />
                   <ListItemSecondaryAction>
@@ -175,7 +184,8 @@ const mapState = state => ({
   party: state.party,
   guests: state.guests,
   items: state.items,
-  guestStatus: state.guestStatus
+  guestStatus: state.guestStatus,
+  loggedInUser: state.user
 })
 
 const mapDispatch = dispatch => ({

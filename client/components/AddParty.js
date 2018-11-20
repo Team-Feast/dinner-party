@@ -54,9 +54,11 @@ class AddParty extends Component {
     const userId = this.props.user.id
     const info = {title, description, location, date, imageUrl, userId}
 
+    //if email field left empty, sends empty array
     const guestEmails = evt.target.emails.value
-      .split(',')
-      .map(email => email.trim())
+      ? evt.target.emails.value.split(',').map(email => email.trim())
+      : []
+
     await this.props.postParty({info, guestEmails})
   }
 
@@ -70,7 +72,7 @@ class AddParty extends Component {
             <LockIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Create Event
+            Create Feast
           </Typography>
           <form className={classes.form} onSubmit={this.handleSubmit}>
             <FormControl margin="normal" required fullWidth>
@@ -88,7 +90,7 @@ class AddParty extends Component {
               <Input name="location" id="location" />
             </FormControl>
 
-            <FormControl margin="normal" required fullWidth>
+            <FormControl margin="normal" fullWidth>
               <InputLabel htmlFor="imageUrl">Image URL</InputLabel>
               <Input type="url" name="imageUrl" id="imageUrl" />
             </FormControl>
@@ -106,9 +108,9 @@ class AddParty extends Component {
               />
             </FormControl>
 
-            <FormControl margin="normal" required fullWidth>
+            <FormControl margin="normal" fullWidth>
               <InputLabel htmlFor="location">
-                Guest Emails (separated by ,)
+                Guest Emails (separated by , )
               </InputLabel>
               <Input type="text" name="emails" id="emails" />
             </FormControl>
