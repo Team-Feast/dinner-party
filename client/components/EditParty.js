@@ -24,6 +24,7 @@ import IconButton from '@material-ui/core/IconButton'
 
 import {getParty, getGuests, deleteGuest, putParty} from '../store/'
 import { isThisSecond } from 'date-fns';
+import { CardHeader } from 'material-ui';
 
 const styles = theme => ({
   paper: {
@@ -107,7 +108,8 @@ class EditParty extends Component {
     const {party} = this.props
     return (
       <Fragment>
-        <CssBaseline />
+        <CssBaseline /> 
+
         <CardMedia image={party.imageUrl} />
         <Paper className={classes.paper}>
           <Typography component="h1" variant="h5">

@@ -9,6 +9,7 @@ import {
 } from '../store'
 import {GuestList, ItemList} from '../components'
 import moment from 'moment'
+import history from '../history'
 
 // MATERIAL UI IMPORTS
 import PropTypes from 'prop-types'
@@ -34,6 +35,7 @@ import green from '@material-ui/core/colors/green'
 import Radio from '@material-ui/core/Radio'
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked'
 import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked'
+import Create from '@material-ui/icons/Create'
 
 const styles = theme => ({
   button: {
@@ -105,8 +107,13 @@ class SingleParty extends Component {
         <Fragment>
           <Card className={classes.card}>
             <CardHeader
-              title={title}
-              subheader={`hosted by ${user.firstName} ${user.lastName}`}
+            action={
+              <IconButton onClick={() => history.push(`/parties/${id}/editparty`) }>
+                <Create className={classes.icon} />
+              </IconButton>
+            }
+            title={title}
+            subheader={`hosted by ${user.firstName} ${user.lastName}`}
             />
             {imageUrl && (
               <CardMedia className={classes.media} image={imageUrl} />
