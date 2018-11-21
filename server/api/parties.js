@@ -50,7 +50,12 @@ router.post('/', async (req, res, next) => {
       userId: req.body.info.userId,
       imageUrl: req.body.info.imageUrl
     })
-    res.json(newParty)
+    const newPartyWithUser = await Party.findOne({
+      where: {id: newParty.id},
+      include: [User]
+    })
+
+    res.json(newPartyWithUser)
   } catch (err) {
     next(err)
   }

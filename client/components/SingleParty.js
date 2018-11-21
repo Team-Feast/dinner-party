@@ -112,6 +112,8 @@ class SingleParty extends Component {
     const {guestPartyToken} = this.props.match.params
     const {classes} = this.props
 
+    console.log(this.props.party)
+    console.log('props', this.props)
     if (!this.props.party.id) {
       return null
     } else {
@@ -142,7 +144,7 @@ class SingleParty extends Component {
                   secondary={location}
                 />
               </ListItem>
-              {(userId === loggedInUser.id || guestPartyToken) && (
+              {guestPartyToken && (
                 <ListItem>
                   <ListItemText primary="Are you attending?" />
                   <ListItemSecondaryAction>
