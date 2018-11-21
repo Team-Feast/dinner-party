@@ -41,6 +41,12 @@ const styles = theme => ({
   icon: {
     margin: theme.spacing.unit
     // fontSize: 32
+  },
+  column: {
+    flexBasis: '33.33%'
+  },
+  details: {
+    alignItems: 'center'
   }
 })
 
@@ -138,13 +144,17 @@ class AllParties extends Component {
                         component={Link}
                         to={`/parties/${party.partyId}`}
                       >
-                        <Avatar src={`${party.party.imageUrl}`} />
-                        <ListItemText primary={`${party.party.title}`} />
-                        <ListItemText
-                          secondary={`${moment(party.party.date).format(
-                            'LLLL'
-                          )}`}
-                        />
+                        <div className={classes.column}>
+                          <Avatar src={`${party.party.imageUrl}`} />
+                          <ListItemText primary={`${party.party.title}`} />
+                        </div>
+                        <div className={classes.column}>
+                          <ListItemText
+                            secondary={`${moment(party.party.date).format(
+                              'LLLL'
+                            )}`}
+                          />
+                        </div>
                       </ListItem>
                     ))}
                   </List>
@@ -164,11 +174,15 @@ class AllParties extends Component {
                         component={Link}
                         to={`/parties/${party.id}`}
                       >
-                        <Avatar src={`${party.imageUrl}`} />
-                        <ListItemText primary={`${party.title}`} />
-                        <ListItemText
-                          secondary={`${moment(party.date).format('LLLL')}`}
-                        />
+                        <div className={classes.column}>
+                          <Avatar src={`${party.imageUrl}`} />
+                          <ListItemText primary={`${party.title}`} />
+                        </div>
+                        <div className={classes.column}>
+                          <ListItemText
+                            secondary={`${moment(party.date).format('LLLL')}`}
+                          />
+                        </div>
                       </ListItem>
                     ))}
                   </List>
