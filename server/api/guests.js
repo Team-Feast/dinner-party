@@ -39,12 +39,15 @@ router.put('/:id', async (req, res, next) => {
 
 router.post('/', async function(req, res, next) {
   try {
-    const data = await Guest.findOrCreate({
-      where: {
-        email: req.body.email,
-        partyId: req.body.partyId
-      }
+    const user = await User.find({where: {email: req.body.email}})
+
+    const data = await Guest.create({
+      email: req.body.email,
+      partyId: req.body.partyId,
+      userId: user ? user.id : null,
+      status: user ? 'attending' : null
     })
+
     res.json(data)
   } catch (err) {
     next(err)

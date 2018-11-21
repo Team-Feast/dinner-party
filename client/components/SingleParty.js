@@ -119,13 +119,15 @@ class SingleParty extends Component {
         <Fragment>
           <Card className={classes.card}>
             <CardHeader
-            action={
-              <IconButton onClick={() => history.push(`/parties/${id}/editparty`) }>
-                <Create className={classes.icon} />
-              </IconButton>
-            }
-            title={title}
-            subheader={`hosted by ${user.firstName} ${user.lastName}`}
+              action={
+                <IconButton
+                  onClick={() => history.push(`/parties/${id}/editparty`)}
+                >
+                  <Create className={classes.icon} />
+                </IconButton>
+              }
+              title={title}
+              subheader={`hosted by ${user.firstName} ${user.lastName}`}
             />
             {imageUrl && (
               <CardMedia className={classes.media} image={imageUrl} />
@@ -140,7 +142,7 @@ class SingleParty extends Component {
                   secondary={location}
                 />
               </ListItem>
-              {(userId === loggedInUser.id || guestPartyToken) && (
+              {guestPartyToken && (
                 <ListItem>
                   <ListItemText primary="Are you attending?" />
                   <ListItemSecondaryAction>

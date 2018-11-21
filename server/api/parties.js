@@ -50,8 +50,12 @@ router.post('/', async (req, res, next) => {
       userId: req.body.info.userId,
       imageUrl: req.body.info.imageUrl
     })
+    const newPartyWithUser = await Party.findOne({
+      where: {id: newParty.id},
+      include: [User]
+    })
 
-    res.json(newParty)
+    res.json(newPartyWithUser)
   } catch (err) {
     next(err)
   }
@@ -68,11 +72,11 @@ router.get('/rsvp/:guestPartyToken', async (req, res, next) => {
 })
 
 router.put('/:id', async (req, res, next) => {
-  try{
+  try {
     let party = await Party.findById(req.params.id)
-    let result  = await party.update(req.body)
+    let result = await party.update(req.body)
     res.json(result)
-  }catch(err){
+  } catch (err) {
     next(err)
   }
 })
