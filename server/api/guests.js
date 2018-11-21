@@ -4,6 +4,7 @@ const Party = require('../db/models/party')
 const User = require('../db/models/user')
 const nodemailer = require('nodemailer')
 const moment = require('moment')
+const sanitizeHtml = require('sanitize-html')
 
 // GET /api/guests/
 router.get('/', async (req, res, next) => {
@@ -74,17 +75,19 @@ router.post('/:id/invite', async function(req, res, next) {
         to: guest.email,
         from: '1809teamfeast@gmail.com',
         subject: "You're Invited",
-        text: `You are receiving this because you have been invited by ${
-          user.firstName
-        } ${user.lastName} to ${title} through Feast! It's on ${moment(
-          date
-        ).format(
-          'LLLL'
-        )} at ${location}. Use the attached link to accept or decline your invitation. \n\nhttp://${
-          req.headers.host
-        }/parties/${guest.partyId}/rsvp/${
-          guest.guestPartyToken
-        }\n\nIf you did not request this, please ignore this email.`
+        text: sanitizeHtml(
+          `You are receiving this because you have been invited by ${
+            user.firstName
+          } ${user.lastName} to ${title} through Feast! It's on ${moment(
+            date
+          ).format(
+            'LLLL'
+          )} at ${location}. Use the attached link to accept or decline your invitation. \n\nhttp://${
+            req.headers.host
+          }/parties/${guest.partyId}/rsvp/${
+            guest.guestPartyToken
+          }\n\nIf you did not request this, please ignore this email.`
+        )
       }
       transporter.sendMail(mailOptions, function(err) {
         err ? next(err) : res.sendStatus(200)

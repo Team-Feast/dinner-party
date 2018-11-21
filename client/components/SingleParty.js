@@ -9,6 +9,7 @@ import {
 } from '../store'
 import {GuestList, ItemList} from '../components'
 import moment from 'moment'
+import history from '../history'
 
 // MATERIAL UI IMPORTS
 import PropTypes from 'prop-types'
@@ -24,6 +25,9 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
 import Typography from '@material-ui/core/Typography'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import Checkbox from '@material-ui/core/Checkbox'
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank'
+import CheckBoxIcon from '@material-ui/icons/CheckBox'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
@@ -31,9 +35,11 @@ import ListItemText from '@material-ui/core/ListItemText'
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import Switch from '@material-ui/core/Switch'
 import green from '@material-ui/core/colors/green'
+import red from '@material-ui/core/colors/red'
 import Radio from '@material-ui/core/Radio'
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked'
 import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked'
+import Create from '@material-ui/icons/Create'
 
 const styles = theme => ({
   button: {
@@ -42,26 +48,28 @@ const styles = theme => ({
   input: {
     display: 'none'
   },
-  root: {
-    width: '100%',
-    // maxWidth: 360,
-    backgroundColor: theme.palette.background.paper,
+  green: {
     color: green[600],
     '&$checked': {
       color: green[500]
     }
   },
+  red: {
+    color: red[600],
+    '&$checked': {
+      color: red[500]
+    }
+  },
+  checked: {},
   media: {
     height: 0,
     paddingTop: '56.25%' // 16:9
-  },
-
-  checked: {}
+  }
 })
 
 class SingleParty extends Component {
   state = {
-    selectedValue: this.props.guestStatus
+    selectedValue: 'invited'
   }
 
   componentDidMount() {
@@ -73,8 +81,14 @@ class SingleParty extends Component {
 
     if (guestPartyToken) this.props.getGuestStatus(guestPartyToken, partyId)
   }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.guestStatus !== prevProps.guestStatus) {
+      this.setState({selectedValue: this.props.guestStatus})
+    }
+  }
   handleChange = event => {
-    const rsvp = event.target.value
+    const rsvp = event.target.name
     this.setState({selectedValue: rsvp})
     const {guestPartyToken} = this.props.match.params
     this.props.putGuestStatus(guestPartyToken, rsvp)
@@ -89,13 +103,13 @@ class SingleParty extends Component {
       status,
       user,
       date,
-      id
+      id,
+      userId
     } = this.props.party
 
-    const {guests, items} = this.props
+    const {guests, items, loggedInUser} = this.props
 
     const {guestPartyToken} = this.props.match.params
-
     const {classes} = this.props
 
     if (!this.props.party.id) {
@@ -105,36 +119,54 @@ class SingleParty extends Component {
         <Fragment>
           <Card className={classes.card}>
             <CardHeader
-              title={title}
-              subheader={moment(date).format('MMMM Do YYYY, h:mm')}
+            action={
+              <IconButton onClick={() => history.push(`/parties/${id}/editparty`) }>
+                <Create className={classes.icon} />
+              </IconButton>
+            }
+            title={title}
+            subheader={`hosted by ${user.firstName} ${user.lastName}`}
             />
-            <CardMedia className={classes.media} image={imageUrl} />
+            {imageUrl && (
+              <CardMedia className={classes.media} image={imageUrl} />
+            )}
+            <CardContent>
+              <Typography component="p">{description}</Typography>
+            </CardContent>
             <List>
               <ListItem button>
-                <ListItemText primary={location} />
+                <ListItemText
+                  primary={moment(date).format('MMMM Do YYYY, h:mm A')}
+                  secondary={location}
+                />
               </ListItem>
-              {guestPartyToken && (
+              {(userId === loggedInUser.id || guestPartyToken) && (
                 <ListItem>
                   <ListItemText primary="Are you attending?" />
                   <ListItemSecondaryAction>
                     <div>
-                      <Radio
+                      <Checkbox
                         checked={this.state.selectedValue === 'attending'}
                         onChange={this.handleChange}
-                        value="attending"
-                        name="radio-button-demo"
+                        value={this.state.selectedValue}
+                        name="attending"
                         aria-label="C"
                         classes={{
-                          root: classes.root,
+                          root: classes.green,
                           checked: classes.checked
                         }}
                       />
-                      <Radio
+
+                      <Checkbox
                         checked={this.state.selectedValue === 'declined'}
                         onChange={this.handleChange}
-                        value="declined"
-                        color="default"
-                        name="radio-button-demo"
+                        value={this.state.selectedValue}
+                        name="declined"
+                        color="primary"
+                        classes={{
+                          root: classes.red,
+                          checked: classes.checked
+                        }}
                         aria-label="D"
                       />
                     </div>
@@ -158,7 +190,12 @@ class SingleParty extends Component {
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
               <Typography className={classes.heading}>Items</Typography>
             </ExpansionPanelSummary>
-            <ItemList items={items} />
+            <ItemList
+              items={items}
+              guest={guests.find(guest => {
+                return guest.guestPartyToken === guestPartyToken
+              })}
+            />
           </ExpansionPanel>
         </Fragment>
       )
@@ -170,7 +207,8 @@ const mapState = state => ({
   party: state.party,
   guests: state.guests,
   items: state.items,
-  guestStatus: state.guestStatus
+  guestStatus: state.guestStatus,
+  loggedInUser: state.user
 })
 
 const mapDispatch = dispatch => ({

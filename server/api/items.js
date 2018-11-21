@@ -16,7 +16,8 @@ router.put('/:id', async (req, res, next) => {
   try {
     let item = await Item.findById(req.params.id)
     let result = await item.update(req.body)
-    res.json(result)
+    let data = await Item.findById(result.id, {include: [Guest]})
+    res.json(data)
   } catch (err) {
     next(err)
   }
@@ -46,8 +47,12 @@ router.post('/', async (req, res, next) => {
       description,
       partyId
     })
+    const newItemWithGuest = await Item.findOne({
+      where: {id: newItem.id},
+      include: [Guest]
+    })
 
-    res.json(newItem)
+    res.json(newItemWithGuest)
   } catch (error) {
     next(error)
   }

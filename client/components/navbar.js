@@ -67,7 +67,7 @@ class Navbar extends Component {
         <AppBar className={classes.root} position="sticky">
           <Toolbar>
             <Grid container justify="space-between">
-              <Grid item>
+              <Grid item component={Link} to="/">
                 <img className={classes.media} src="/images/logo-full.jpg" />
               </Grid>
               <Grid item>
@@ -105,10 +105,25 @@ class Navbar extends Component {
                             {this.props.isLoggedIn ? (
                               <div>
                                 <MenuItem onClick={this.handleClose}>
-                                  <Link to="/">Home</Link>
+                                  <Link to="/" style={{textDecoration: 'none'}}>
+                                    Home
+                                  </Link>
+                                </MenuItem>{' '}
+                                <MenuItem onClick={this.handleClose}>
+                                  <Link
+                                    to="/addparty"
+                                    style={{textDecoration: 'none'}}
+                                  >
+                                    Create Feast
+                                  </Link>
                                 </MenuItem>
                                 <MenuItem onClick={this.handleClose}>
-                                  <Link to="/home">My Events</Link>
+                                  <Link
+                                    to="/home"
+                                    style={{textDecoration: 'none'}}
+                                  >
+                                    My Feasts
+                                  </Link>
                                 </MenuItem>
                                 <MenuItem
                                   onClick={() => {
@@ -122,13 +137,25 @@ class Navbar extends Component {
                             ) : (
                               <div>
                                 <MenuItem onClick={this.handleClose}>
-                                  <Link to="/">Home</Link>
+                                  <Link to="/" style={{textDecoration: 'none'}}>
+                                    Home
+                                  </Link>
                                 </MenuItem>
                                 <MenuItem onClick={this.handleClose}>
-                                  <Link to="/login">Login</Link>
+                                  <Link
+                                    to="/login"
+                                    style={{textDecoration: 'none'}}
+                                  >
+                                    Login
+                                  </Link>
                                 </MenuItem>
                                 <MenuItem onClick={this.handleClose}>
-                                  <Link to="/signup">Sign Up</Link>
+                                  <Link
+                                    to="/signup"
+                                    style={{textDecoration: 'none'}}
+                                  >
+                                    Sign Up
+                                  </Link>
                                 </MenuItem>
                               </div>
                             )}
