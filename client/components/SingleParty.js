@@ -6,11 +6,13 @@ import {
   getGuestStatus,
   getGuests,
   getItems,
+  postToCalendar,
   getImages
 } from '../store'
 import {GuestList, ItemList, Gallery} from '../components'
 import moment from 'moment'
 import history from '../history'
+import axios from 'axios'
 
 // MATERIAL UI IMPORTS
 import PropTypes from 'prop-types'
@@ -41,6 +43,7 @@ import Radio from '@material-ui/core/Radio'
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked'
 import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked'
 import Create from '@material-ui/icons/Create'
+import CalendarToday from '@material-ui/icons/CalendarToday'
 
 const styles = theme => ({
   button: {
@@ -96,6 +99,12 @@ class SingleParty extends Component {
     this.props.putGuestStatus(guestPartyToken, rsvp)
   }
 
+  handleAddToCalendar = async () => {
+    const {loggedInUser, party, guests} = this.props
+    const guest = guests.find(ele => ele.email === loggedInUser.email)
+    this.props.postToCalendar(guest.id, party)
+  }
+
   render() {
     const {
       title,
@@ -114,6 +123,8 @@ class SingleParty extends Component {
     const {guestPartyToken} = this.props.match.params
     const {classes} = this.props
 
+    const guest = guests.find(ele => ele.email === loggedInUser.email)
+
     if (!this.props.party.id) {
       return null
     } else {
@@ -131,18 +142,30 @@ class SingleParty extends Component {
               title={title}
               subheader={`hosted by ${user.firstName} ${user.lastName}`}
             />
-            {imageUrl && (
-              <CardMedia className={classes.media} image={imageUrl} />
-            )}
+            <CardMedia className={classes.media} image={imageUrl} />
             <CardContent>
               <Typography component="p">{description}</Typography>
             </CardContent>
             <List>
-              <ListItem button>
+              <ListItem>
                 <ListItemText
                   primary={moment(date).format('MMMM Do YYYY, h:mm A')}
-                  secondary={location}
                 />
+                {loggedInUser &&
+                loggedInUser.googleToken &&
+                guest &&
+                !guest.onGoogleCalendar ? (
+                  <ListItemSecondaryAction>
+                    <IconButton onClick={this.handleAddToCalendar}>
+                      <CalendarToday className={classes.icon} />
+                    </IconButton>
+                  </ListItemSecondaryAction>
+                ) : (
+                  <span />
+                )}
+              </ListItem>
+              <ListItem>
+                <ListItemText primary={location} />
               </ListItem>
               {guestPartyToken && (
                 <ListItem>
@@ -229,6 +252,7 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => ({
+  postToCalendar: (guestId, party) => dispatch(postToCalendar(guestId, party)),
   getImages: partyId => dispatch(getImages(partyId)),
   getParty: partyId => dispatch(getParty(partyId)),
   getGuests: partyId => dispatch(getGuests(partyId)),

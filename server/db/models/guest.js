@@ -19,6 +19,10 @@ const Guest = db.define('guest', {
   },
   guestPartyToken: {
     type: Sequelize.STRING
+  },
+  onGoogleCalendar: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
   }
 })
 

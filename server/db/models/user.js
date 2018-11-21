@@ -36,6 +36,9 @@ const User = db.define('user', {
   },
   googleId: {
     type: Sequelize.STRING
+  },
+  googleToken: {
+    type: Sequelize.STRING
   }
 })
 

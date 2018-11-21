@@ -31,21 +31,31 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
     googleConfig,
     (token, refreshToken, profile, done) => {
       const googleId = profile.id
-      const name = profile.displayName
+      const name = profile.name
       const email = profile.emails[0].value
 
       User.findOrCreate({
         where: {googleId},
-        defaults: {name, email}
+        defaults: {firstName: name.givenName, lastName: name.familyName, email}
       })
-        .then(([user]) => done(null, user))
+        .then(([user]) => {
+          user.update({googleToken: token})
+          done(null, user)
+        })
         .catch(done)
+
+      User.update({googleToken: token}, {where: {googleId}})
     }
   )
 
   passport.use(strategy)
 
-  router.get('/', passport.authenticate('google', {scope: 'email'}))
+  router.get(
+    '/',
+    passport.authenticate('google', {
+      scope: ['email', 'https://www.googleapis.com/auth/calendar']
+    })
+  )
 
   router.get(
     '/callback',

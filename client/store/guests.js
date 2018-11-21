@@ -6,6 +6,7 @@ const SET_GUESTS = 'SET_GUESTS'
 const ADD_GUEST = 'ADD_GUEST'
 const EDIT_GUEST = 'EDIT_GUEST'
 const REMOVE_GUEST = 'REMOVE_GUEST'
+const ADD_TO_CALENDAR = 'ADD_TO_CALENDAR'
 
 //ACTION CREATORS
 const setGuests = guests => ({
@@ -26,6 +27,11 @@ const editGuest = guest => ({
 const removeGuest = guestId => ({
   type: REMOVE_GUEST,
   guestId
+})
+
+const addToCalendar = guest => ({
+  type: ADD_TO_CALENDAR,
+  guest
 })
 
 //THUNK CREATORS
@@ -73,6 +79,17 @@ export const deleteGuest = guestId => {
   }
 }
 
+export const postToCalendar = (guestId, party) => {
+  return async dispatch => {
+    try {
+      const {data} = await axios.post(`/api/users/${guestId}/calendars`, party)
+      dispatch(addToCalendar(data))
+    } catch (error) {
+      console.error(error)
+    }
+  }
+}
+
 //REDUCER
 export default function(state = [], action) {
   switch (action.type) {
@@ -86,6 +103,10 @@ export default function(state = [], action) {
       )
     case REMOVE_GUEST:
       return state.filter(guest => guest.id !== action.guestId)
+    case ADD_TO_CALENDAR:
+      return state.map(
+        guest => (guest.id !== action.guest.id ? guest : action.guest)
+      )
     default:
       return state
   }
