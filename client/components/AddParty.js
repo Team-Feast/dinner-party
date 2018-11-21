@@ -59,12 +59,16 @@ class AddParty extends Component {
     evt.preventDefault()
 
     const userId = this.props.user.id
+    const userEmail = this.props.user.email
     const info = {...this.state, userId}
-    console.log(info)
-    //if email field left empty, sends empty array
+
+    //adds user as a guest
     const guestEmails = this.state.emails
-      ? this.state.emails.split(',').map(email => email.trim())
-      : []
+      ? this.state.emails
+          .split(',')
+          .concat(userEmail)
+          .map(email => email.trim())
+      : [userEmail]
 
     await this.props.postParty({info, guestEmails})
   }

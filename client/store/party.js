@@ -44,14 +44,16 @@ export const postParty = ({info, guestEmails}) => {
       const {data: party} = await axios.post('/api/parties', {
         info
       })
+      console.log('party:', party)
 
       let email
       const partyId = party.id
       for (let i = 0; i < guestEmails.length; i++) {
         email = guestEmails[i]
-        const {data} = await axios.post('/api/guests/', {email, partyId})
-        await axios.post(`/api/guests/${data[0].id}/invite`)
+        const {data: guest} = await axios.post('/api/guests/', {email, partyId})
+        await axios.post(`/api/guests/${guest.id}/invite`)
       }
+
       dispatch(addParty(party))
       history.push(`/parties/${party.id}`)
     } catch (error) {
