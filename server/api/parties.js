@@ -1,41 +1,6 @@
 const {Party, User, Guest, Item} = require('../db/models')
 const router = require('express').Router()
 const moment = require('moment')
-// const multer = require('multer')
-// const cloudinary = require('cloudinary')
-// const cloudinaryStorage = require('multer-storage-cloudinary')
-
-// const storage = cloudinaryStorage({
-//   cloudinary: cloudinary,
-//   folder: 'parties',
-//   allowedFormats: ['jpg', 'png'],
-//   transformation: [{width: 500, height: 500, crop: 'limit'}]
-// })
-
-// // const storage = multer.diskStorage({
-// //   filename: function(req, file, callback) {
-// //     callback(null, Date.now() + file.originalname)
-// //   }
-// // })
-
-// const parser = multer({storage: storage})
-
-// router.post('/images', parser.single('image'), (req, res, next) => {
-//   try {
-//     console.log(req.file) // to see what is returned to you
-//     const image = {}
-//     image.url = req.file.url
-//     image.id = req.file.public_id
-
-//     res.json(image.url)
-//   } catch (error) {
-//     next(error)
-//   }
-
-//   // cloudinary.uploader.upload(req.file.path, function(error, result) {
-//   //   console.log(result, error)
-//   // })
-// })
 
 router.get('/:id', async (req, res, next) => {
   try {
