@@ -113,6 +113,15 @@ const AuthForm = props => {
             {displayName}
           </Button>
         </form>
+        <Button
+          fullWidth
+          variant="contained"
+          color="primary"
+          className={classes.submit}
+          href="/auth/google"
+        >
+          {displayName} with Google
+        </Button>
       </Paper>
     </Fragment>
   )

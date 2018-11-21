@@ -56,7 +56,6 @@ class ItemList extends Component {
 
   render() {
     const {guest, items} = this.props
-
     return (
       <Card>
         <List>
