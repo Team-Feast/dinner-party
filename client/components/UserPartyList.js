@@ -126,7 +126,13 @@ class AllParties extends Component {
                           secondary={`${moment(party.date).format('LLLL')}`}
                         />
                         <ListItemSecondaryAction>
-                          <Create className={classes.icon} />
+                          <IconButton
+                            onClick={() =>
+                              history.push(`/parties/${party.id}/editparty`)
+                            }
+                          >
+                            <Create className={classes.icon} />
+                          </IconButton>
                         </ListItemSecondaryAction>
                       </ListItem>
                     ))}
