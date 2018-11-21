@@ -5,6 +5,15 @@ import {connect} from 'react-redux'
 
 import {InputLabel, Button, Input} from '@material-ui/core'
 import {List, ListItem, ListItemText} from '@material-ui/core'
+import {withStyles} from '@material-ui/core/styles'
+import CardMedia from '@material-ui/core/CardMedia'
+
+const styles = theme => ({
+  media: {
+    height: 0,
+    paddingTop: '56.25%' // 16:9
+  }
+})
 
 class Gallery extends Component {
   handleUploadFile = async event => {
@@ -22,11 +31,13 @@ class Gallery extends Component {
   }
 
   render() {
+    const {classes} = this.props
     return (
       <List>
-        {this.props.images.map(image => (
+        {this.props.images && this.props.images.map(image => (
           <ListItem key={image.id}>
-            <img src={image.url} />
+            <img src={image.imageUrl} />
+
           </ListItem>
         ))}
 
@@ -54,4 +65,4 @@ const mapDispatchToProps = dispatch => ({
     dispatch(postImage(imageUrl, partyId, guestId))
 })
 
-export default connect(null, mapDispatchToProps)(Gallery)
+export default connect(null, mapDispatchToProps)(withStyles(styles)(Gallery))

@@ -224,7 +224,8 @@ const mapState = state => ({
   guests: state.guests,
   items: state.items,
   guestStatus: state.guestStatus,
-  loggedInUser: state.user
+  loggedInUser: state.user,
+  images: state.images
 })
 
 const mapDispatch = dispatch => ({
