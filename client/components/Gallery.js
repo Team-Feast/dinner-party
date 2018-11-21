@@ -3,6 +3,7 @@ import axios from 'axios'
 import {postImage} from '../store'
 import {connect} from 'react-redux'
 
+import Card from '@material-ui/core/Card'
 import {InputLabel, Button, Input} from '@material-ui/core'
 import {List, ListItem, ListItemText} from '@material-ui/core'
 import {withStyles} from '@material-ui/core/styles'
@@ -16,9 +17,17 @@ const styles = theme => ({
 })
 
 class Gallery extends Component {
+  constructor() {
+    super()
+    this.state = {showAddImage: false}
+  }
+  toggleAddImage = () => {
+    this.setState({showAddImage: !this.state.showAddImage})
+  }
   handleUploadFile = async event => {
     const url = 'https://api.cloudinary.com/v1_1/dhgftlgcc/image/upload'
     const formData = new FormData()
+
     formData.append('file', event.target.files[0])
     formData.append('upload_preset', 'xlji39fe')
     formData.append('api_key', process.env.CLOUDINARY_API_KEY)
@@ -27,35 +36,39 @@ class Gallery extends Component {
         'X-Requested-With': 'XMLHttpRequest'
       }
     })
+
     this.props.postImage(data.url, this.props.partyId, this.props.guest.id)
   }
 
   render() {
     const {classes} = this.props
     return (
-      <List>
-        {this.props.images && this.props.images.map(image => (
-          <ListItem key={image.id}>
-            <img src={image.imageUrl} />
+      <Card>
+        <List>
+          {this.props.images &&
+            this.props.images.map(image => (
+              <ListItem key={image.id}>
+                <img src={image.imageUrl} style={{width: '95vw'}} />
+              </ListItem>
+            ))}
 
-          </ListItem>
-        ))}
-
-        <InputLabel htmlFor="imageUrl">Image URL</InputLabel>
-        <Input
-          type="file"
-          name="imageUrl"
-          accept="image/png, image/jpeg"
-          onChange={this.handleUploadFile}
-          id="imageUrl"
-        />
-        {/* <Button
-        className={this.props.classes.button}
-        onClick={this.toggleAddItem}
-      >
-        Add Item
-      </Button> */}
-      </List>
+          {this.state.showAddImage && (
+            <Input
+              type="file"
+              name="imageUrl"
+              accept="image/png, image/jpeg"
+              onChange={this.handleUploadFile}
+              id="imageUrl"
+            />
+          )}
+          <Button
+            className={this.props.classes.button}
+            onClick={this.toggleAddImage}
+          >
+            Add Image
+          </Button>
+        </List>
+      </Card>
     )
   }
 }
