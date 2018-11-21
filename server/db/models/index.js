@@ -3,9 +3,15 @@ const Party = require('./party')
 const Guest = require('./guest')
 const Item = require('./item')
 const Category = require('./category')
+const Image = require('./image')
 
 Party.belongsTo(User)
 User.hasMany(Party)
+
+Image.belongsTo(Party)
+Party.hasMany(Image)
+Image.belongsTo(Guest)
+Guest.hasMany(Image)
 
 Guest.belongsTo(Party)
 Party.hasMany(Guest)
@@ -38,5 +44,6 @@ module.exports = {
   Party,
   Guest,
   Item,
-  Category
+  Category,
+  Image
 }

@@ -6,9 +6,13 @@ import {
   getGuestStatus,
   getGuests,
   getItems,
+<<<<<<< HEAD
   postToCalendar
+=======
+  getImages
+>>>>>>> master
 } from '../store'
-import {GuestList, ItemList} from '../components'
+import {GuestList, ItemList, Gallery} from '../components'
 import moment from 'moment'
 import history from '../history'
 import axios from 'axios'
@@ -81,6 +85,7 @@ class SingleParty extends Component {
     this.props.getParty(partyId)
     this.props.getGuests(partyId)
     this.props.getItems(partyId)
+    this.props.getImages(partyId)
 
     if (guestPartyToken) this.props.getGuestStatus(guestPartyToken, partyId)
   }
@@ -116,7 +121,7 @@ class SingleParty extends Component {
       userId
     } = this.props.party
 
-    const {guests, items, loggedInUser} = this.props
+    const {guests, items, loggedInUser, images} = this.props
 
     const {guestPartyToken} = this.props.match.params
     const {classes} = this.props
@@ -165,7 +170,7 @@ class SingleParty extends Component {
               <ListItem>
                 <ListItemText primary={location} />
               </ListItem>
-              {(userId === loggedInUser.id || guestPartyToken) && (
+              {guestPartyToken && (
                 <ListItem>
                   <ListItemText primary="Are you attending?" />
                   <ListItemSecondaryAction>
@@ -222,6 +227,18 @@ class SingleParty extends Component {
               })}
             />
           </ExpansionPanel>
+          <ExpansionPanel>
+            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+              <Typography className={classes.heading}>Gallery</Typography>
+            </ExpansionPanelSummary>
+            <Gallery
+              images={images}
+              partyId={id}
+              guest={guests.find(guest => {
+                return guest.guestPartyToken === guestPartyToken
+              })}
+            />
+          </ExpansionPanel>
         </Fragment>
       )
     }
@@ -233,11 +250,13 @@ const mapState = state => ({
   guests: state.guests,
   items: state.items,
   guestStatus: state.guestStatus,
-  loggedInUser: state.user
+  loggedInUser: state.user,
+  images: state.images
 })
 
 const mapDispatch = dispatch => ({
   postToCalendar: (guestId, party) => dispatch(postToCalendar(guestId, party)),
+  getImages: partyId => dispatch(getImages(partyId)),
   getParty: partyId => dispatch(getParty(partyId)),
   getGuests: partyId => dispatch(getGuests(partyId)),
   getItems: partyId => dispatch(getItems(partyId)),

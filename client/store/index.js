@@ -8,6 +8,7 @@ import guests from './guests'
 import parties from './parties'
 import party from './party'
 import guestStatus from './guestStatus'
+import images from './images'
 
 const reducer = combineReducers({
   user,
@@ -15,7 +16,8 @@ const reducer = combineReducers({
   guests,
   party,
   parties,
-  guestStatus
+  guestStatus,
+  images
 })
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
@@ -29,3 +31,4 @@ export * from './guests'
 export * from './items'
 export * from './parties'
 export * from './guestStatus'
+export * from './images'

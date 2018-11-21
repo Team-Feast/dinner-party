@@ -1,23 +1,22 @@
 import React, {Component, Fragment} from 'react'
 import {connect} from 'react-redux'
-import history from '../history'
 import moment from 'moment'
+import axios from 'axios'
 
 import PropTypes from 'prop-types'
-import TextField from '@material-ui/core/TextField'
-import FormControl from '@material-ui/core/FormControl'
-import InputLabel from '@material-ui/core/InputLabel'
-import MenuItem from '@material-ui/core/MenuItem'
-import Button from '@material-ui/core/Button'
-import Input from '@material-ui/core/Input'
-import InputAdornment from '@material-ui/core/InputAdornment'
-import Typography from '@material-ui/core/Typography'
+import {
+  TextField,
+  FormControl,
+  InputLabel,
+  Button,
+  Input,
+  Typography,
+  Paper,
+  CssBaseline,
+  Avatar,
+  withStyles
+} from '@material-ui/core'
 import LockIcon from '@material-ui/icons/LockOutlined'
-import Paper from '@material-ui/core/Paper'
-import CssBaseline from '@material-ui/core/CssBaseline'
-import Avatar from '@material-ui/core/Avatar'
-import classNames from 'classnames'
-import {withStyles} from '@material-ui/core'
 
 import {postParty} from '../store/party'
 
@@ -44,22 +43,53 @@ const styles = theme => ({
 })
 
 class AddParty extends Component {
+  constructor() {
+    super()
+    this.state = {
+      title: '',
+      description: '',
+      location: '',
+      emails: '',
+      date: moment(Date.now()).format('YYYY-MM-DDTHH:mm'),
+      imageUrl: ''
+    }
+  }
+
   handleSubmit = async evt => {
     evt.preventDefault()
-    const title = evt.target.title.value
-    const description = evt.target.description.value
-    const location = evt.target.location.value
-    const date = evt.target.date.value
-    const imageUrl = evt.target.imageUrl.value
-    const userId = this.props.user.id
-    const info = {title, description, location, date, imageUrl, userId}
 
-    //if email field left empty, sends empty array
-    const guestEmails = evt.target.emails.value
-      ? evt.target.emails.value.split(',').map(email => email.trim())
-      : []
+    const userId = this.props.user.id
+    const userEmail = this.props.user.email
+    const info = {...this.state, userId}
+
+    //adds user as a guest
+    const guestEmails = this.state.emails
+      ? this.state.emails
+          .split(',')
+          .concat(userEmail)
+          .map(email => email.trim())
+      : [userEmail]
 
     await this.props.postParty({info, guestEmails})
+  }
+
+  handleChange = event => {
+    this.setState({[event.target.name]: event.target.value})
+  }
+
+  handleUploadFile = async event => {
+    const url = 'https://api.cloudinary.com/v1_1/dhgftlgcc/image/upload'
+    const formData = new FormData()
+    formData.append('file', event.target.files[0])
+    formData.append('upload_preset', 'xlji39fe')
+    formData.append('api_key', process.env.CLOUDINARY_API_KEY)
+    const {data} = await axios.post(url, formData, {
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest'
+      }
+    })
+
+    this.setState({imageUrl: data.url})
   }
 
   render() {
@@ -77,31 +107,55 @@ class AddParty extends Component {
           <form className={classes.form} onSubmit={this.handleSubmit}>
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="title">Title</InputLabel>
-              <Input id="title" name="title" autoFocus />
+              <Input
+                id="title"
+                name="title"
+                onChange={this.handleChange}
+                value={this.state.title}
+                autoFocus
+              />
             </FormControl>
 
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="description">Description</InputLabel>
-              <Input name="description" id="description" />
+              <Input
+                name="description"
+                onChange={this.handleChange}
+                id="description"
+                value={this.state.description}
+              />
             </FormControl>
 
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="location">Location</InputLabel>
-              <Input name="location" id="location" />
+              <Input
+                name="location"
+                onChange={this.handleChange}
+                id="location"
+                value={this.state.location}
+              />
             </FormControl>
 
             <FormControl margin="normal" fullWidth>
               <InputLabel htmlFor="imageUrl">Image URL</InputLabel>
-              <Input type="url" name="imageUrl" id="imageUrl" />
+              <Input
+                type="file"
+                name="imageUrl"
+                accept="image/png, image/jpeg"
+                onChange={this.handleUploadFile}
+                id="imageUrl"
+              />
             </FormControl>
 
             <FormControl>
               <TextField
                 id="date"
                 label="Date"
+                name="date"
                 type="datetime-local"
-                defaultValue={moment(Date.now()).format('YYYY-MM-DDTHH:mm')}
                 className={classes.textField}
+                onChange={this.handleChange}
+                value={this.state.date}
                 InputLabelProps={{
                   shrink: true
                 }}
@@ -112,7 +166,13 @@ class AddParty extends Component {
               <InputLabel htmlFor="location">
                 Guest Emails (separated by , )
               </InputLabel>
-              <Input type="text" name="emails" id="emails" />
+              <Input
+                type="text"
+                name="emails"
+                id="emails"
+                onChange={this.handleChange}
+                value={this.state.emails}
+              />
             </FormControl>
             <Button
               type="submit"
