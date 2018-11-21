@@ -6,11 +6,8 @@ import {
   getGuestStatus,
   getGuests,
   getItems,
-<<<<<<< HEAD
-  postToCalendar
-=======
+  postToCalendar,
   getImages
->>>>>>> master
 } from '../store'
 import {GuestList, ItemList, Gallery} from '../components'
 import moment from 'moment'
