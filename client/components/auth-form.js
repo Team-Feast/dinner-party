@@ -2,6 +2,7 @@ import React, {Fragment} from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
+import {Link} from 'react-router'
 
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'

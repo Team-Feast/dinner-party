@@ -68,7 +68,7 @@ class AllParties extends Component {
               <React.Fragment>
                 <Toolbar>
                   <Typography variant="h6" color="inherit">
-                    Upcoming party you're hosting
+                    Upcoming feast you're hosting
                   </Typography>
                 </Toolbar>
                 <Card className={classes.card}>
@@ -98,7 +98,7 @@ class AllParties extends Component {
             <ExpansionPanel>
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                 <Typography className={classes.heading}>
-                  Parties you're hosting
+                  Feasts you're hosting
                 </Typography>
               </ExpansionPanelSummary>
               {parties.hosting &&
@@ -131,7 +131,7 @@ class AllParties extends Component {
             <ExpansionPanel>
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                 <Typography className={classes.heading}>
-                  Parties you're attending
+                  Feasts you're attending
                 </Typography>
               </ExpansionPanelSummary>
               {parties.attending &&
@@ -158,7 +158,7 @@ class AllParties extends Component {
             </ExpansionPanel>
             <ExpansionPanel>
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography className={classes.heading}>Past events</Typography>
+                <Typography className={classes.heading}>Past feasts</Typography>
               </ExpansionPanelSummary>
               {parties.pastEvents &&
                 parties.pastEvents.length && (

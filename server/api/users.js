@@ -1,7 +1,7 @@
 const router = require('express').Router()
-const {User} = require('../db/models')
-//const {google} = require('googleapis')
-var gcal = require('google-calendar')
+const {User, Guest} = require('../db/models')
+const gcal = require('google-calendar')
+const moment = require('moment')
 
 module.exports = router
 
@@ -19,29 +19,29 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.get('/:id/calendars', async (req, res, next) => {
+router.post('/:guestId/calendars', async (req, res, next) => {
   try {
-    const user = await User.findById(req.params.id)
-    const google_calendar = new gcal.GoogleCalendar(user.googleToken)
-    console.log(google_calendar)
-    google_calendar.calendarList.list(function(err, calendarList) {
-      console.log(calendarList)
-    })
+    const guest = await Guest.findById(req.params.guestId, {include: [User]})
+    const gCal = new gcal.GoogleCalendar(guest.user.googleToken)
+    const start = moment(req.body.date).format('YYYY-MM-DDTHH:mm:ss')
+    const end = moment(start)
+      .add(2, 'hours')
+      .format('YYYY-MM-DDTHH:mm:ss')
 
     var event = {
-      summary: 'Google I/O 2016',
-      location: '800 Howard St., San Francisco, CA 94103',
-      description: "A chance to hear more about Google's developer products.",
+      summary: req.body.title,
+      location: req.body.location,
+      description: req.body.description,
       start: {
-        dateTime: '2018-11-20T09:00:00-07:00',
-        timeZone: 'America/Los_Angeles'
+        dateTime: start,
+        timeZone: 'America/Chicago'
       },
       end: {
-        dateTime: '2018-11-20T09:00:00-08:00',
-        timeZone: 'America/Los_Angeles'
+        dateTime: end,
+        timeZone: 'America/Chicago'
       },
-      recurrence: ['RRULE:FREQ=DAILY;COUNT=2'],
-      attendees: [{email: 'lpage@example.com'}, {email: 'sbrin@example.com'}],
+      recurrence: [],
+      attendees: [],
       reminders: {
         useDefault: false,
         overrides: [
@@ -51,25 +51,14 @@ router.get('/:id/calendars', async (req, res, next) => {
       }
     }
 
-    google_calendar.events.insert('primary', event, function(err, eventList) {
-      console.log(eventList)
+    await gCal.events.insert('primary', event, async function(err) {
+      if (err) {
+        next(err)
+      } else {
+        const updatedGuest = await guest.update({onGoogleCalendar: true})
+        res.json(updatedGuest)
+      }
     })
-
-    res.json(user)
-  } catch (err) {
-    next(err)
-  }
-})
-
-router.post('/:userId/calendars/:calendarId', async (req, res, next) => {
-  try {
-    const users = await User.findAll({
-      // explicitly select only the id and email fields - even though
-      // users' passwords are encrypted, it won't help if we just
-      // send everything to anyone who asks!
-      attributes: ['id', 'email']
-    })
-    res.json(users)
   } catch (err) {
     next(err)
   }

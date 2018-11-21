@@ -9,7 +9,8 @@ import {
   SingleParty,
   Landing,
   UserPartyList,
-  AddParty
+  AddParty,
+  EditParty
 } from './components'
 import {me} from './store'
 
@@ -31,7 +32,9 @@ class Routes extends Component {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
 
-        <Route exact path="/parties/addParty" component={AddParty} />
+        <Route exact path="/addparty" component={AddParty} />
+        <Route  path="/parties/:id/editparty" component={EditParty} />
+
         <Route
           path="/parties/:partyId/rsvp/:guestPartyToken"
           component={SingleParty}
