@@ -65,12 +65,10 @@ class AllParties extends Component {
         <CssBaseline>
           <div className={classes.root}>
             {parties.upcomingEventToHost.id && (
-              <React.Fragment>
-                <Toolbar>
-                  <Typography variant="h6" color="inherit">
-                    Upcoming feast you're hosting
-                  </Typography>
-                </Toolbar>
+              <ExpansionPanel defaultExpanded>
+                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                  <Typography color="inherit">Your upcoming feast</Typography>
+                </ExpansionPanelSummary>
                 <Card className={classes.card}>
                   <CardHeader
                     action={
@@ -93,9 +91,9 @@ class AllParties extends Component {
                     </Typography>
                   </CardContent>
                 </Card>
-              </React.Fragment>
+              </ExpansionPanel>
             )}
-            <ExpansionPanel>
+            <ExpansionPanel defaultExpanded>
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                 <Typography className={classes.heading}>
                   Feasts you're hosting
@@ -122,13 +120,9 @@ class AllParties extends Component {
                       </ListItem>
                     ))}
                   </List>
-                )
-              // <ExpansionPanelDetails key={party.id}>
-              //   <Typography>{party.description}</Typography>
-              // </ExpansionPanelDetails>
-              }
+                )}
             </ExpansionPanel>
-            <ExpansionPanel>
+            <ExpansionPanel defaultExpanded>
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                 <Typography className={classes.heading}>
                   Feasts you're attending
@@ -156,7 +150,7 @@ class AllParties extends Component {
                   </List>
                 )}
             </ExpansionPanel>
-            <ExpansionPanel>
+            <ExpansionPanel defaultExpanded>
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                 <Typography className={classes.heading}>Past feasts</Typography>
               </ExpansionPanelSummary>
