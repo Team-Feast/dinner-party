@@ -15,20 +15,20 @@ import TextField from '@material-ui/core/TextField'
 import moment from 'moment'
 import CardMedia from '@material-ui/core/CardMedia'
 
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel'
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import Delete from '@material-ui/icons/Delete'
 import IconButton from '@material-ui/core/IconButton'
 
 import {getParty, getGuests, deleteGuest, putParty} from '../store/'
-import { isThisSecond } from 'date-fns';
-import { CardHeader } from 'material-ui';
+import {isThisSecond} from 'date-fns'
+import {CardHeader} from 'material-ui'
 
 const styles = theme => ({
   paper: {
-    marginTop: theme.spacing.unit * 8,
+    // marginTop: theme.spacing.unit * 1,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -44,7 +44,7 @@ const styles = theme => ({
     marginTop: theme.spacing.unit
   },
   submit: {
-    marginTop: theme.spacing.unit * 3
+    marginTop: theme.spacing.unit * 1
   },
   media: {
     height: 0,
@@ -64,7 +64,7 @@ class EditParty extends Component {
       title: '',
       description: '',
       location: '',
-      date: '',
+      date: ''
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
@@ -77,30 +77,30 @@ class EditParty extends Component {
     this.props.getGuests(id)
   }
 
-  componentDidUpdate(prevProps){
-    if(prevProps.party !== this.props.party){
+  componentDidUpdate(prevProps) {
+    if (prevProps.party !== this.props.party) {
       this.setState({
         id: this.props.party.id,
         title: this.props.party.title,
         description: this.props.party.description,
         location: this.props.party.location,
-        date: this.props.party.date,
+        date: this.props.party.date
       })
     }
   }
 
-  handleChange(evt){
+  handleChange(evt) {
     evt.preventDefault()
     this.setState({[evt.target.name]: evt.target.value})
   }
 
-  handleSubmit(evt){
+  handleSubmit(evt) {
     evt.preventDefault()
     this.props.putParty(this.state)
   }
 
-  handleDelete(guestId){
-    console.log("hadeling delete", guestId)
+  handleDelete(guestId) {
+    console.log('hadeling delete', guestId)
   }
 
   render() {
@@ -108,7 +108,7 @@ class EditParty extends Component {
     const {party} = this.props
     return (
       <Fragment>
-        <CssBaseline /> 
+        <CssBaseline />
 
         <CardMedia image={party.imageUrl} />
         <Paper className={classes.paper}>
@@ -125,7 +125,7 @@ class EditParty extends Component {
                 name="title"
                 onChange={this.handleChange}
                 placeholder={party.title}
-                />
+              />
             </FormControl>
 
             <FormControl margin="normal" required fullWidth>
@@ -149,7 +149,7 @@ class EditParty extends Component {
                 // value={party.location || ''}
                 placeholder={party.location}
                 onChange={this.handleChange}
-                />
+              />
             </FormControl>
 
             <FormControl>
@@ -169,33 +169,43 @@ class EditParty extends Component {
             <ExpansionPanel>
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                 <Typography className={classes.heading}>GUESTS</Typography>
-            </ExpansionPanelSummary>
-            {
-              this.props.guests.map(guest =>
-                <ExpansionPanelDetails
-                key={guest.id}
-                >
-             <TextField
-                key={guest.id}
-                className={classes.textField}
-                // value={guest.email}
-                placeholder={guest.email}
-              />
-              <IconButton onClick={this.handleDelete(guest.id)}>
-                  <Delete className={classes.icon} />
-              </IconButton>
-             </ExpansionPanelDetails>
-              )
-             }
+              </ExpansionPanelSummary>
+              {this.props.guests.map(guest => (
+                <ExpansionPanelDetails key={guest.id}>
+                  <TextField
+                    key={guest.id}
+                    className={classes.textField}
+                    // value={guest.email}
+                    placeholder={guest.email}
+                  />
+                  <IconButton onClick={this.handleDelete(guest.id)}>
+                    <Delete className={classes.icon} />
+                  </IconButton>
+                </ExpansionPanelDetails>
+              ))}
             </ExpansionPanel>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-            >Submit
-            </Button>
+
+            <FormControl margin="normal" required fullWidth>
+              <Button
+                type="button"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.button}
+              >
+                Submit
+              </Button>
+            </FormControl>
+            <FormControl margin="normal" required fullWidth>
+              <Button
+                type="button"
+                variant="contained"
+                color="secondary"
+                className={classes.button}
+              >
+                Cancel Event
+              </Button>
+            </FormControl>
           </form>
         </Paper>
       </Fragment>
