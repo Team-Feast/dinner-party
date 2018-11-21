@@ -1,9 +1,9 @@
 const {Party, User, Guest, Item} = require('../db/models')
 const router = require('express').Router()
 const moment = require('moment')
-const multer = require('multer')
-const cloudinary = require('cloudinary')
-const cloudinaryStorage = require('multer-storage-cloudinary')
+// const multer = require('multer')
+// const cloudinary = require('cloudinary')
+// const cloudinaryStorage = require('multer-storage-cloudinary')
 
 // const storage = cloudinaryStorage({
 //   cloudinary: cloudinary,
@@ -12,44 +12,30 @@ const cloudinaryStorage = require('multer-storage-cloudinary')
 //   transformation: [{width: 500, height: 500, crop: 'limit'}]
 // })
 
-const storage = multer.diskStorage({
-  filename: function(req, file, callback) {
-    callback(null, Date.now() + file.originalname)
-  }
-})
-
-const imageFilter = function(req, file, cb) {
-  if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/i)) {
-    return cb(new Error('Only image files are allowed.'), false)
-  }
-  cb(null, true)
-}
-
-const upload = multer({storage: storage, fileFilter: imageFilter})
+// // const storage = multer.diskStorage({
+// //   filename: function(req, file, callback) {
+// //     callback(null, Date.now() + file.originalname)
+// //   }
+// // })
 
 // const parser = multer({storage: storage})
-// parser.single('image'),
-router.post('/images', upload.single('image'), (req, res, next) => {
-  console.log(req.body)
-  console.log(req.file)
-  // try {
-  //   console.log(req.file) // to see what is returned to you
-  //   const image = {}
-  //   image.url = req.file.url
-  //   image.id = req.file.public_id
 
-  //   res.json(image.url)
-  // } catch (error) {
-  //   next(error)
-  // }
+// router.post('/images', parser.single('image'), (req, res, next) => {
+//   try {
+//     console.log(req.file) // to see what is returned to you
+//     const image = {}
+//     image.url = req.file.url
+//     image.id = req.file.public_id
 
-  cloudinary.uploader.upload(req.file.path, function(error, result) {
-    console.log(result, error)
-  })
-  // Image.create(image) // save image information in database
-  //   .then(newImage => res.json(newImage))
-  //   .catch(err => console.log(err))
-})
+//     res.json(image.url)
+//   } catch (error) {
+//     next(error)
+//   }
+
+//   // cloudinary.uploader.upload(req.file.path, function(error, result) {
+//   //   console.log(result, error)
+//   // })
+// })
 
 router.get('/:id', async (req, res, next) => {
   try {
@@ -89,21 +75,17 @@ router.get('/:id/guests', async (req, res, next) => {
   }
 })
 
-router.post('/', upload.single('image'), async (req, res, next) => {
-  console.log(req.file)
-  console.log(req.body)
+router.post('/', async (req, res, next) => {
   try {
-    cloudinary.uploader.upload(req.file.path, async result => {
-      const newParty = await Party.create({
-        title: req.body.info.title,
-        description: req.body.info.description,
-        location: req.body.info.location,
-        date: req.body.info.date,
-        userId: req.body.info.userId,
-        imageUrl: result.url
-      })
-      res.json(newParty)
+    const newParty = await Party.create({
+      title: req.body.info.title,
+      description: req.body.info.description,
+      location: req.body.info.location,
+      date: req.body.info.date,
+      userId: req.body.info.userId,
+      imageUrl: req.body.info.imageUrl
     })
+    res.json(newParty)
   } catch (err) {
     next(err)
   }
@@ -120,11 +102,11 @@ router.get('/rsvp/:guestPartyToken', async (req, res, next) => {
 })
 
 router.put('/:id', async (req, res, next) => {
-  try{
+  try {
     let party = await Party.findById(req.params.id)
-    let result  = await party.update(req.body)
+    let result = await party.update(req.body)
     res.json(result)
-  }catch(err){
+  } catch (err) {
     next(err)
   }
 })

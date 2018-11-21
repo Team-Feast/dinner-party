@@ -41,23 +41,8 @@ export const getParty = id => async dispatch => {
 export const postParty = ({info, guestEmails}) => {
   return async dispatch => {
     try {
-      // const {data: party} = await axios.post('/api/parties', {
-      //   info
-      // })
-
-      const {title, description, location, date, userId, imageUrl} = info
-      const formData = new FormData()
-      formData.append('file', imageUrl)
-      formData.append('document', {title, description, location, date, userId})
-
-      const {data: party} = await axios({
-        method: 'post',
-        url: '/api/parties',
-        data: formData,
-        header: {
-          Accept: 'application/json',
-          'Content-Type': 'multipart/form-data'
-        }
+      const {data: party} = await axios.post('/api/parties', {
+        info
       })
 
       let email

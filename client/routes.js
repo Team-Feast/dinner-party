@@ -33,7 +33,7 @@ class Routes extends Component {
         <Route path="/signup" component={Signup} />
 
         <Route exact path="/addparty" component={AddParty} />
-        <Route  path="/parties/:id/editparty" component={EditParty} />
+        <Route path="/parties/:id/editparty" component={EditParty} />
 
         <Route
           path="/parties/:partyId/rsvp/:guestPartyToken"
