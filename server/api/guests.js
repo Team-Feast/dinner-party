@@ -44,7 +44,8 @@ router.post('/', async function(req, res, next) {
     const data = await Guest.create({
       email: req.body.email,
       partyId: req.body.partyId,
-      userId: user ? user.id : null
+      userId: user ? user.id : null,
+      status: user ? 'attending' : null
     })
 
     res.json(data)

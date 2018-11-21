@@ -44,7 +44,6 @@ export const postParty = ({info, guestEmails}) => {
       const {data: party} = await axios.post('/api/parties', {
         info
       })
-      console.log('party:', party)
 
       let email
       const partyId = party.id
