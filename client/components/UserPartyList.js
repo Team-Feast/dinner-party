@@ -3,6 +3,7 @@ import {getParties} from '../store'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import moment from 'moment'
+import history from '../history'
 
 // MATERIAL UI IMPORTS
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -74,7 +75,15 @@ class AllParties extends Component {
                 <Card className={classes.card}>
                   <CardHeader
                     action={
-                      <IconButton>
+                      <IconButton
+                        onClick={() =>
+                          history.push(
+                            `/parties/${
+                              this.props.parties.upcomingEventToHost.id
+                            }/editparty`
+                          )
+                        }
+                      >
                         <Create className={classes.icon} />
                       </IconButton>
                     }
