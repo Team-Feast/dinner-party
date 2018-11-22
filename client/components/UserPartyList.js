@@ -5,6 +5,7 @@ import {Link} from 'react-router-dom'
 import moment from 'moment'
 
 // MATERIAL UI IMPORTS
+import Grid from '@material-ui/core/Grid'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import {withStyles} from '@material-ui/core/styles'
 import ExpansionPanel from '@material-ui/core/ExpansionPanel'
@@ -18,6 +19,7 @@ import CardMedia from '@material-ui/core/CardMedia'
 import CardContent from '@material-ui/core/CardContent'
 import IconButton from '@material-ui/core/IconButton'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
+import AddIcon from '@material-ui/icons/Add'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import List from '@material-ui/core/List'
@@ -26,6 +28,7 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import ListItemText from '@material-ui/core/ListItemText'
 import Checkbox from '@material-ui/core/Checkbox'
 import Avatar from '@material-ui/core/Avatar'
+import Button from '@material-ui/core/Button'
 import Create from '@material-ui/icons/Create'
 
 const styles = theme => ({
@@ -47,6 +50,11 @@ const styles = theme => ({
   },
   details: {
     alignItems: 'center'
+  },
+  fab: {
+    position: 'absolute',
+    bottom: theme.spacing.unit * 2,
+    right: theme.spacing.unit * 2
   }
 })
 
@@ -70,18 +78,18 @@ class AllParties extends Component {
       <React.Fragment>
         <CssBaseline>
           <div className={classes.root}>
-            {parties.upcomingEventToHost.id && (
+            {parties.upcomingEventToHost.id ? (
               <ExpansionPanel defaultExpanded>
                 <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                   <Typography color="inherit">Your upcoming feast</Typography>
                 </ExpansionPanelSummary>
-                <Card className={classes.card}>
+                <Card
+                  className={classes.card}
+                  component={Link}
+                  to={`/parties/${parties.upcomingEventToHost.id}`}
+                  style={{textDecoration: 'none'}}
+                >
                   <CardHeader
-                    action={
-                      <IconButton>
-                        <Create className={classes.icon} />
-                      </IconButton>
-                    }
                     title={parties.upcomingEventToHost.title}
                     subheader={moment(parties.upcomingEventToHost.date).format(
                       'LLLL'
@@ -98,7 +106,39 @@ class AllParties extends Component {
                   </CardContent>
                 </Card>
               </ExpansionPanel>
+            ) : (
+              <ExpansionPanel defaultExpanded>
+                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                  <Typography color="inherit">
+                    No upcoming feasts... why not create one?
+                  </Typography>
+                </ExpansionPanelSummary>
+                <Card className={classes.card}>
+                  <CardMedia
+                    className={classes.media}
+                    image="/images/landing-background.jpg"
+                  />
+                </Card>
+              </ExpansionPanel>
             )}
+            <Grid
+              container
+              alignItems="center"
+              direction="column"
+              justify="flex-start"
+            >
+              <Grid item>
+                <Button
+                  component={Link}
+                  to="/addparty"
+                  className={classes.button}
+                  variant="contained"
+                  color="primary"
+                >
+                  Create Feast!
+                </Button>
+              </Grid>
+            </Grid>
             <ExpansionPanel defaultExpanded>
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                 <Typography className={classes.heading}>
@@ -115,14 +155,21 @@ class AllParties extends Component {
                         component={Link}
                         to={`/parties/${party.id}`}
                       >
-                        <Avatar src={`${party.imageUrl}`} />
-                        <ListItemText primary={`${party.title}`} />
-                        <ListItemText
-                          secondary={`${moment(party.date).format('LLLL')}`}
-                        />
-                        <ListItemSecondaryAction>
-                          <Create className={classes.icon} />
-                        </ListItemSecondaryAction>
+                        <Grid container alignItems="center">
+                          <Grid item xs={2}>
+                            <Avatar src={`${party.imageUrl}`} />
+                          </Grid>
+                          <Grid item xs={4}>
+                            <ListItemText primary={`${party.title}`} />
+                          </Grid>
+                          <Grid item>
+                            <ListItemText
+                              secondary={`${moment(party.date).format(
+                                'ddd, MMM DD, YYYY h:mm A'
+                              )}`}
+                            />
+                          </Grid>
+                        </Grid>
                       </ListItem>
                     ))}
                   </List>
@@ -144,17 +191,22 @@ class AllParties extends Component {
                         component={Link}
                         to={`/parties/${party.partyId}`}
                       >
-                        <div className={classes.column}>
-                          <Avatar src={`${party.party.imageUrl}`} />
-                          <ListItemText primary={`${party.party.title}`} />
-                        </div>
-                        <div className={classes.column}>
-                          <ListItemText
-                            secondary={`${moment(party.party.date).format(
-                              'LLLL'
-                            )}`}
-                          />
-                        </div>
+                        <Grid container alignItems="center">
+                          <Grid item xs={2}>
+                            <Avatar src={`${party.party.imageUrl}`} />
+                          </Grid>
+
+                          <Grid item xs={4}>
+                            <ListItemText primary={`${party.party.title}`} />
+                          </Grid>
+                          <Grid item>
+                            <ListItemText
+                              secondary={`${moment(party.date).format(
+                                'ddd, MMM DD, YYYY h:mm A'
+                              )}`}
+                            />
+                          </Grid>
+                        </Grid>
                       </ListItem>
                     ))}
                   </List>
@@ -174,15 +226,24 @@ class AllParties extends Component {
                         component={Link}
                         to={`/parties/${party.id}`}
                       >
-                        <div className={classes.column}>
-                          <Avatar src={`${party.imageUrl}`} />
-                          <ListItemText primary={`${party.title}`} />
-                        </div>
-                        <div className={classes.column}>
-                          <ListItemText
-                            secondary={`${moment(party.date).format('LLLL')}`}
-                          />
-                        </div>
+                        <Grid container alignItems="center">
+                          <Grid item xs={2}>
+                            <Avatar src={`${party.imageUrl}`} />
+                          </Grid>
+                          <Grid item xs={4}>
+                            <ListItemText
+                              primary={`${party.title}`}
+                              secondary={'test'}
+                            />
+                          </Grid>
+                          <Grid item>
+                            <ListItemText
+                              primary={`${moment(party.date).format(
+                                'ddd, MMM DD, YYYY h:mm A'
+                              )}`}
+                            />
+                          </Grid>
+                        </Grid>
                       </ListItem>
                     ))}
                   </List>

@@ -205,7 +205,10 @@ router.get('/user/:userId', async (req, res, next) => {
       ]
     })
 
-    const pastEvents = [...pastHosting, ...pastAttending]
+    const pastEvents = [
+      ...pastHosting,
+      ...pastAttending.map(attended => attended.party)
+    ]
 
     res.json({upcomingEventToHost, hosting, attending, pastEvents})
   } catch (err) {
