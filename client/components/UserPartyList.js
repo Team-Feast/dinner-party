@@ -78,7 +78,7 @@ class AllParties extends Component {
       <React.Fragment>
         <CssBaseline>
           <div className={classes.root}>
-            {parties.upcomingEventToHost.id ? (
+            {parties.upcomingEvent.id ? (
               <ExpansionPanel defaultExpanded>
                 <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                   <Typography color="inherit">Your upcoming feast</Typography>
@@ -86,22 +86,22 @@ class AllParties extends Component {
                 <Card
                   className={classes.card}
                   component={Link}
-                  to={`/parties/${parties.upcomingEventToHost.id}`}
+                  to={`/parties/${parties.upcomingEvent.id}`}
                   style={{textDecoration: 'none'}}
                 >
                   <CardHeader
-                    title={parties.upcomingEventToHost.title}
-                    subheader={moment(parties.upcomingEventToHost.date).format(
+                    title={parties.upcomingEvent.title}
+                    subheader={moment(parties.upcomingEvent.date).format(
                       'LLLL'
                     )}
                   />
                   <CardMedia
                     className={classes.media}
-                    image={parties.upcomingEventToHost.imageUrl}
+                    image={parties.upcomingEvent.imageUrl}
                   />
                   <CardContent>
                     <Typography component="p">
-                      {parties.upcomingEventToHost.description}
+                      {parties.upcomingEvent.description}
                     </Typography>
                   </CardContent>
                 </Card>
@@ -186,18 +186,23 @@ class AllParties extends Component {
                   <List dense>
                     {parties.attending.map(party => (
                       <ListItem
-                        key={party.party.id}
+                        key={party.id}
                         button
                         component={Link}
-                        to={`/parties/${party.partyId}`}
+                        to={`/parties/${party.id}`}
                       >
                         <Grid container alignItems="center">
                           <Grid item xs={2}>
-                            <Avatar src={`${party.party.imageUrl}`} />
+                            <Avatar src={`${party.imageUrl}`} />
                           </Grid>
 
                           <Grid item xs={4}>
-                            <ListItemText primary={`${party.party.title}`} />
+                            <ListItemText
+                              primary={`${party.title}`}
+                              secondary={`${party.user.firstName} ${
+                                party.user.lastName
+                              }`}
+                            />
                           </Grid>
                           <Grid item>
                             <ListItemText
@@ -233,12 +238,14 @@ class AllParties extends Component {
                           <Grid item xs={4}>
                             <ListItemText
                               primary={`${party.title}`}
-                              secondary={'test'}
+                              secondary={`${party.user.firstName} ${
+                                party.user.lastName
+                              }`}
                             />
                           </Grid>
                           <Grid item>
                             <ListItemText
-                              primary={`${moment(party.date).format(
+                              secondary={`${moment(party.date).format(
                                 'ddd, MMM DD, YYYY h:mm A'
                               )}`}
                             />
