@@ -1,6 +1,8 @@
 const router = require('express').Router()
 const User = require('../db/models/user')
 const Guest = require('../db/models/guest')
+const nodemailer = require('nodemailer')
+const sanitizeHtml = require('sanitize-html')
 
 module.exports = router
 
@@ -28,6 +30,29 @@ router.post('/signup', async (req, res, next) => {
     const user = await User.create({firstName, lastName, email, password})
 
     await Guest.update({userId: user.id}, {where: {email: req.body.email}})
+
+    let transporter = nodemailer.createTransport({
+      service: 'Gmail',
+      auth: {
+        user: '1809teamfeast@gmail.com',
+        pass: process.env.GMAILPW
+      }
+    })
+    let mailOptions = {
+      to: user.email,
+      from: '1809teamfeast@gmail.com',
+      subject: 'Welcome to Feast!',
+      text: sanitizeHtml(
+        `Thanks ${
+          user.firstName
+        } for signing up to Feast, the World's Number 1 Dinner Party Planning Tool! Start planning your first feast @ \n\nhttp://${
+          req.headers.host
+        }`
+      )
+    }
+    transporter.sendMail(mailOptions, function(err) {
+      err ? next(err) : res.sendStatus(200)
+    })
 
     req.login(user, err => (err ? next(err) : res.json(user)))
   } catch (err) {
