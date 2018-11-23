@@ -76,11 +76,7 @@ class Navbar extends Component {
               </Grid>
               <Grid item xs={2}>
                 {user.id && (
-                  <Avatar
-                    alt="Remy Sharp"
-                    src={user.imageUrl}
-                    className={classes.avatar}
-                  />
+                  <Avatar src={user.imageUrl} className={classes.avatar} />
                 )}
               </Grid>
               <Grid item xs={1}>
