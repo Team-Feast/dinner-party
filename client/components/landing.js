@@ -23,7 +23,7 @@ class Landing extends Component {
 
     return (
       <Fragment>
-        <CssBaseline />
+        {/* <CssBaseline /> */}
         <div
           style={{
             background:
@@ -32,7 +32,7 @@ class Landing extends Component {
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             overflow: 'hidden',
-            height: '100vh',
+            height: '672px',
             textAlign: 'center',
             display: 'flex',
             flexDirection: 'column',
@@ -54,7 +54,7 @@ class Landing extends Component {
             </Grid>
             <Grid item>
               <Typography component="h3" variant="h5">
-                The Worlds #1 Dinner Party Planning Tool
+                The World's #1 Dinner Party Planning Tool
               </Typography>
             </Grid>
             <Grid item>
