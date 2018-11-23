@@ -57,7 +57,9 @@ const UpcomingParty = props => {
       <Card
         className={classes.card}
         component={Link}
-        to={`/parties/${upcomingEvent.id}`}
+        to={`/parties/${upcomingEvent.id}/rsvp/${
+          upcomingEvent.guests[0].guestPartyToken
+        }`}
         style={{textDecoration: 'none'}}
       >
         <CardMedia className={classes.media} image={upcomingEvent.imageUrl} />

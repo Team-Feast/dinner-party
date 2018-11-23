@@ -125,6 +125,7 @@ router.get('/user/:userId', async (req, res, next) => {
           }
         ]
       },
+      include: [{model: Guest, where: {userId: user.id}}],
       order: [['date', 'ASC']]
     })
 
