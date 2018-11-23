@@ -9,7 +9,7 @@ import {
   postToCalendar,
   getImages
 } from '../store'
-import {GuestList, ItemList, Gallery} from '../components'
+import {GuestList, ItemList, Gallery} from '.'
 import moment from 'moment'
 import history from '../history'
 import axios from 'axios'
