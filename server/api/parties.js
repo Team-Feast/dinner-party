@@ -112,7 +112,7 @@ router.get('/user/:userId', async (req, res, next) => {
     // upcoming parties
     const user = await User.findById(req.params.userId)
 
-    const hosting = await Party.findAll({
+    const hostingQuery = Party.findAll({
       where: {
         $and: [
           {userId: user.id},
@@ -128,7 +128,7 @@ router.get('/user/:userId', async (req, res, next) => {
       order: [['date', 'ASC']]
     })
 
-    let upcomingEvent = await Party.findAll({
+    const upcomingEventQuery = Party.findAll({
       include: [
         {model: Guest, where: {userId: user.id}},
         {model: User, attributes: ['firstName', 'lastName']}
@@ -144,9 +144,7 @@ router.get('/user/:userId', async (req, res, next) => {
       order: [['date', 'ASC']]
     })
 
-    if (upcomingEvent.length === 1) upcomingEvent = upcomingEvent[0]
-
-    const attending = await Party.findAll({
+    const attendingQuery = Party.findAll({
       include: [
         {model: Guest, where: {userId: user.id}},
         {model: User, attributes: ['firstName', 'lastName']}
@@ -161,7 +159,7 @@ router.get('/user/:userId', async (req, res, next) => {
       order: [['date', 'ASC']]
     })
 
-    const pastEvents = await Party.findAll({
+    const pastEventsQuery = Party.findAll({
       include: [
         {model: Guest, where: {userId: user.id}},
         {model: User, attributes: ['firstName', 'lastName']}
@@ -175,6 +173,13 @@ router.get('/user/:userId', async (req, res, next) => {
       },
       order: [['date', 'DESC']]
     })
+
+    const hosting = await hostingQuery
+    let upcomingEvent = await upcomingEventQuery
+    const attending = await attendingQuery
+    const pastEvents = await pastEventsQuery
+
+    if (upcomingEvent.length === 1) upcomingEvent = upcomingEvent[0]
 
     res.json({upcomingEvent, hosting, attending, pastEvents})
   } catch (err) {
