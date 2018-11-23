@@ -3,8 +3,10 @@ import {getParties} from '../store'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import moment from 'moment'
+import {UpcomingEvent} from '../components'
 
 // MATERIAL UI IMPORTS
+import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import {withStyles} from '@material-ui/core/styles'
@@ -45,9 +47,6 @@ const styles = theme => ({
     margin: theme.spacing.unit
     // fontSize: 32
   },
-  column: {
-    flexBasis: '33.33%'
-  },
   details: {
     alignItems: 'center'
   },
@@ -55,6 +54,9 @@ const styles = theme => ({
     position: 'absolute',
     bottom: theme.spacing.unit * 2,
     right: theme.spacing.unit * 2
+  },
+  heading: {
+    fontSize: theme.typography.pxToRem(15)
   }
 })
 
@@ -72,55 +74,14 @@ class AllParties extends Component {
   }
 
   render() {
-    const {classes, parties} = this.props
+    const {classes, parties, user} = this.props
+    const {upcomingEvent, hosting, attending, pastEvents} = parties
 
     return (
       <React.Fragment>
         <CssBaseline>
           <div className={classes.root}>
-            {parties.upcomingEvent.id ? (
-              <ExpansionPanel defaultExpanded>
-                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                  <Typography color="inherit">Your upcoming feast</Typography>
-                </ExpansionPanelSummary>
-                <Card
-                  className={classes.card}
-                  component={Link}
-                  to={`/parties/${parties.upcomingEvent.id}`}
-                  style={{textDecoration: 'none'}}
-                >
-                  <CardHeader
-                    title={parties.upcomingEvent.title}
-                    subheader={moment(parties.upcomingEvent.date).format(
-                      'LLLL'
-                    )}
-                  />
-                  <CardMedia
-                    className={classes.media}
-                    image={parties.upcomingEvent.imageUrl}
-                  />
-                  <CardContent>
-                    <Typography component="p">
-                      {parties.upcomingEvent.description}
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </ExpansionPanel>
-            ) : (
-              <ExpansionPanel defaultExpanded>
-                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                  <Typography color="inherit">
-                    No upcoming feasts... why not create one?
-                  </Typography>
-                </ExpansionPanelSummary>
-                <Card className={classes.card}>
-                  <CardMedia
-                    className={classes.media}
-                    image="/images/landing-background.jpg"
-                  />
-                </Card>
-              </ExpansionPanel>
-            )}
+            <UpcomingEvent user={user} upcomingEvent={upcomingEvent} />
             <Grid
               container
               alignItems="center"
@@ -145,10 +106,10 @@ class AllParties extends Component {
                   Feasts you're hosting
                 </Typography>
               </ExpansionPanelSummary>
-              {parties.hosting &&
-                parties.hosting.length && (
+              {hosting &&
+                hosting.length && (
                   <List dense>
-                    {parties.hosting.map(party => (
+                    {hosting.map(party => (
                       <ListItem
                         key={party.id}
                         button
@@ -181,10 +142,10 @@ class AllParties extends Component {
                   Feasts you're attending
                 </Typography>
               </ExpansionPanelSummary>
-              {parties.attending &&
-                parties.attending.length && (
+              {attending &&
+                attending.length && (
                   <List dense>
-                    {parties.attending.map(party => (
+                    {attending.map(party => (
                       <ListItem
                         key={party.id}
                         button
@@ -221,10 +182,10 @@ class AllParties extends Component {
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                 <Typography className={classes.heading}>Past feasts</Typography>
               </ExpansionPanelSummary>
-              {parties.pastEvents &&
-                parties.pastEvents.length && (
+              {pastEvents &&
+                pastEvents.length && (
                   <List dense>
-                    {parties.pastEvents.map(party => (
+                    {pastEvents.map(party => (
                       <ListItem
                         key={party.id}
                         button
