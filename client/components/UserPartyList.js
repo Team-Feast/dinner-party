@@ -1,15 +1,12 @@
 import React, {Component} from 'react'
 import {getParties} from '../store'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
 import {UpcomingParty, HostingParties, AttendingParties, PastParties} from '.'
 
 // MATERIAL UI IMPORTS
-import Grid from '@material-ui/core/Grid'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import {withStyles} from '@material-ui/core/styles'
 import ListItem from '@material-ui/core/ListItem'
-import Button from '@material-ui/core/Button'
 
 const styles = theme => ({
   root: {
