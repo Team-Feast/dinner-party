@@ -131,13 +131,6 @@ const AuthForm = props => {
         </form>
         {name === 'login' && (
           <div className={classes.secondaryButtons}>
-            {/* <Button
-                type="button"
-                onClick={() => history.push('/forgotpassword')}
-                className={classes.submit}
-              >
-                Forgot Password
-              </Button> */}
             <ForgotPassword />
             <div />
 

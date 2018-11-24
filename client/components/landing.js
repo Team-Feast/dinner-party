@@ -23,7 +23,6 @@ class Landing extends Component {
 
     return (
       <Fragment>
-        {/* <CssBaseline /> */}
         <div
           style={{
             background:
