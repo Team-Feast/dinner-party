@@ -1,10 +1,8 @@
 import React, {Fragment, Component} from 'react'
 import PropTypes from 'prop-types'
-// import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 
-import CssBaseline from '@material-ui/core/CssBaseline'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
@@ -15,8 +13,6 @@ const styles = {}
 
 class Landing extends Component {
   state = {}
-
-  handleClick = event => {}
 
   render() {
     const {classes, user} = this.props
@@ -86,15 +82,6 @@ class Landing extends Component {
   }
 }
 
-/**
- * CONTAINER
- */
-// const mapState = state => {
-//   return {
-//     isLoggedIn: !!state.user.id
-//   }
-// }
-
 Landing.propTypes = {
   classes: PropTypes.object.isRequired
 }
@@ -104,5 +91,3 @@ const mapStateToProps = state => ({
 })
 
 export default connect(mapStateToProps)(withStyles(styles)(Landing))
-
-// export default connect(mapState, null)(withStyles(styles)(Landing))
