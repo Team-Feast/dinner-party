@@ -112,7 +112,7 @@ router.get('/user/:userId', async (req, res, next) => {
     // upcoming parties
     const user = await User.findById(req.params.userId)
 
-    const hosting = await Party.findAll({
+    const hostingQuery = Party.findAll({
       where: {
         $and: [
           {userId: user.id},
@@ -125,89 +125,64 @@ router.get('/user/:userId', async (req, res, next) => {
           }
         ]
       },
+      include: [{model: Guest, where: {userId: user.id}}],
       order: [['date', 'ASC']]
     })
 
-    let upcomingEventToHost = await Party.findAll({
+    const upcomingEventQuery = Party.findAll({
+      include: [
+        {model: Guest, where: {userId: user.id}},
+        {model: User, attributes: ['firstName', 'lastName']}
+      ],
       where: {
-        $and: [
-          {userId: user.id},
-          {
-            date: {
-              $gte: moment()
-                .utc()
-                .toDate()
-            }
-          }
-        ]
+        date: {
+          $gte: moment()
+            .utc()
+            .toDate()
+        }
       },
       limit: 1,
       order: [['date', 'ASC']]
     })
 
-    if (upcomingEventToHost.length === 1)
-      upcomingEventToHost = upcomingEventToHost[0]
-
-    const attending = await Guest.findAll({
-      where: {
-        email: user.email
-      },
+    const attendingQuery = Party.findAll({
       include: [
-        {
-          model: Party,
-          where: {
-            date: {
-              $gte: moment()
-                .utc()
-                .toDate()
-            }
-          }
-        }
-      ]
-    })
-
-    // sort ASCENDING by the party date
-    attending.sort(function(left, right) {
-      return moment.utc(left.party.date).diff(moment.utc(right.party.date))
-    })
-
-    const pastHosting = await Party.findAll({
+        {model: Guest, where: {userId: user.id}},
+        {model: User, attributes: ['firstName', 'lastName']}
+      ],
       where: {
-        $and: [
-          {userId: user.id},
-          {
-            date: {
-              $lt: moment()
-                .utc()
-                .toDate()
-            }
-          }
-        ]
+        date: {
+          $gte: moment()
+            .utc()
+            .toDate()
+        }
       },
       order: [['date', 'ASC']]
     })
 
-    const pastAttending = await Guest.findAll({
-      where: {
-        email: user.email
-      },
+    const pastEventsQuery = Party.findAll({
       include: [
-        {
-          model: Party,
-          where: {
-            date: {
-              $lt: moment()
-                .utc()
-                .toDate()
-            }
-          }
+        {model: Guest, where: {userId: user.id}},
+        {model: User, attributes: ['firstName', 'lastName']}
+      ],
+      where: {
+        date: {
+          $lt: moment()
+            .utc()
+            .toDate()
         }
-      ]
+      },
+      order: [['date', 'DESC']]
     })
 
-    const pastEvents = [...pastHosting, ...pastAttending]
+    const hosting = await hostingQuery
+    let upcomingEvent = await upcomingEventQuery
+    const attending = await attendingQuery
+    const pastEvents = await pastEventsQuery
 
-    res.json({upcomingEventToHost, hosting, attending, pastEvents})
+    if (upcomingEvent.length === 1) upcomingEvent = upcomingEvent[0]
+
+    res.json({upcomingEvent, hosting, attending, pastEvents})
   } catch (err) {
     next(err)
   }
