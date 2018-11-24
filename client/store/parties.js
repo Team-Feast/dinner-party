@@ -24,7 +24,7 @@ export const getParties = userId => async dispatch => {
 //REDUCER
 export default function(
   state = {
-    upcomingEventToHost: {},
+    upcomingEvent: {},
     hosting: [],
     attending: [],
     pastEvents: []
