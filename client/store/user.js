@@ -4,6 +4,7 @@ import history from '../history'
 /**
  * ACTION TYPES
  */
+const RESET_EMAIL_SENT = 'RESET_EMAIL_SENT'
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
 
@@ -17,6 +18,7 @@ const defaultUser = {}
  */
 const getUser = user => ({type: GET_USER, user})
 const removeUser = () => ({type: REMOVE_USER})
+const resetEmailSent = status => ({type: RESET_EMAIL_SENT, status})
 
 /**
  * THUNK CREATORS
@@ -37,12 +39,21 @@ export const auth = (info, method) => async dispatch => {
   } catch (authError) {
     return dispatch(getUser({error: authError}))
   }
-
   try {
     dispatch(getUser(res.data))
     history.push('/home')
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr)
+  }
+}
+
+export const postForgotPassword = email => async dispatch => {
+  let res
+  try {
+    res = await axios.post('/auth/forgotpassword', email)
+    dispatch(resetEmailSent({status: res}))
+  } catch (error) {
+    dispatch(resetEmailSent({status: error.response}))
   }
 }
 
@@ -65,6 +76,15 @@ export default function(state = defaultUser, action) {
       return action.user
     case REMOVE_USER:
       return defaultUser
+    default:
+      return state
+  }
+}
+
+export function passwordReducer(state = {}, action) {
+  switch (action.type) {
+    case RESET_EMAIL_SENT:
+      return action.status
     default:
       return state
   }

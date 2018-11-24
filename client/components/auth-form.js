@@ -15,6 +15,7 @@ import LockIcon from '@material-ui/icons/LockOutlined'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import {withStyles} from '@material-ui/core/styles'
+import ForgotPassword2 from './ForgotPassword2'
 
 const styles = theme => ({
   main: {
@@ -127,21 +128,28 @@ const AuthForm = props => {
               Google {displayName}
             </Button>
           </div>
-          {name === 'login' && (
-            <div className={classes.secondaryButtons}>
-              <Button className={classes.submit}>Forgot Password</Button>
-              <div />
-              <Button
+        </form>
+        {name === 'login' && (
+          <div className={classes.secondaryButtons}>
+            {/* <Button
                 type="button"
-                style={{textDecoration: 'none'}}
-                onClick={() => history.push('/signup')}
+                onClick={() => history.push('/forgotpassword')}
                 className={classes.submit}
               >
-                Sign Up
-              </Button>
-            </div>
-          )}
-        </form>
+                Forgot Password
+              </Button> */}
+            <ForgotPassword2 />
+            <div />
+
+            <Button
+              type="button"
+              onClick={() => history.push('/signup')}
+              className={classes.submit}
+            >
+              Sign Up
+            </Button>
+          </div>
+        )}
       </Paper>
     </Fragment>
   )
