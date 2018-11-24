@@ -15,6 +15,7 @@ import Paper from '@material-ui/core/Paper'
 import Popper from '@material-ui/core/Popper'
 import MenuItem from '@material-ui/core/MenuItem'
 import MenuList from '@material-ui/core/MenuList'
+import Avatar from '@material-ui/core/Avatar'
 import {withStyles} from '@material-ui/core/styles'
 
 import MenuIcon from '@material-ui/icons/Menu'
@@ -40,6 +41,9 @@ const styles = {
   },
   media: {
     height: 40
+  },
+  avatar: {
+    height: 36
   }
 }
 
@@ -57,7 +61,7 @@ class Navbar extends Component {
   }
 
   render() {
-    const {classes} = this.props
+    const {classes, user} = this.props
     const {anchorEl} = this.state
     const open = Boolean(anchorEl)
 
@@ -66,11 +70,16 @@ class Navbar extends Component {
         <CssBaseline />
         <AppBar className={classes.root} position="sticky">
           <Toolbar>
-            <Grid container justify="space-between">
-              <Grid item component={Link} to="/">
+            <Grid container justify="space-between" alignItems="center">
+              <Grid item component={Link} to="/" xs={9}>
                 <img className={classes.media} src="/images/logo-full.jpg" />
               </Grid>
-              <Grid item>
+              <Grid item xs={2}>
+                {user.id && (
+                  <Avatar src={user.imageUrl} className={classes.avatar} />
+                )}
+              </Grid>
+              <Grid item xs={1}>
                 <IconButton
                   aria-owns={open ? 'menu-list-grow' : undefined}
                   aria-haspopup="true"
@@ -179,7 +188,8 @@ class Navbar extends Component {
  */
 const mapState = state => {
   return {
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    user: state.user
   }
 }
 

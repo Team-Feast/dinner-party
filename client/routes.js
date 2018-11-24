@@ -10,7 +10,8 @@ import {
   Landing,
   UserPartyList,
   AddParty,
-  EditParty
+  EditParty,
+  ForgotPassword
 } from './components'
 import {me} from './store'
 
@@ -31,7 +32,7 @@ class Routes extends Component {
         <Route exact path="/" component={Landing} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-
+        <Route path="/forgotpassword" component={ForgotPassword} />
         <Route exact path="/addparty" component={AddParty} />
         <Route path="/parties/:id/editparty" component={EditParty} />
 

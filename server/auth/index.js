@@ -64,6 +64,48 @@ router.post('/signup', async (req, res, next) => {
   }
 })
 
+router.post('/forgotpassword', async (req, res, next) => {
+  try {
+    const {email} = req.body
+    const user = await User.find({where: {email: email}})
+
+    if (user) {
+      let transporter = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+          user: '1809teamfeast@gmail.com',
+          pass: process.env.GMAILPW
+        }
+      })
+      let mailOptions = {
+        to: email,
+        from: '1809teamfeast@gmail.com',
+        subject: 'Reset your Feast password',
+        text: sanitizeHtml(
+          `
+          Hi ${user.firstName},
+
+          We received a request to reset your password for your Feast account: ${
+            user.email
+          }. We're here to help! Click the following link to reset your password: \n\nhttp://${
+            req.headers.host
+          }/resetpassword
+
+          \n\nIf you did not request this, please ignore this email.`
+        )
+      }
+      transporter.sendMail(mailOptions, function(err) {
+        err ? next(err) : res.status(200).send('Email sent!')
+      })
+    } else {
+      console.log('No such user found:', email)
+      res.status(401).send(`No user found at ${email}`)
+    }
+  } catch (error) {
+    next(error)
+  }
+})
+
 router.post('/logout', (req, res) => {
   req.logout()
   req.session.destroy()
