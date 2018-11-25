@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
 import {Link} from 'react-router'
+import history from '../history'
 
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
@@ -14,6 +15,7 @@ import LockIcon from '@material-ui/icons/LockOutlined'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import {withStyles} from '@material-ui/core/styles'
+import {ForgotPassword} from '../components'
 
 const styles = theme => ({
   main: {
@@ -28,12 +30,22 @@ const styles = theme => ({
     }
   },
   paper: {
-    marginTop: theme.spacing.unit * 8,
+    // marginTop: theme.spacing.unit * 8,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme
       .spacing.unit * 3}px`
+  },
+  button: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+  secondaryButtons: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   avatar: {
     margin: theme.spacing.unit,
@@ -78,12 +90,7 @@ const AuthForm = props => {
               </FormControl>
               <FormControl margin="normal" required fullWidth>
                 <InputLabel htmlFor="lastName">Last Name</InputLabel>
-                <Input
-                  id="lastName"
-                  name="lastName"
-                  autoComplete="lastName"
-                  autoFocus
-                />
+                <Input id="lastName" name="lastName" autoComplete="lastName" />
               </FormControl>
             </Fragment>
           ) : (
@@ -91,7 +98,7 @@ const AuthForm = props => {
           )}
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="email">Email Address</InputLabel>
-            <Input id="email" name="email" autoComplete="email" autoFocus />
+            <Input id="email" name="email" autoComplete="email" />
           </FormControl>
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="password">Password</InputLabel>
@@ -103,25 +110,39 @@ const AuthForm = props => {
             />
           </FormControl>
           {error && error.response && <div> {error.response.data} </div>}
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            {displayName}
-          </Button>
+          <div className={classes.button}>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              {displayName}
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              href="/auth/google"
+            >
+              Google {displayName}
+            </Button>
+          </div>
         </form>
-        <Button
-          fullWidth
-          variant="contained"
-          color="primary"
-          className={classes.submit}
-          href="/auth/google"
-        >
-          {displayName} with Google
-        </Button>
+        {name === 'login' && (
+          <div className={classes.secondaryButtons}>
+            <ForgotPassword />
+            <div />
+
+            <Button
+              type="button"
+              onClick={() => history.push('/signup')}
+              className={classes.submit}
+            >
+              Sign Up
+            </Button>
+          </div>
+        )}
       </Paper>
     </Fragment>
   )

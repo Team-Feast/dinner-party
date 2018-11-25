@@ -1,7 +1,7 @@
 'use strict'
 
 const db = require('../server/db')
-const {User, Party, Guest, Item, Category} = require('../server/db/models')
+const {User, Party, Guest, Item, Category, Image} = require('../server/db/models')
 const moment = require('moment')
 
 // Random Data Creators

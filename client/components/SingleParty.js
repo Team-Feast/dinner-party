@@ -7,9 +7,8 @@ import {
   getGuests,
   getItems,
   postToCalendar,
-  getImages
 } from '../store'
-import {GuestList, ItemList, Gallery} from '../components'
+import {GuestList, ItemList, Gallery} from '.'
 import moment from 'moment'
 import history from '../history'
 import axios from 'axios'
@@ -46,6 +45,12 @@ import Create from '@material-ui/icons/Create'
 import CalendarToday from '@material-ui/icons/CalendarToday'
 import Button from '@material-ui/core/Button';
 import SaveIcon from '@material-ui/icons/Save';
+import Avatar from '@material-ui/core/Avatar'
+import deepOrange from '@material-ui/core/colors/deepOrange';
+
+
+const toonavatar = require('cartoon-avatar');
+const url = toonavatar.generate_avatar({"gender":"male"})
 
 const styles = theme => ({
   button: {
@@ -70,6 +75,14 @@ const styles = theme => ({
   media: {
     height: 0,
     paddingTop: '56.25%' // 16:9
+  },
+  avatar: {
+    // margin: 10,
+    height: 30,
+    width: 30,
+    backgroundColor: deepOrange[500],
+    justifyContent: 'center',
+
   }
 })
 
@@ -84,7 +97,6 @@ class SingleParty extends Component {
     this.props.getParty(partyId)
     this.props.getGuests(partyId)
     this.props.getItems(partyId)
-    this.props.getImages(partyId)
 
     if (guestPartyToken) this.props.getGuestStatus(guestPartyToken, partyId)
   }
@@ -205,12 +217,17 @@ class SingleParty extends Component {
           </Card>
 
           <ExpansionPanel>
+
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography className={classes.heading}>
+            <Avatar className={classes.avatar}>H</Avatar>
+
+
+              {/* <Typography className={classes.heading}>
                 {`Guest List (Attending: ${
                   guests.filter(guest => guest.status === 'attending').length
                 } Invited: ${guests.length})`}
-              </Typography>
+              </Typography> */}
+
             </ExpansionPanelSummary>
             <GuestList guests={guests} />
           </ExpansionPanel>
@@ -225,8 +242,6 @@ class SingleParty extends Component {
               })}
             />
           </ExpansionPanel>
-
-
             <Button
                variant="contained"
                className={classes.button}
@@ -234,15 +249,6 @@ class SingleParty extends Component {
                >
               <SaveIcon />
              </Button>
-
-           {/* <Gallery
-              images={images}
-              partyId={id}
-              guest={guests.find(guest => {
-                return guest.guestPartyToken === guestPartyToken
-              })}
-            />  */}
-
         </Fragment>
       )
     }
@@ -255,12 +261,10 @@ const mapState = state => ({
   items: state.items,
   guestStatus: state.guestStatus,
   loggedInUser: state.user,
-  images: state.images
 })
 
 const mapDispatch = dispatch => ({
   postToCalendar: (guestId, party) => dispatch(postToCalendar(guestId, party)),
-  getImages: partyId => dispatch(getImages(partyId)),
   getParty: partyId => dispatch(getParty(partyId)),
   getGuests: partyId => dispatch(getGuests(partyId)),
   getItems: partyId => dispatch(getItems(partyId)),

@@ -32,6 +32,7 @@ export const getImages = partyId => {
   return async dispatch => {
     try {
       const {data} = await axios.get(`/api/images/${partyId}`)
+      console.log(data, "YOO")
       dispatch(setImages(data))
     } catch (error) {
       console.error(error)

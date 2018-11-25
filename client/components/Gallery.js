@@ -10,7 +10,8 @@ import {withStyles} from '@material-ui/core/styles'
 import GridList from '@material-ui/core/GridList'
 import GridListTile from '@material-ui/core/GridListTile'
 import Button from '@material-ui/core/Button'
-import AddIcon from '@material-ui/icons/Add';
+import AddIcon from '@material-ui/icons/Add'
+import ListSubheader from '@material-ui/core/ListSubheader'
 
 const styles = theme => ({
   root: {
@@ -23,9 +24,6 @@ const styles = theme => ({
   gridList: {
     width: 500,
     height: 450
-    // flexWrap: 'nowrap',
-    // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
-    // transform: 'translateZ(0)',
   },
   subheader: {
     width: '100%'
@@ -41,21 +39,22 @@ class Gallery extends Component {
     // this.state = {showAddImage: false}
   }
 
-  // componentDidMount() {
-  //   const partyId = this.props.match.params
-  //   this.props.getImages(partyId)
-  // }
+  componentDidMount() {
+    const partyId = this.props.match.params.id
+    this.props.getImages(partyId)
+  }
 
-  // toggleAddImage = () => {
-  //   this.setState({showAddImage: !this.state.showAddImage})
-  // }
+  toggleAddImage = () => {
+    this.setState({showAddImage: !this.state.showAddImage})
+  }
 
   findGuestId = () => {
     const {guestPartyToken} = this.props.match.params
-
-    return this.props.guests.find(guest =>{
+    let result = this.props.guests.find(guest => {
       return guest.guestPartyToken === guestPartyToken
     })
+
+    return result || 1
   }
 
   handleUploadFile = async event => {
@@ -70,62 +69,55 @@ class Gallery extends Component {
         'X-Requested-With': 'XMLHttpRequest'
       }
     })
-    const guestId  = this.findGuestId()
-    console.log(guestId)
-    // this.props.postImage(data.url, this.props.partyId, this.props.guest.id)
-    // this.props.postImage(data.url, this.props.partyId, 6)
+    const guestId = this.findGuestId()
+    console.log('Here', guestId, 'Here2', this.props.match.params)
+    this.props.postImage(data.url, this.props.match.params.id, guestId)
   }
 
   render() {
     const {classes} = this.props
-    console.log('GALLERY', this.props)
+    console.log("Gallery", this.props)
     return (
       <div className={classes.root}>
-        <GridList cellHeight={160} className={classes.gridList} cols={3}>
+        <ListSubheader component="div">Gallery</ListSubheader>
+        <GridList cellHeight={160} cols={3}>
           {this.props.images.map(tile => (
-            <GridListTile key={tile.img} cols={tile.cols || 1}>
-              <img key={tile.id} src={tile.imageUrl} alt={tile.title} />
+            <GridListTile key={tile.id} >
+              <img key={tile.id} src={tile.imageUrl} />
             </GridListTile>
           ))}
         </GridList>
-
-          <Input
-            type="file"
-            name="imageUrl"
-            accept="image/png, image/jpeg"
-            onChange={this.handleUploadFile}
-            id="imageUrl"
-            className={classes.input}
-          />
-         <label htmlFor="imageUrl">
-        <Button
-          variant="fab"
-          component="span"
-          color="primary"
-          >
-        <AddIcon />
-      </Button>
+        <Input
+          type="file"
+          name="imageUrl"
+          accept="image/png, image/jpeg"
+          onChange={this.handleUploadFile}
+          id="imageUrl"
+          className={classes.input}
+        />
+        <label htmlFor="imageUrl">
+          <Button variant="fab" component="span" color="primary">
+            <AddIcon />
+          </Button>
         </label>
       </div>
     )
   }
 }
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatch = dispatch => ({
   postImage: (imageUrl, partyId, guestId) =>
-  dispatch(postImage(imageUrl, partyId, guestId)),
+    dispatch(postImage(imageUrl, partyId, guestId)),
   getImages: partyId => dispatch(getImages(partyId)),
-  getGuests: partyId => dispatch(getGuests(partyId)),
+  getGuests: partyId => dispatch(getGuests(partyId))
 })
 
 const mapState = state => ({
   images: state.images,
-  guests: state.guests,
+  guests: state.guests
 })
 
-export default connect(mapState, mapDispatchToProps)(
-  withStyles(styles)(Gallery)
-)
+export default connect(mapState, mapDispatch)(withStyles(styles)(Gallery))
 
 // <Card>
 //   <List>
@@ -153,3 +145,22 @@ export default connect(mapState, mapDispatchToProps)(
 //     </Button>
 //   </List>
 // </Card>
+
+// <div className={classes.root}>
+// <GridList className={classes.gridList} cols={2.5}>
+//   {this.props.images.map(tile => (
+//     <GridListTile key={tile.img}>
+//       <img src={tile.imageUrl} alt={tile.title} />
+//       {/* <GridListTileBar
+//         title={tile.title}
+//         classes={{
+//           root: classes.titleBar,
+//           title: classes.title,
+//         }}
+//         actionIcon={
+//           <IconButton>
+//             <StarBorderIcon className={classes.title} />
+//           </IconButton>
+//         }
+//       /> */}
+//     </GridListTile>
