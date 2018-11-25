@@ -44,6 +44,8 @@ import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked'
 import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked'
 import Create from '@material-ui/icons/Create'
 import CalendarToday from '@material-ui/icons/CalendarToday'
+import Button from '@material-ui/core/Button';
+import SaveIcon from '@material-ui/icons/Save';
 
 const styles = theme => ({
   button: {
@@ -119,7 +121,6 @@ class SingleParty extends Component {
     } = this.props.party
 
     const {guests, items, loggedInUser, images} = this.props
-
     const {guestPartyToken} = this.props.match.params
     const {classes} = this.props
 
@@ -224,18 +225,24 @@ class SingleParty extends Component {
               })}
             />
           </ExpansionPanel>
-          <ExpansionPanel>
-            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography className={classes.heading}>Gallery</Typography>
-            </ExpansionPanelSummary>
-            <Gallery
+
+
+            <Button
+               variant="contained"
+               className={classes.button}
+               onClick={()=> history.push(`/parties/${id}/gallery`)}
+               >
+              <SaveIcon />
+             </Button>
+
+           {/* <Gallery
               images={images}
               partyId={id}
               guest={guests.find(guest => {
                 return guest.guestPartyToken === guestPartyToken
               })}
-            />
-          </ExpansionPanel>
+            />  */}
+
         </Fragment>
       )
     }
