@@ -65,26 +65,24 @@ class ItemList extends Component {
             <ListItem key={item.id}>
               <Grid container alignItems="center">
 
-              <Grid item xs={4}>
+              <Grid item xs={3}>
               <ListItemText primary={`${item.title}`} />
               </Grid>
 
-              <Grid item xs={3}>
-              <ListItemText primary={`${item.guest !== null ? ' - ' + item.guest.email : ''}`}/>
-               </Grid>
+              <ListItemText primary={`${item.guest !== null ? item.guest.email : ''}`}/>
 
               <ListItemSecondaryAction>
                 {item.guest && guest ? (
                   item.guest.id === guest.id ? (
 
-                    <Grid item xs={3}>
                     <IconButton
                       aria-label="Remove"
                       onClick={this.toggleRemoveGuestFromItem.bind(this, item)}
                     >
+                    <Grid item xs={5}>
                       <RemoveCircleOutlineIcon />
-                    </IconButton>
                     </Grid>
+                    </IconButton>
                   ) : (
                     <span />
                     )
@@ -104,13 +102,15 @@ class ItemList extends Component {
             </Grid>
             </ListItem>
           ))}
-          {this.state.showAddItem && <AddItem />}
-          <Button
-            className={this.props.classes.button}
-            onClick={this.toggleAddItem}
+          <AddItem/>
+          {/* {this.state.showAddItem && <AddItem />} */}
+
+          {/* <Button */}
+            {/* className={this.props.classes.button}
+            // onClick={this.toggleAddItem}
             >
             Add Item
-          </Button>
+          </Button> */}
         </List>
       </Card>
     )

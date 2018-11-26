@@ -229,7 +229,7 @@ const categoryData = [
 const itemData = [
   {
     partyId: 1,
-    title: 'item 1',
+    title: 'Pie',
     guestId: null,
     categoryId: 1,
     description:
@@ -237,7 +237,7 @@ const itemData = [
   },
   {
     partyId: 1,
-    title: 'item 2',
+    title: 'Drinks',
     guestId: null,
     categoryId: 1,
     description:
@@ -245,7 +245,7 @@ const itemData = [
   },
   {
     partyId: 1,
-    title: 'item 3',
+    title: 'Appetizers',
     guestId: 2,
     categoryId: 3,
     description:
@@ -253,7 +253,7 @@ const itemData = [
   },
   {
     partyId: 2,
-    title: 'item 1B',
+    title: 'Kids Food',
     guestId: null,
     categoryId: 1,
     description:
@@ -261,7 +261,7 @@ const itemData = [
   },
   {
     partyId: 2,
-    title: 'item 2B',
+    title: 'Strawberries',
     guestId: null,
     categoryId: 1,
     description:
@@ -269,7 +269,7 @@ const itemData = [
   },
   {
     partyId: 2,
-    title: 'item 3B',
+    title: 'Turkey',
     guestId: 7,
     categoryId: 1,
     description:
