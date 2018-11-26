@@ -15,6 +15,8 @@ import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline'
 import Card from '@material-ui/core/Card'
 import {AddItem} from '.'
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
+import Grid from '@material-ui/core/Grid'
+
 
 import {putItem} from '../store'
 
@@ -61,39 +63,52 @@ class ItemList extends Component {
         <List>
           {items.map(item => (
             <ListItem key={item.id}>
-              <ListItemText
-                primary={`${item.title}  ${
-                  item.guest !== null ? ' - ' + item.guest.email : ''
-                }`}
-              />
+              <Grid container alignItems="center">
+
+              <Grid item xs={4}>
+              <ListItemText primary={`${item.title}`} />
+              </Grid>
+
+              <Grid item xs={3}>
+              <ListItemText primary={`${item.guest !== null ? ' - ' + item.guest.email : ''}`}/>
+               </Grid>
+
               <ListItemSecondaryAction>
                 {item.guest && guest ? (
                   item.guest.id === guest.id ? (
+
+                    <Grid item xs={3}>
                     <IconButton
                       aria-label="Remove"
                       onClick={this.toggleRemoveGuestFromItem.bind(this, item)}
                     >
                       <RemoveCircleOutlineIcon />
                     </IconButton>
+                    </Grid>
                   ) : (
                     <span />
-                  )
-                ) : (
-                  <IconButton
-                    aria-label="Add"
-                    onClick={this.toggleAddGuestToItem.bind(this, item)}
-                  >
+                    )
+                    ) : (
+                      <Grid item xs={3}>
+                      <IconButton
+                      aria-label="Add"
+                      onClick={this.toggleAddGuestToItem.bind(this, item)}
+                      >
                     <AddCircleOutlineIcon />
                   </IconButton>
+                  </Grid>
                 )}
               </ListItemSecondaryAction>
+
+
+            </Grid>
             </ListItem>
           ))}
           {this.state.showAddItem && <AddItem />}
           <Button
             className={this.props.classes.button}
             onClick={this.toggleAddItem}
-          >
+            >
             Add Item
           </Button>
         </List>

@@ -235,12 +235,14 @@ class SingleParty extends Component {
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
               <Typography className={classes.heading}>Items</Typography>
             </ExpansionPanelSummary>
+
             <ItemList
               items={items}
               guest={guests.find(guest => {
                 return guest.guestPartyToken === guestPartyToken
               })}
             />
+            
           </ExpansionPanel>
             <Button
                color='primary'
