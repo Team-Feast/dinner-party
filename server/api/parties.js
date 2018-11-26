@@ -125,7 +125,6 @@ router.get('/user/:userId', async (req, res, next) => {
           }
         ]
       },
-      include: [{model: Guest, where: {userId: user.id}}],
       order: [['date', 'ASC']]
     })
 
@@ -161,10 +160,7 @@ router.get('/user/:userId', async (req, res, next) => {
     })
 
     const pastEventsQuery = Party.findAll({
-      include: [
-        {model: Guest, where: {userId: user.id}},
-        {model: User, attributes: ['firstName', 'lastName']}
-      ],
+      include: [{model: User, attributes: ['firstName', 'lastName']}],
       where: {
         date: {
           $lt: moment()

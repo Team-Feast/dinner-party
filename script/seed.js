@@ -187,6 +187,7 @@ const guestData = [
     guestPartyToken: '68264675-ec39-11e8-a2d2-758fc26097cb',
     id: 6,
     partyId: 4,
+    userId: 1,
     email: 'cody@email.com'
   },
   {
