@@ -276,6 +276,39 @@ const itemData = [
   }
 ]
 
+const galleryData = [
+  {
+    imageUrl: '/images/images-2.jpg',
+    partyId: 2,
+    guestId: 1
+  },
+  {
+    imageUrl: '/images/images-3.jpg',
+    partyId: 2,
+    guestId: 2
+  },
+  {
+    imageUrl: '/images/images-4.jpg',
+    partyId: 2,
+    guestId: 3
+  },
+  {
+    imageUrl: '/images/images-5.jpg',
+    partyId: 2,
+    guestId: 4
+  },
+  {
+    imageUrl: '/images/images-6.jpg',
+    partyId: 2,
+    guestId: 5
+  },
+  {
+    imageUrl: '/images/images-7.jpg',
+    partyId: 2,
+    guestId: 6
+  }
+]
+
 //helper functions
 function doTimes(n, fn) {
   const results = []
@@ -453,6 +486,11 @@ const seed = async () => {
     // await createItems()
     await Item.bulkCreate(itemData)
     console.log(`Successfully Seeded Items`)
+
+    await Image.bulkCreate(galleryData)
+    console.log(`Successfully Seeded Images`)
+
+
 
     await db.query(
       `ALTER SEQUENCE "parties_id_seq" RESTART WITH ${partyData.length + 1};`

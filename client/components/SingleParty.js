@@ -81,7 +81,6 @@ const styles = theme => ({
     height: 30,
     width: 30,
     backgroundColor: deepOrange[500],
-    justifyContent: 'center',
 
   }
 })
@@ -149,7 +148,7 @@ class SingleParty extends Component {
                 <IconButton
                   onClick={() => history.push(`/parties/${id}/editparty`)}
                 >
-                  <Create className={classes.icon} />
+                <Create className={classes.icon} />
                 </IconButton>
               }
               title={title}
@@ -217,10 +216,12 @@ class SingleParty extends Component {
           </Card>
 
           <ExpansionPanel>
-
-            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            <Avatar className={classes.avatar}>H</Avatar>
-
+            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
+              <Avatar className={classes.avatar} src={url}/>
+              <Avatar className={classes.avatar}src={url}/>
+              <Avatar className={classes.avatar}src={url}/>
+              <Avatar className={classes.avatar}src={url}/>
+              <Avatar className={classes.avatar}src={url}/>
 
               {/* <Typography className={classes.heading}>
                 {`Guest List (Attending: ${
@@ -243,6 +244,7 @@ class SingleParty extends Component {
             />
           </ExpansionPanel>
             <Button
+               color='primary'
                variant="contained"
                className={classes.button}
                onClick={()=> history.push(`/parties/${id}/gallery`)}

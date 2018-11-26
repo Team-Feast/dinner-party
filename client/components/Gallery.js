@@ -30,14 +30,13 @@ const styles = theme => ({
   },
   input: {
     display: 'none'
+  },
+  fab: {
+    position: 'relative'
   }
 })
 
 class Gallery extends Component {
-  constructor() {
-    super()
-    // this.state = {showAddImage: false}
-  }
 
   componentDidMount() {
     const partyId = this.props.match.params.id
@@ -96,10 +95,14 @@ class Gallery extends Component {
           className={classes.input}
         />
         <label htmlFor="imageUrl">
-          <Button variant="fab" component="span" color="primary">
+          <Button variant="fab" color='primary'component="span" className={classes.fab}>
             <AddIcon />
+            UPLOAD
           </Button>
         </label>
+
+
+
       </div>
     )
   }
@@ -118,49 +121,3 @@ const mapState = state => ({
 })
 
 export default connect(mapState, mapDispatch)(withStyles(styles)(Gallery))
-
-// <Card>
-//   <List>
-//     {this.props.images &&
-//       this.props.images.map(image => (
-//         <ListItem key={image.id}>
-//           <img src={image.imageUrl} style={{width: '95vw'}} />
-//         </ListItem>
-//       ))}
-
-//     {this.state.showAddImage && (
-//       <Input
-//         type="file"
-//         name="imageUrl"
-//         accept="image/png, image/jpeg"
-//         onChange={this.handleUploadFile}
-//         id="imageUrl"
-//       />
-//     )}
-//     <Button
-//       className={this.props.classes.button}
-//       onClick={this.toggleAddImage}
-//     >
-//       Add Image
-//     </Button>
-//   </List>
-// </Card>
-
-// <div className={classes.root}>
-// <GridList className={classes.gridList} cols={2.5}>
-//   {this.props.images.map(tile => (
-//     <GridListTile key={tile.img}>
-//       <img src={tile.imageUrl} alt={tile.title} />
-//       {/* <GridListTileBar
-//         title={tile.title}
-//         classes={{
-//           root: classes.titleBar,
-//           title: classes.title,
-//         }}
-//         actionIcon={
-//           <IconButton>
-//             <StarBorderIcon className={classes.title} />
-//           </IconButton>
-//         }
-//       /> */}
-//     </GridListTile>
