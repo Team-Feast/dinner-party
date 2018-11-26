@@ -217,17 +217,16 @@ class SingleParty extends Component {
 
           <ExpansionPanel>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
-              <Avatar className={classes.avatar} src={url}/>
+              {/* <Avatar className={classes.avatar} src={"/images/default-user.jpg"}/>
               <Avatar className={classes.avatar}src={url}/>
               <Avatar className={classes.avatar}src={url}/>
-              <Avatar className={classes.avatar}src={url}/>
-              <Avatar className={classes.avatar}src={url}/>
+              <Avatar className={classes.avatar}src={url}/> */}
 
-              {/* <Typography className={classes.heading}>
+               <Typography className={classes.heading}>
                 {`Guest List (Attending: ${
                   guests.filter(guest => guest.status === 'attending').length
                 } Invited: ${guests.length})`}
-              </Typography> */}
+              </Typography>
 
             </ExpansionPanelSummary>
             <GuestList guests={guests} />

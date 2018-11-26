@@ -279,6 +279,36 @@ const itemData = [
 const galleryData = [
   {
     imageUrl: '/images/images-2.jpg',
+    partyId: 1,
+    guestId: 1
+  },
+  {
+    imageUrl: '/images/images-3.jpg',
+    partyId: 1,
+    guestId: 2
+  },
+  {
+    imageUrl: '/images/images-4.jpg',
+    partyId: 1,
+    guestId: 3
+  },
+  {
+    imageUrl: '/images/images-5.jpg',
+    partyId: 1,
+    guestId: 4
+  },
+  {
+    imageUrl: '/images/images-6.jpg',
+    partyId: 1,
+    guestId: 5
+  },
+  {
+    imageUrl: '/images/images-7.jpg',
+    partyId: 1,
+    guestId: 6
+  },
+  {
+    imageUrl: '/images/images-2.jpg',
     partyId: 2,
     guestId: 1
   },
@@ -305,6 +335,66 @@ const galleryData = [
   {
     imageUrl: '/images/images-7.jpg',
     partyId: 2,
+    guestId: 6
+  },
+  {
+    imageUrl: '/images/images-2.jpg',
+    partyId: 3,
+    guestId: 1
+  },
+  {
+    imageUrl: '/images/images-3.jpg',
+    partyId: 3,
+    guestId: 2
+  },
+  {
+    imageUrl: '/images/images-4.jpg',
+    partyId: 3,
+    guestId: 3
+  },
+  {
+    imageUrl: '/images/images-5.jpg',
+    partyId: 3,
+    guestId: 4
+  },
+  {
+    imageUrl: '/images/images-6.jpg',
+    partyId: 3,
+    guestId: 5
+  },
+  {
+    imageUrl: '/images/images-7.jpg',
+    partyId: 3,
+    guestId: 6
+  },
+  {
+    imageUrl: '/images/images-2.jpg',
+    partyId: 4,
+    guestId: 1
+  },
+  {
+    imageUrl: '/images/images-3.jpg',
+    partyId: 4,
+    guestId: 2
+  },
+  {
+    imageUrl: '/images/images-4.jpg',
+    partyId: 4,
+    guestId: 3
+  },
+  {
+    imageUrl: '/images/images-5.jpg',
+    partyId: 4,
+    guestId: 4
+  },
+  {
+    imageUrl: '/images/images-6.jpg',
+    partyId: 4,
+    guestId: 5
+  },
+  {
+    imageUrl: '/images/images-7.jpg',
+    partyId: 4,
     guestId: 6
   }
 ]

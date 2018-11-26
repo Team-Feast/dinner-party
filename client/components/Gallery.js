@@ -32,11 +32,16 @@ const styles = theme => ({
     display: 'none'
   },
   fab: {
-    position: 'relative'
+    position: 'relative',
+    margin: theme.spacing.unit,
+  },
+  button: {
+    margin: theme.spacing.unit,
   }
 })
 
 class Gallery extends Component {
+
 
   componentDidMount() {
     const partyId = this.props.match.params.id
@@ -69,13 +74,11 @@ class Gallery extends Component {
       }
     })
     const guestId = this.findGuestId()
-    console.log('Here', guestId, 'Here2', this.props.match.params)
     this.props.postImage(data.url, this.props.match.params.id, guestId)
   }
 
   render() {
     const {classes} = this.props
-    console.log("Gallery", this.props)
     return (
       <div className={classes.root}>
         <ListSubheader component="div">Gallery</ListSubheader>
@@ -97,12 +100,12 @@ class Gallery extends Component {
         <label htmlFor="imageUrl">
           <Button variant="fab" color='primary'component="span" className={classes.fab}>
             <AddIcon />
-            UPLOAD
           </Button>
         </label>
-
-
-
+        <Button variant="extendedFab" color="primary" className={classes.button}
+          onClick={()=> history.push(`/parties/${this.props.match.params.id}`)}
+         > Back
+         </Button>
       </div>
     )
   }
@@ -110,7 +113,7 @@ class Gallery extends Component {
 
 const mapDispatch = dispatch => ({
   postImage: (imageUrl, partyId, guestId) =>
-    dispatch(postImage(imageUrl, partyId, guestId)),
+  dispatch(postImage(imageUrl, partyId, guestId)),
   getImages: partyId => dispatch(getImages(partyId)),
   getGuests: partyId => dispatch(getGuests(partyId))
 })
