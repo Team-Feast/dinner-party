@@ -54,6 +54,59 @@ router.post('/', async function(req, res, next) {
   }
 })
 
+router.post('/newfeast', async (req, res, next) => {
+  try {
+    const {guests, partyId} = req.body
+
+    const party = await Party.findById(partyId, {
+      include: [{model: User, attributes: ['firstName', 'lastName']}]
+    })
+
+    for (let i = 0; i < guests.length; i++) {
+      let {email, firstName} = guests[i]
+      const user = await User.find({where: {email}})
+      const guest = await Guest.create({
+        email,
+        firstName,
+        partyId,
+        userId: user ? user.id : null,
+        status: user ? 'attending' : null
+      })
+
+      // sends emails on guests creation
+      let transporter = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+          user: '1809teamfeast@gmail.com',
+          pass: process.env.GMAILPW
+        }
+      })
+      let mailOptions = {
+        to: guest.email,
+        from: '1809teamfeast@gmail.com',
+        subject: "You're Invited",
+        text: sanitizeHtml(
+          `You are receiving this because you have been invited by ${
+            party.user.firstName
+          } ${party.user.lastName} to ${
+            party.title
+          } through Feast! It's on ${moment(party.date).format('LLLL')} at ${
+            party.location
+          }. Use the attached link to accept or decline your invitation. \n\nhttp://${
+            req.headers.host
+          }/parties/${partyId}/rsvp/${
+            guest.guestPartyToken
+          }\n\nIf you did not request this, please ignore this email.`
+        )
+      }
+      transporter.sendMail(mailOptions)
+    }
+    res.status(201).end()
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.post('/:id/invite', async function(req, res, next) {
   try {
     const guest = await Guest.findById(req.params.id)

@@ -60,7 +60,8 @@ class AddParty extends Component {
       description: '',
       location: '',
       imageUrl: '',
-      guests: [{firstName: '', email: ''}]
+      guests: [{firstName: '', email: ''}],
+      items: [{title: ''}]
     }
   }
 
@@ -82,8 +83,17 @@ class AddParty extends Component {
     this.setState({guests: [...this.state.guests, {firstName: '', email: ''}]})
   }
 
+  addItemField = () => {
+    this.setState({items: [...this.state.items, {title: ''}]})
+  }
   handleChange = event => {
     this.setState({[event.target.name]: event.target.value})
+  }
+
+  handleItem = (index, event) => {
+    let itemsCopy = this.state.items.slice()
+    itemsCopy[index][event.target.name] = event.target.value
+    this.setState({items: itemsCopy})
   }
 
   handleGuest = (index, event) => {
@@ -96,24 +106,20 @@ class AddParty extends Component {
     evt.preventDefault()
 
     const userId = this.props.user.id
+    const userFirstName = this.props.user.firstName
     const userEmail = this.props.user.email
+    const host = {firstName: userFirstName, email: userEmail}
+
     const info = {...this.state, userId}
 
     //adds user as a guest
-    const guestEmails = this.state.emails
-      ? this.state.emails
-          .split(',')
-          .concat(userEmail)
-          .map(email => email.trim())
-      : [userEmail]
+    const guests = this.state.guests ? [host, ...this.state.guests] : [host]
 
-    await this.props.postParty({info, guestEmails})
+    await this.props.postParty({info, guests})
   }
   render() {
     const {step} = this.state
-    const {title, description, location, imageUrl, emails} = this.state
-    const values = {title, description, location, imageUrl, emails}
-    const steps = ['Feast Info', 'Add Guests', 'Add Items']
+    const {title, description, location, date} = this.state
 
     const {classes, theme} = this.props
     return (
@@ -126,16 +132,20 @@ class AddParty extends Component {
           <Typography component="h1" variant="h5">
             Create Feast
           </Typography>
+
           <form className={classes.form} onSubmit={this.handleSubmit}>
             {step === 0 && (
               <Fragment>
+                <Typography component="h6" variant="h6">
+                  Feast Info
+                </Typography>
                 <FormControl margin="normal" required fullWidth>
                   <InputLabel htmlFor="title">Title</InputLabel>
                   <Input
                     id="title"
                     name="title"
                     onChange={this.handleChange}
-                    value={this.state.title}
+                    value={title}
                     autoFocus
                   />
                 </FormControl>
@@ -146,7 +156,7 @@ class AddParty extends Component {
                     name="description"
                     onChange={this.handleChange}
                     id="description"
-                    value={this.state.description}
+                    value={description}
                   />
                 </FormControl>
 
@@ -156,7 +166,7 @@ class AddParty extends Component {
                     name="location"
                     onChange={this.handleChange}
                     id="location"
-                    value={this.state.location}
+                    value={location}
                   />
                 </FormControl>
 
@@ -179,7 +189,7 @@ class AddParty extends Component {
                     type="datetime-local"
                     className={classes.textField}
                     onChange={this.handleChange}
-                    value={this.state.date}
+                    value={date}
                     InputLabelProps={{
                       shrink: true
                     }}
@@ -189,40 +199,84 @@ class AddParty extends Component {
             )}
 
             {step === 1 && (
-              <List dense>
-                <Button onClick={() => this.addGuestField()}>
-                  Add a guest
-                </Button>
-                {this.state.guests.length &&
-                  this.state.guests.map((guest, index) => (
-                    <ListItem key={`${guest.email}`}>
-                      <FormControl margin="normal">
-                        <InputLabel htmlFor="guest name">Guest Name</InputLabel>
-                        <Input
-                          type="text"
-                          name="firstName"
-                          onChange={event => this.handleGuest(index, event)}
-                          value={this.state.guests[index].firstName}
-                        />
-                      </FormControl>
-                      <FormControl margin="normal">
-                        <InputLabel htmlFor="location">Guest Email</InputLabel>
-                        <Input
-                          type="text"
-                          name="email"
-                          onChange={event => this.handleGuest(index, event)}
-                          value={this.state.guests[index].email}
-                        />
-                      </FormControl>
-                    </ListItem>
-                  ))}
-              </List>
+              <Fragment>
+                <Typography component="h6" variant="h6">
+                  Invite Guests
+                </Typography>
+                <List dense>
+                  {this.state.guests.length &&
+                    this.state.guests.map((guest, index) => (
+                      <ListItem key={`guest[${index}]`}>
+                        <FormControl margin="normal">
+                          <InputLabel htmlFor="guest name">
+                            Guest Name
+                          </InputLabel>
+                          <Input
+                            type="text"
+                            name="firstName"
+                            onChange={event => this.handleGuest(index, event)}
+                            value={this.state.guests[index].firstName}
+                          />
+                        </FormControl>
+                        <FormControl margin="normal">
+                          <InputLabel htmlFor="location">
+                            Guest Email
+                          </InputLabel>
+                          <Input
+                            type="email"
+                            name="email"
+                            onChange={event => this.handleGuest(index, event)}
+                            value={this.state.guests[index].email}
+                          />
+                        </FormControl>
+                      </ListItem>
+                    ))}
+                  <Button onClick={() => this.addGuestField()}>
+                    Add a guest
+                  </Button>
+                </List>
+              </Fragment>
+            )}
+            {step === 2 && (
+              <Fragment>
+                <Typography component="h6" variant="h6">
+                  Add Items
+                </Typography>
+                <List dense>
+                  {this.state.items.length &&
+                    this.state.items.map((item, index) => (
+                      <ListItem key={`item[${index}]`}>
+                        <FormControl margin="normal" fullWidth>
+                          <InputLabel htmlFor="Item title">Item</InputLabel>
+                          <Input
+                            type="text"
+                            name="title"
+                            onChange={event => this.handleItem(index, event)}
+                            value={this.state.items[index].title}
+                          />
+                        </FormControl>
+                      </ListItem>
+                    ))}
+                  <Button onClick={() => this.addItemField()}>
+                    Add new item
+                  </Button>
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                  >
+                    Create Feast
+                  </Button>
+                </List>
+              </Fragment>
             )}
           </form>
         </Paper>
         <MobileStepper
           variant="dots"
-          steps={4}
+          steps={3}
           position="static"
           activeStep={this.state.step}
           className={classes.root}
@@ -230,7 +284,7 @@ class AddParty extends Component {
             <Button
               size="small"
               onClick={this.nextStep}
-              disabled={this.state.step === 3}
+              disabled={this.state.step === 2}
             >
               Next
               {theme.direction === 'rtl' ? (

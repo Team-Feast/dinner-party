@@ -58,4 +58,22 @@ router.post('/', async (req, res, next) => {
   }
 })
 
+router.post('/newfeast', async (req, res, next) => {
+  try {
+    const {items, partyId} = req.body
+
+    for (let i = 0; i < items.length; i++) {
+      const {title, description} = items[i]
+      await Item.create({
+        title,
+        description,
+        partyId
+      })
+    }
+    res.status(201).end()
+  } catch (error) {
+    next(error)
+  }
+})
+
 module.exports = router
