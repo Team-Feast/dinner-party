@@ -1,6 +1,11 @@
 import React, {Component} from 'react'
-// import mapboxgl from 'mapbox-gl'
-const mapboxgl = __CLIENT__ ? require('mapbox-gl') : {}
+
+let mapboxgl
+if (global.self) {
+  mapboxgl = require('mapbox-gl')
+} else {
+  mapboxgl = {}
+}
 import axios from 'axios'
 
 class Map extends Component {

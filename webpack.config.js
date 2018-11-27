@@ -1,5 +1,4 @@
 const isDev = process.env.NODE_ENV === 'development'
-const webpack = require('webpack')
 
 module.exports = {
   mode: isDev ? 'development' : 'production',
@@ -23,10 +22,5 @@ module.exports = {
         loader: 'babel-loader'
       }
     ]
-  },
-  plugins: [
-    new webpack.DefinePlugin({
-      __CLIENT__: isDev === 'development' // Your logic to define if webpack is running in server or client mode
-    })
-  ]
+  }
 }
