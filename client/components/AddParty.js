@@ -203,7 +203,23 @@ class AddParty extends Component {
                   />
                 </FormControl>
 
-                <FormControl margin="normal">
+                <FormControl>
+                  <TextField
+                    id="date"
+                    label="Date"
+                    name="date"
+                    type="datetime-local"
+                    className={classes.textField}
+                    onChange={this.handleChange}
+                    required
+                    value={date}
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                  />
+                </FormControl>
+
+                <FormControl margin="normal" fullWidth>
                   {/* <InputLabel htmlFor="imageUrl">Image URL</InputLabel> */}
 
                   <div className={classes.uploadBtnWrapper}>
@@ -219,22 +235,6 @@ class AddParty extends Component {
                       id="imageUrl"
                     />
                   </div>
-                </FormControl>
-
-                <FormControl>
-                  <TextField
-                    id="date"
-                    label="Date"
-                    name="date"
-                    type="datetime-local"
-                    className={classes.textField}
-                    onChange={this.handleChange}
-                    required
-                    value={date}
-                    InputLabelProps={{
-                      shrink: true
-                    }}
-                  />
                 </FormControl>
               </Fragment>
             )}
