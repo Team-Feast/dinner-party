@@ -3,6 +3,14 @@ const router = require('express').Router()
 const Op = require('sequelize').Op
 
 //GET /api/reminders/party/:partyId
+/*
+ Returns an object that looks like
+ {
+   reminders: [] // reminders for a particular party
+   guests: []  // attending guests
+ }
+
+*/
 router.get('/party/:partyId', async (req, res, next) => {
   try {
     let guests = await Guest.findAll({
@@ -10,30 +18,32 @@ router.get('/party/:partyId', async (req, res, next) => {
         [Op.and]: [{partyId: req.params.partyId}, {status: 'attending'}]
       }
     })
-    if (guests) {
+    if (guests.length) {
       let reminders = await Reminder.findAll({
         where: {
           partyId: req.params.partyId
         }
       })
       res.json({reminders, guests})
+    } else {
+      res.sendStatus(404)
     }
   } catch (err) {
     next(err)
   }
 })
 
-// //PUT /api/reminders/party/:partyId
-// router.put('/party/:partyId', async (req, res, next) => {
-//   try {
-//     let item = await Item.findById(req.params.id)
-//     let result = await item.update(req.body)
-//     let data = await Item.findById(result.id, {include: [Guest]})
-//     res.json(data)
-//   } catch (err) {
-//     next(err)
-//   }
-// })
+//PUT /api/reminders/party/:partyId
+router.put('/party/:partyId', async (req, res, next) => {
+  try {
+    let item = await Item.findById(req.params.id)
+    let result = await item.update(req.body)
+    let data = await Item.findById(result.id, {include: [Guest]})
+    res.json(data)
+  } catch (err) {
+    next(err)
+  }
+})
 
 // //PUT /api/reminders/party/:partyId
 // router.delete('/party/:partyId', async (req, res, next) => {
