@@ -5,9 +5,9 @@ import {getImages} from '../store'
 import MobileStepper from '@material-ui/core/MobileStepper'
 import {withStyles} from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
-import Button from '@material-ui/core/Button';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+import Button from '@material-ui/core/Button'
+import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
+import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
 
 const styles = theme => ({
   root: {
@@ -43,7 +43,7 @@ class SinglePicture extends Component {
     const pictureId = this.props.match.params.pictureId
     this.props.getImages(partyId)
 
-    console.log("State", this.state)
+    console.log('State', this.state)
   }
 
   handleNext = () => {
@@ -57,9 +57,18 @@ class SinglePicture extends Component {
       activeStep: prevState.activeStep - 1
     }))
   }
+  getImageFromId = pictureId => {
+    console.log('id>>.', pictureId)
+    for (let i = 0; i < this.props.images.length; i++) {
+      if (this.props.images[i].id === +pictureId) {
+        return i
+      }
+    }
+  }
 
   render() {
-    const maxSteps = this.props.images.length;
+    const maxSteps = this.props.images.length
+    const pictureId = this.props.match.params.pictureId
 
     if (this.props.images.length) {
       const {classes, theme} = this.props
@@ -68,7 +77,7 @@ class SinglePicture extends Component {
         <div className={classes.root}>
           <img
             className={classes.img}
-            src={this.props.images[this.state.activeStep].imageUrl}
+            src={this.props.images[this.getImageFromId(pictureId)].imageUrl}
           />
 
           <MobileStepper
@@ -76,7 +85,6 @@ class SinglePicture extends Component {
             position="static"
             activeStep={activeStep}
             className={classes.mobileStepper}
-
             nextButton={
               <Button
                 size="small"
@@ -122,4 +130,6 @@ const mapDispatch = dispatch => ({
   getImages: partyId => dispatch(getImages(partyId))
 })
 
-export default connect(mapState, mapDispatch)(withStyles(styles, {withTheme: true})(SinglePicture))
+export default connect(mapState, mapDispatch)(
+  withStyles(styles, {withTheme: true})(SinglePicture)
+)
