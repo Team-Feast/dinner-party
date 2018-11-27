@@ -4,6 +4,7 @@ const Guest = require('./guest')
 const Item = require('./item')
 const Category = require('./category')
 const Image = require('./image')
+const Reminder = require('./reminder')
 
 Party.belongsTo(User)
 User.hasMany(Party)
@@ -26,6 +27,8 @@ Party.hasMany(Item)
 Item.belongsTo(Category)
 Category.hasMany(Item)
 
+Reminder.belongsTo(Party)
+
 /**
  * If we had any associations to make, this would be a great place to put them!
  * ex. if we had another model called BlogPost, we might say:
@@ -45,5 +48,6 @@ module.exports = {
   Guest,
   Item,
   Category,
-  Image
+  Image,
+  Reminder
 }
