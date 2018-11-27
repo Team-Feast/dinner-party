@@ -66,14 +66,25 @@ const styles = theme => ({
 })
 
 class SingleParty extends Component {
-  state = {
-    selectedValue: 'invited'
+  constructor(props) {
+    super(props)
+    this.state = {
+      title: '',
+      description: '',
+      location: '',
+      imageUrl: '',
+      date: '',
+      id: '',
+      userId: '',
+      status: '',
+      selectedValue: 'invited'
+    }
   }
 
   async componentDidMount() {
     const {guestPartyToken, partyId} = this.props.match.params
 
-    this.props.getParty(partyId)
+    await this.props.getParty(partyId)
     await this.props.getGuests(partyId)
     this.props.getItems(partyId)
 
@@ -82,7 +93,7 @@ class SingleParty extends Component {
         ele => ele.guestPartyToken === guestPartyToken
       )
 
-      this.setState({selectedValue: guest.status})
+      this.setState({...this.props.party, selectedValue: guest.status})
     }
   }
 
@@ -113,8 +124,9 @@ class SingleParty extends Component {
       user,
       date,
       id,
-      userId
-    } = this.props.party
+      userId,
+      status
+    } = this.state
 
     const {guests, items, loggedInUser, images} = this.props
     const {guestPartyToken} = this.props.match.params
@@ -122,7 +134,7 @@ class SingleParty extends Component {
 
     const guest = guests.find(ele => ele.email === loggedInUser.email)
 
-    if (!this.props.party.id) {
+    if (!this.state.id) {
       return null
     } else {
       return (
@@ -164,8 +176,8 @@ class SingleParty extends Component {
               <ListItem>
                 <ListItemText primary={location} />
               </ListItem>
-              {guestPartyToken &&
-                userId !== loggedInUser.id && (
+              {userId !== loggedInUser.id &&
+                status === 'upcoming' && (
                   <ListItem>
                     <ListItemText primary="Are you attending?" />
                     <ListItemSecondaryAction>

@@ -34,7 +34,9 @@ const PastParties = props => {
                 key={party.id}
                 button
                 component={Link}
-                to={`/parties/${party.id}`}
+                to={`/parties/${party.id}/rsvp/${
+                  party.guests[0].guestPartyToken
+                }`}
               >
                 <Grid container alignItems="center">
                   <Grid item xs={2}>
