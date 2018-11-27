@@ -9,7 +9,6 @@ import Button from '@material-ui/core/Button';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 
-
 const styles = theme => ({
   root: {
     maxWidth: 400,
@@ -35,14 +34,16 @@ class SinglePicture extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      activeStep: 0
+      activeStep: this.props.match.params.pictureId
     }
   }
 
   componentDidMount() {
     const partyId = this.props.match.params.partyId
-    console.log('Here', partyId)
+    const pictureId = this.props.match.params.pictureId
     this.props.getImages(partyId)
+
+    console.log("State", this.state)
   }
 
   handleNext = () => {
@@ -61,14 +62,13 @@ class SinglePicture extends Component {
     const maxSteps = this.props.images.length;
 
     if (this.props.images.length) {
-      console.log('props', this.props)
       const {classes, theme} = this.props
       const {activeStep} = this.state
       return (
         <div className={classes.root}>
           <img
             className={classes.img}
-            src={this.props.images[this.props.match.params.pictureId].imageUrl}
+            src={this.props.images[this.state.activeStep].imageUrl}
           />
 
           <MobileStepper
@@ -76,6 +76,7 @@ class SinglePicture extends Component {
             position="static"
             activeStep={activeStep}
             className={classes.mobileStepper}
+
             nextButton={
               <Button
                 size="small"
