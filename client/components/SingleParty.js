@@ -215,6 +215,15 @@ class SingleParty extends Component {
 
           <ExpansionPanel>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+
+              <Typography className={classes.heading}>{location}</Typography>
+            </ExpansionPanelSummary>
+            <Map location={location} />
+          </ExpansionPanel>
+
+          <ExpansionPanel>
+            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+
               <Typography className={classes.heading}>
                 {`Guest List (Attending: ${
                   guests.filter(guest => guest.status === 'attending').length
