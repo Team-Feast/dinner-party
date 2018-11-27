@@ -104,7 +104,7 @@ const partyData = [
   {
     location: '1305 S Michigan Ave, Chicago, IL 60605',
     status: 'upcoming',
-    userId: 2,
+    userId: 5,
     id: 2,
     title: 'Friday night dinner',
     date: '2018-11-30 19:30:00.512-06',
@@ -209,9 +209,9 @@ const guestData = [
     phone: '5324896085',
     guestPartyToken: '68264675-ec39-11e8-a2d2-758fc26097cb',
     id: 7,
-    partyId: 2,
-    userId: 2,
-    email: 'joseph@email.com'
+    partyId: 3,
+    userId: 5,
+    email: 'paul@email.com'
   },
   {
     status: 'attending',
@@ -687,92 +687,92 @@ const galleryData = [
   {
     imageUrl: '/images/images-2.jpg',
     partyId: 2,
-    guestId: 1
+    guestId: 7
   },
   {
     imageUrl: '/images/images-3.jpg',
     partyId: 2,
-    guestId: 2
+    guestId: 8
   },
   {
     imageUrl: '/images/images-4.jpg',
     partyId: 2,
-    guestId: 3
+    guestId: 10
   },
   {
     imageUrl: '/images/images-5.jpg',
     partyId: 2,
-    guestId: 4
+    guestId: 11
   },
   {
     imageUrl: '/images/images-6.jpg',
     partyId: 2,
-    guestId: 5
+    guestId: 11
   },
   {
     imageUrl: '/images/images-7.jpg',
     partyId: 2,
-    guestId: 6
+    guestId: 10
   },
   {
     imageUrl: '/images/images-2.jpg',
     partyId: 3,
-    guestId: 1
+    guestId: 13
   },
   {
     imageUrl: '/images/images-3.jpg',
     partyId: 3,
-    guestId: 2
+    guestId: 13
   },
   {
     imageUrl: '/images/images-4.jpg',
     partyId: 3,
-    guestId: 3
+    guestId: 14
   },
   {
     imageUrl: '/images/images-5.jpg',
     partyId: 3,
-    guestId: 4
+    guestId: 14
   },
   {
     imageUrl: '/images/images-6.jpg',
     partyId: 3,
-    guestId: 5
+    guestId: 16
   },
   {
     imageUrl: '/images/images-7.jpg',
     partyId: 3,
-    guestId: 6
+    guestId: 16
   },
   {
     imageUrl: '/images/images-2.jpg',
     partyId: 4,
-    guestId: 1
+    guestId: 17
   },
   {
     imageUrl: '/images/images-3.jpg',
     partyId: 4,
-    guestId: 2
+    guestId: 19
   },
   {
     imageUrl: '/images/images-4.jpg',
     partyId: 4,
-    guestId: 3
+    guestId: 19
   },
   {
     imageUrl: '/images/images-5.jpg',
     partyId: 4,
-    guestId: 4
+    guestId: 22
   },
   {
     imageUrl: '/images/images-6.jpg',
     partyId: 4,
-    guestId: 5
+    guestId: 22
   },
   {
     imageUrl: '/images/images-7.jpg',
     partyId: 4,
-    guestId: 6
+    guestId: 22
   }
 ]
 
