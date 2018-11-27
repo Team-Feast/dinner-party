@@ -69,7 +69,7 @@ const AuthForm = props => {
   return (
     <Fragment>
       <CssBaseline />
-      <Paper className={classes.paper}>
+      <Paper elevation={0} className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockIcon />
         </Avatar>
@@ -130,9 +130,9 @@ const AuthForm = props => {
           </div>
         </form>
         {name === 'login' && (
-           <div className={classes.secondaryButtons}>
+          <div className={classes.secondaryButtons}>
             <ForgotPassword />
-          <div />
+            <div />
 
             <Button
               type="button"
@@ -141,7 +141,7 @@ const AuthForm = props => {
             >
               Sign Up
             </Button>
-           </div>
+          </div>
         )}
       </Paper>
     </Fragment>
