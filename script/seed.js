@@ -7,7 +7,8 @@ const {
   Guest,
   Item,
   Category,
-  Image
+  Image,
+  Reminder
 } = require('../server/db/models')
 const moment = require('moment')
 
@@ -776,6 +777,14 @@ const galleryData = [
   }
 ]
 
+const reminderData = [
+  {
+    name: 'foo',
+    timeBefore: 3,
+    partyId: 1
+  }
+]
+
 //helper functions
 function doTimes(n, fn) {
   const results = []
@@ -957,6 +966,9 @@ const seed = async () => {
     await Image.bulkCreate(galleryData)
     console.log(`Successfully Seeded Images`)
 
+    await Reminder.bulkCreate(reminderData)
+    console.log(`Successfully Seeded Reminders`)
+
     await db.query(
       `ALTER SEQUENCE "parties_id_seq" RESTART WITH ${partyData.length + 1};`
     )
@@ -972,6 +984,10 @@ const seed = async () => {
     )
     await db.query(
       `ALTER SEQUENCE "items_id_seq" RESTART WITH ${itemData.length + 1};`
+    )
+    await db.query(
+      `ALTER SEQUENCE "reminders_id_seq" RESTART WITH ${reminderData.length +
+        1};`
     )
 
     console.log(`seeding successfully`)
