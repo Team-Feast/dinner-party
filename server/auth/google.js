@@ -2,6 +2,8 @@ const passport = require('passport')
 const router = require('express').Router()
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
 const {User} = require('../db/models')
+const {Op} = require('sequelize')
+
 module.exports = router
 
 /**
@@ -34,17 +36,26 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
       const name = profile.name
       const email = profile.emails[0].value
 
+      console.log('====', profile)
+
       User.findOrCreate({
-        where: {googleId},
-        defaults: {firstName: name.givenName, lastName: name.familyName, email}
+        where: {
+          [Op.or]: [{googleId}, {email}]
+        },
+        defaults: {
+          firstName: name.givenName,
+          lastName: name.familyName,
+          email,
+          googleId
+        }
       })
         .then(([user]) => {
-          user.update({googleToken: token})
+          user.update({googleToken: token, googleId})
           done(null, user)
         })
         .catch(done)
 
-      User.update({googleToken: token}, {where: {googleId}})
+      //User.update({googleToken: token}, {where: {googleId}})
     }
   )
 
