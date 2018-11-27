@@ -174,50 +174,54 @@ class SingleParty extends Component {
                   <span />
                 )}
               </ListItem>
-              {guestPartyToken && (
-                <ListItem>
-                  <ListItemText primary="Are you attending?" />
-                  <ListItemSecondaryAction>
-                    <div>
-                      <Checkbox
-                        checked={this.state.selectedValue === 'attending'}
-                        onChange={this.handleChange}
-                        value={this.state.selectedValue}
-                        name="attending"
-                        aria-label="C"
-                        classes={{
-                          root: classes.green,
-                          checked: classes.checked
-                        }}
-                      />
+              <ListItem>
+                <ListItemText primary={location} />
+              </ListItem>
+              {guestPartyToken &&
+                userId !== loggedInUser.id && (
+                  <ListItem>
+                    <ListItemText primary="Are you attending?" />
+                    <ListItemSecondaryAction>
+                      <div>
+                        <Checkbox
+                          checked={this.state.selectedValue === 'attending'}
+                          onChange={this.handleChange}
+                          value={this.state.selectedValue}
+                          name="attending"
+                          aria-label="C"
+                          classes={{
+                            root: classes.green,
+                            checked: classes.checked
+                          }}
+                        />
 
-                      <Checkbox
-                        checked={this.state.selectedValue === 'declined'}
-                        onChange={this.handleChange}
-                        value={this.state.selectedValue}
-                        name="declined"
-                        color="primary"
-                        classes={{
-                          root: classes.red,
-                          checked: classes.checked
-                        }}
-                        aria-label="D"
-                      />
-                    </div>
-                  </ListItemSecondaryAction>
-                </ListItem>
-              )}
+
+                        <Checkbox
+                          checked={this.state.selectedValue === 'declined'}
+                          onChange={this.handleChange}
+                          value={this.state.selectedValue}
+                          name="declined"
+                          color="primary"
+                          classes={{
+                            root: classes.red,
+                            checked: classes.checked
+                          }}
+                          aria-label="D"
+                        />
+                      </div>
+                    </ListItemSecondaryAction>
+                  </ListItem>
+                )}
             </List>
           </Card>
 
           <ExpansionPanel>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography className={classes.heading}>{location}</Typography>
-            </ExpansionPanelSummary>
-            <Map location={location} />
-          </ExpansionPanel>
-          <ExpansionPanel>
-            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+              {/* <Avatar className={classes.avatar} src={"/images/default-user.jpg"}/>
+              <Avatar className={classes.avatar}src={url}/>
+              <Avatar className={classes.avatar}src={url}/>
+              <Avatar className={classes.avatar}src={url}/> */}
+
               <Typography className={classes.heading}>
                 {`Guest List (Attending: ${
                   guests.filter(guest => guest.status === 'attending').length

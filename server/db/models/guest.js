@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize')
+const User = require('../models/user')
 const db = require('../db')
 const uuidv1 = require('uuid/v1')
 
@@ -7,6 +8,7 @@ const Guest = db.define('guest', {
     type: Sequelize.ENUM('attending', 'invited', 'declined'),
     defaultValue: 'invited'
   },
+  firstName: Sequelize.STRING,
   email: {
     type: Sequelize.STRING,
     allowNull: false,
