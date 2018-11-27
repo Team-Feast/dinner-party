@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import {
   Login,
   Signup,
-  UserHome,
+  MyAccount,
   SingleParty,
   Landing,
   UserPartyList,
@@ -37,7 +37,6 @@ class Routes extends Component {
         <Route exact path="/addparty" component={AddParty} />
         <Route path="/parties/:id/editparty" component={EditParty} />
         <Route path="/parties/:id/gallery" component={Gallery} />
-
         <Route
           path="/parties/:partyId/rsvp/:guestPartyToken"
           component={SingleParty}
@@ -46,6 +45,7 @@ class Routes extends Component {
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
+            <Route path="/my-account" component={MyAccount} />
             <Route path="/home" component={UserPartyList} />
           </Switch>
         )}
