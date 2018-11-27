@@ -55,10 +55,10 @@ const styles = theme => ({
   uploadBtnWrapper: {
     position: 'relative',
     overflow: 'hidden',
-    display: 'inline-block'
+    display: 'flex',
+    flexDirection: 'column'
   },
   uploadBtnWrapperInput: {
-    fontSize: '100px',
     position: 'absolute',
     left: '0',
     top: '0',
@@ -224,7 +224,7 @@ class AddParty extends Component {
 
                   <div className={classes.uploadBtnWrapper}>
                     <IconButton>
-                      <PhotoCamera />
+                      <PhotoCamera fontSize="large" />
                     </IconButton>
                     <Input
                       type="file"
