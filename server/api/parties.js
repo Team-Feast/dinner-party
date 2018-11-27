@@ -1,6 +1,8 @@
 const {Party, User, Guest, Item} = require('../db/models')
 const router = require('express').Router()
 const moment = require('moment')
+const Sequelize = require('sequelize')
+const Op = Sequelize.Op
 
 router.get('/:id', async (req, res, next) => {
   try {
@@ -114,11 +116,11 @@ router.get('/user/:userId', async (req, res, next) => {
 
     const hostingQuery = Party.findAll({
       where: {
-        $and: [
+        [Op.and]: [
           {userId: user.id},
           {
             date: {
-              $gte: moment()
+              [Op.gte]: moment()
                 .utc()
                 .toDate()
             }
@@ -152,7 +154,7 @@ router.get('/user/:userId', async (req, res, next) => {
       ],
       where: {
         date: {
-          $gte: moment()
+          [Op.gte]: moment()
             .utc()
             .toDate()
         }
@@ -161,10 +163,13 @@ router.get('/user/:userId', async (req, res, next) => {
     })
 
     const pastEventsQuery = Party.findAll({
-      include: [{model: User, attributes: ['firstName', 'lastName']}],
+      include: [
+        {model: User, attributes: ['firstName', 'lastName']},
+        {model: Guest, where: {userId: user.id}}
+      ],
       where: {
         date: {
-          $lt: moment()
+          [Op.lt]: moment()
             .utc()
             .toDate()
         }
