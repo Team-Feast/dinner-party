@@ -159,7 +159,7 @@ class AddParty extends Component {
     return (
       <Fragment>
         <CssBaseline />
-        <Paper className={classes.paper}>
+        <Paper elevation={0} className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockIcon />
           </Avatar>
