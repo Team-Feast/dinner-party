@@ -1,14 +1,23 @@
 const {Guest, Reminder} = require('../db/models')
 const router = require('express').Router()
+const Op = require('sequelize').Op
 
 //GET /api/reminders/party/:partyId
 router.get('/party/:partyId', async (req, res, next) => {
   try {
-    let reminders = await Reminder.findAll({
-      where: {partyId: req.params.partyId},
-      include: [Guest]
+    let guests = await Guest.findAll({
+      where: {
+        [Op.and]: [{partyId: req.params.partyId}, {status: 'attending'}]
+      }
     })
-    res.json(reminders)
+    if (guests) {
+      let reminders = await Reminder.findAll({
+        where: {
+          partyId: req.params.partyId
+        }
+      })
+      res.json({reminders, guests})
+    }
   } catch (err) {
     next(err)
   }
