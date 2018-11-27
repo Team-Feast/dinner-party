@@ -19,4 +19,5 @@ export {default as UpcomingParty} from './UserPartyList/UpcomingParty'
 export {default as HostingParties} from './UserPartyList/HostingParties'
 export {default as AttendingParties} from './UserPartyList/AttendingParties'
 export {default as PastParties} from './UserPartyList/PastParties'
+export {default as SinglePicture} from './SinglePicture'
 

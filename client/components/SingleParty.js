@@ -216,11 +216,7 @@ class SingleParty extends Component {
 
           <ExpansionPanel>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
-              {/* <Avatar className={classes.avatar} src={"/images/default-user.jpg"}/>
-              <Avatar className={classes.avatar}src={url}/>
-              <Avatar className={classes.avatar}src={url}/>
-              <Avatar className={classes.avatar}src={url}/> */}
-
+            
                <Typography className={classes.heading}>
                 {`Guest List (Attending: ${
                   guests.filter(guest => guest.status === 'attending').length
@@ -241,16 +237,20 @@ class SingleParty extends Component {
                 return guest.guestPartyToken === guestPartyToken
               })}
             />
-
           </ExpansionPanel>
-            <Button
+
+          <Gallery partyId={id}/>
+
+            {/* <Button
                color='primary'
                variant="contained"
                className={classes.button}
                onClick={()=> history.push(`/parties/${id}/gallery`)}
                >
               <SaveIcon />
-             </Button>
+             </Button> */}
+
+
         </Fragment>
       )
     }

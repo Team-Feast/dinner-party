@@ -1,6 +1,9 @@
 import React, {Component} from 'react'
+import { Link } from 'react-router-dom'
+
 import axios from 'axios'
 import history from '../history'
+import SinglePicture from './SinglePicture'
 import {postImage, getImages, getGuests} from '../store'
 import {connect} from 'react-redux'
 
@@ -9,22 +12,26 @@ import {Input} from '@material-ui/core'
 import {withStyles} from '@material-ui/core/styles'
 import GridList from '@material-ui/core/GridList'
 import GridListTile from '@material-ui/core/GridListTile'
-import Button from '@material-ui/core/Button'
-import AddIcon from '@material-ui/icons/Add'
-import ListSubheader from '@material-ui/core/ListSubheader'
+import IconButton from '@material-ui/core/IconButton';
+import PhotoCamera from '@material-ui/icons/PhotoCamera';
 
 const styles = theme => ({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'space-around',
-    overflow: 'hidden',
-    backgroundColor: theme.palette.background.paper
+    // overflow: 'hidden',
+    // backgroundColor: theme.palette.background.paper
+    minWidth: 300,
+    width: '100%'
   },
   gridList: {
-    width: 500,
-    height: 450
+    // width: 500,
+    // height: 450
+    flexWrap: 'nowrap',
+    transform: 'translateZ(0)'
   },
+  focusVisible: {},
   subheader: {
     width: '100%'
   },
@@ -39,12 +46,14 @@ const styles = theme => ({
     margin: theme.spacing.unit,
   }
 })
+const MyLink = props => <Link to="/parties/singlePicture" {...props} />
 
 class Gallery extends Component {
 
 
   componentDidMount() {
-    const partyId = this.props.match.params.id
+    // const partyId = this.props.match.params.id
+    const partyId = this.props.partyId
     this.props.getImages(partyId)
   }
 
@@ -52,14 +61,16 @@ class Gallery extends Component {
     this.setState({showAddImage: !this.state.showAddImage})
   }
 
-  findGuestId = () => {
-    const {guestPartyToken} = this.props.match.params
-    let result = this.props.guests.find(guest => {
-      return guest.guestPartyToken === guestPartyToken
-    })
 
-    return result || 1
-  }
+
+  // findGuestId = () => {
+  //   const {guestPartyToken} = this.props.match.params
+  //   let result = this.props.guests.find(guest => {
+  //     return guest.guestPartyToken === guestPartyToken
+  //   })
+
+  //   return result || 1
+  // }
 
   handleUploadFile = async event => {
     const url = 'https://api.cloudinary.com/v1_1/dhgftlgcc/image/upload'
@@ -73,39 +84,56 @@ class Gallery extends Component {
         'X-Requested-With': 'XMLHttpRequest'
       }
     })
-    const guestId = this.findGuestId()
-    this.props.postImage(data.url, this.props.match.params.id, guestId)
+    // const guestId = this.findGuestId()
+    this.props.postImage(data.url, this.props.partyId, 1)
   }
+
+  singlePicture = () =>{
+
+  }
+
 
   render() {
     const {classes} = this.props
+
     return (
       <div className={classes.root}>
-        <ListSubheader component="div">Gallery</ListSubheader>
-        <GridList cellHeight={160} cols={3}>
-          {this.props.images.map(tile => (
-            <GridListTile key={tile.id} >
-              <img key={tile.id} src={tile.imageUrl} />
-            </GridListTile>
-          ))}
+        {/* <ListSubheader component="div">Gallery</ListSubheader> */}
+        {/* <GridList cellHeight={160} cols={3}> */}
+        <GridList className={classes.gridList} cols={2.0}>
+          {
+              this.props.images.map(tile => (
+                <GridListTile key={tile.id} >
+                  <img
+                      // onClick={this.SinglePicture}
+                    onClick={() => history.push(`/parties/${this.props.partyId}/singlePicture/${tile.id}`)}
+                    key={tile.id}
+                    src={tile.imageUrl}
+                    />
+                </GridListTile>
+              ))
+          }
         </GridList>
-        <Input
+         <Input
+          accept="image/png, image/jpeg"
           type="file"
           name="imageUrl"
-          accept="image/png, image/jpeg"
           onChange={this.handleUploadFile}
           id="imageUrl"
           className={classes.input}
         />
-        <label htmlFor="imageUrl">
-          <Button variant="fab" color='primary'component="span" className={classes.fab}>
+         <label htmlFor="imageUrl">
+          {/* <Button variant="fab" color='primary'component="span" className={classes.fab}>
             <AddIcon />
-          </Button>
+          </Button> */}
+          <IconButton color="primary" className={classes.button} component="span">
+            <PhotoCamera />
+        </IconButton>
         </label>
-        <Button variant="extendedFab" color="primary" className={classes.button}
-          onClick={()=> history.push(`/parties/${this.props.match.params.id}`)}
+        {/* <Button variant="extendedFab" color="primary" className={classes.button}
+          onClick={()=> history.goBack()}
          > Back
-         </Button>
+         </Button>  */}
       </div>
     )
   }
