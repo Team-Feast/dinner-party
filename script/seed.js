@@ -779,7 +779,6 @@ const galleryData = [
 
 const reminderData = [
   {
-    name: 'foo',
     timeBefore: 3,
     partyId: 1
   }

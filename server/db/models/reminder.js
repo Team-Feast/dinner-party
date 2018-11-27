@@ -2,9 +2,6 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const Reminder = db.define('reminder', {
-  name: {
-    type: Sequelize.STRING
-  },
   notificationType: {
     type: Sequelize.ENUM('email', 'text', 'both'),
     defaultValue: 'email'
