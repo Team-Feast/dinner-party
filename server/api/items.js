@@ -70,6 +70,7 @@ router.post('/newfeast', async (req, res, next) => {
         partyId
       })
     }
+
     res.status(201).end()
   } catch (error) {
     next(error)

@@ -20,9 +20,7 @@ import {
   ListItem,
   ListItemText
 } from '@material-ui/core'
-import Stepper from '@material-ui/core/Stepper'
-import Step from '@material-ui/core/Step'
-import StepLabel from '@material-ui/core/StepLabel'
+
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
 
@@ -60,6 +58,7 @@ class AddParty extends Component {
       description: '',
       location: '',
       imageUrl: '',
+      date: moment(Date.now()).format('YYYY-MM-DDTHH:mm'),
       guests: [{firstName: '', email: ''}],
       items: [{title: ''}]
     }
@@ -100,6 +99,21 @@ class AddParty extends Component {
     let guestsCopy = this.state.guests.slice()
     guestsCopy[index][event.target.name] = event.target.value
     this.setState({guests: guestsCopy})
+  }
+
+  handleUploadFile = async event => {
+    const url = 'https://api.cloudinary.com/v1_1/dhgftlgcc/image/upload'
+    const formData = new FormData()
+    formData.append('file', event.target.files[0])
+    formData.append('upload_preset', 'xlji39fe')
+    formData.append('api_key', process.env.CLOUDINARY_API_KEY)
+    const {data} = await axios.post(url, formData, {
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest'
+      }
+    })
+
+    this.setState({imageUrl: data.url})
   }
 
   handleSubmit = async evt => {
@@ -161,7 +175,7 @@ class AddParty extends Component {
                 </FormControl>
 
                 <FormControl margin="normal" required fullWidth>
-                  <InputLabel htmlFor="location">Location</InputLabel>
+                  <InputLabel htmlFor="location">Address</InputLabel>
                   <Input
                     name="location"
                     onChange={this.handleChange}
@@ -189,6 +203,7 @@ class AddParty extends Component {
                     type="datetime-local"
                     className={classes.textField}
                     onChange={this.handleChange}
+                    required
                     value={date}
                     InputLabelProps={{
                       shrink: true
