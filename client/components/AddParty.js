@@ -171,6 +171,7 @@ class AddParty extends Component {
                     onChange={this.handleChange}
                     id="description"
                     value={description}
+                    multiline
                   />
                 </FormControl>
 
@@ -181,11 +182,13 @@ class AddParty extends Component {
                     onChange={this.handleChange}
                     id="location"
                     value={location}
+                    multiline
                   />
                 </FormControl>
 
                 <FormControl margin="normal" fullWidth>
                   {/* <InputLabel htmlFor="imageUrl">Image URL</InputLabel> */}
+
                   <Input
                     type="file"
                     name="imageUrl"
