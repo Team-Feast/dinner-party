@@ -14,15 +14,22 @@ import {
   Paper,
   CssBaseline,
   Avatar,
-  withStyles
+  withStyles,
+  MobileStepper,
+  List,
+  ListItem,
+  IconButton
 } from '@material-ui/core'
+
+import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
+import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
+import PhotoCamera from '@material-ui/icons/PhotoCamera'
 import LockIcon from '@material-ui/icons/LockOutlined'
 
 import {postParty} from '../store/party'
 
 const styles = theme => ({
   paper: {
-    marginTop: theme.spacing.unit * 8,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -39,6 +46,25 @@ const styles = theme => ({
   },
   submit: {
     marginTop: theme.spacing.unit * 3
+  },
+  fileButton: {
+    width: '100%',
+    color: 'red'
+  },
+  uploadBtnWrapper: {
+    position: 'relative',
+    overflow: 'hidden',
+    display: 'flex',
+    flexDirection: 'column'
+  },
+  uploadBtnWrapperInput: {
+    position: 'absolute',
+    left: '0',
+    top: '0',
+    opacity: '0'
+  },
+  textField: {
+    margin: 'dense'
   }
 })
 
@@ -46,35 +72,52 @@ class AddParty extends Component {
   constructor() {
     super()
     this.state = {
+      step: 0,
       title: '',
       description: '',
       location: '',
-      emails: '',
+      imageUrl: '',
       date: moment(Date.now()).format('YYYY-MM-DDTHH:mm'),
-      imageUrl: ''
+      guests: [{firstName: '', email: ''}],
+      items: [{title: ''}]
     }
   }
 
-  handleSubmit = async evt => {
-    evt.preventDefault()
-
-    const userId = this.props.user.id
-    const userEmail = this.props.user.email
-    const info = {...this.state, userId}
-
-    //adds user as a guest
-    const guestEmails = this.state.emails
-      ? this.state.emails
-          .split(',')
-          .concat(userEmail)
-          .map(email => email.trim())
-      : [userEmail]
-
-    await this.props.postParty({info, guestEmails})
+  nextStep = () => {
+    const {step} = this.state
+    this.setState({
+      step: step + 1
+    })
   }
 
+  prevStep = () => {
+    const {step} = this.state
+    this.setState({
+      step: step - 1
+    })
+  }
+
+  addGuestField = () => {
+    this.setState({guests: [...this.state.guests, {firstName: '', email: ''}]})
+  }
+
+  addItemField = () => {
+    this.setState({items: [...this.state.items, {title: ''}]})
+  }
   handleChange = event => {
     this.setState({[event.target.name]: event.target.value})
+  }
+
+  handleItem = (index, event) => {
+    let itemsCopy = this.state.items.slice()
+    itemsCopy[index][event.target.name] = event.target.value
+    this.setState({items: itemsCopy})
+  }
+
+  handleGuest = (index, event) => {
+    let guestsCopy = this.state.guests.slice()
+    guestsCopy[index][event.target.name] = event.target.value
+    this.setState({guests: guestsCopy})
   }
 
   handleUploadFile = async event => {
@@ -92,99 +135,221 @@ class AddParty extends Component {
     this.setState({imageUrl: data.url})
   }
 
+  handleSubmit = async evt => {
+    evt.preventDefault()
+
+    const userId = this.props.user.id
+    const userFirstName = this.props.user.firstName
+    const userEmail = this.props.user.email
+    const host = {firstName: userFirstName, email: userEmail}
+
+    const info = {...this.state, userId}
+
+    //adds user as a guest
+    const guests = this.state.guests ? [host, ...this.state.guests] : [host]
+
+    await this.props.postParty({info, guests})
+  }
   render() {
-    const {classes} = this.props
+    const {step} = this.state
+    const {title, description, location, date} = this.state
+
+    const {classes, theme} = this.props
     return (
       <Fragment>
         <CssBaseline />
-        <Paper className={classes.paper}>
+        <Paper elevation={0} className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
             Create Feast
           </Typography>
+
           <form className={classes.form} onSubmit={this.handleSubmit}>
-            <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="title">Title</InputLabel>
-              <Input
-                id="title"
-                name="title"
-                onChange={this.handleChange}
-                value={this.state.title}
-                autoFocus
-              />
-            </FormControl>
+            {step === 0 && (
+              <Fragment>
+                <Typography component="h6" variant="h6">
+                  Feast Info
+                </Typography>
+                <FormControl margin="dense" required fullWidth>
+                  <InputLabel htmlFor="title">Title</InputLabel>
+                  <Input
+                    id="title"
+                    name="title"
+                    onChange={this.handleChange}
+                    value={title}
+                    autoFocus
+                  />
+                </FormControl>
 
-            <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="description">Description</InputLabel>
-              <Input
-                name="description"
-                onChange={this.handleChange}
-                id="description"
-                value={this.state.description}
-              />
-            </FormControl>
+                <FormControl margin="dense" required fullWidth>
+                  <InputLabel htmlFor="description">Description</InputLabel>
+                  <Input
+                    name="description"
+                    onChange={this.handleChange}
+                    id="description"
+                    value={description}
+                    multiline
+                  />
+                </FormControl>
 
-            <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="location">Location</InputLabel>
-              <Input
-                name="location"
-                onChange={this.handleChange}
-                id="location"
-                value={this.state.location}
-              />
-            </FormControl>
+                <FormControl margin="dense" required fullWidth>
+                  <InputLabel htmlFor="location">Address</InputLabel>
+                  <Input
+                    name="location"
+                    onChange={this.handleChange}
+                    id="location"
+                    value={location}
+                    multiline
+                  />
+                </FormControl>
 
-            <FormControl margin="normal" fullWidth>
-              <InputLabel htmlFor="imageUrl">Image URL</InputLabel>
-              <Input
-                type="file"
-                name="imageUrl"
-                accept="image/png, image/jpeg"
-                onChange={this.handleUploadFile}
-                id="imageUrl"
-              />
-            </FormControl>
+                <FormControl margin="dense">
+                  <TextField
+                    id="date"
+                    label="Date"
+                    name="date"
+                    type="datetime-local"
+                    className={classes.textField}
+                    onChange={this.handleChange}
+                    required
+                    value={date}
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                  />
+                </FormControl>
 
-            <FormControl>
-              <TextField
-                id="date"
-                label="Date"
-                name="date"
-                type="datetime-local"
-                className={classes.textField}
-                onChange={this.handleChange}
-                value={this.state.date}
-                InputLabelProps={{
-                  shrink: true
-                }}
-              />
-            </FormControl>
+                <FormControl margin="dense" fullWidth>
+                  <div className={classes.uploadBtnWrapper}>
+                    <IconButton>
+                      <PhotoCamera fontSize="large" />
+                    </IconButton>
+                    <Input
+                      type="file"
+                      name="imageUrl"
+                      className={classes.uploadBtnWrapperInput}
+                      accept="image/png, image/jpeg"
+                      onChange={this.handleUploadFile}
+                      id="imageUrl"
+                    />
+                  </div>
+                </FormControl>
+              </Fragment>
+            )}
 
-            <FormControl margin="normal" fullWidth>
-              <InputLabel htmlFor="location">
-                Guest Emails (separated by , )
-              </InputLabel>
-              <Input
-                type="text"
-                name="emails"
-                id="emails"
-                onChange={this.handleChange}
-                value={this.state.emails}
-              />
-            </FormControl>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-            >
-              Submit
-            </Button>
+            {step === 1 && (
+              <Fragment>
+                <Typography component="h6" variant="h6">
+                  Invite Guests
+                </Typography>
+                <List dense>
+                  {this.state.guests.length &&
+                    this.state.guests.map((guest, index) => (
+                      <ListItem key={`guest[${index}]`}>
+                        <FormControl margin="dense">
+                          <InputLabel htmlFor="guest name">
+                            Guest Name
+                          </InputLabel>
+                          <Input
+                            type="text"
+                            name="firstName"
+                            onChange={event => this.handleGuest(index, event)}
+                            value={this.state.guests[index].firstName}
+                          />
+                        </FormControl>
+                        <FormControl margin="dense">
+                          <InputLabel htmlFor="location">
+                            Guest Email
+                          </InputLabel>
+                          <Input
+                            type="email"
+                            name="email"
+                            onChange={event => this.handleGuest(index, event)}
+                            value={this.state.guests[index].email}
+                          />
+                        </FormControl>
+                      </ListItem>
+                    ))}
+                  <Button onClick={() => this.addGuestField()}>
+                    Add a guest
+                  </Button>
+                </List>
+              </Fragment>
+            )}
+            {step === 2 && (
+              <Fragment>
+                <Typography component="h6" variant="h6">
+                  Add Items
+                </Typography>
+                <List dense>
+                  {this.state.items.length &&
+                    this.state.items.map((item, index) => (
+                      <ListItem key={`item[${index}]`}>
+                        <FormControl margin="dense" fullWidth>
+                          <InputLabel htmlFor="Item title">Item</InputLabel>
+                          <Input
+                            type="text"
+                            name="title"
+                            onChange={event => this.handleItem(index, event)}
+                            value={this.state.items[index].title}
+                          />
+                        </FormControl>
+                      </ListItem>
+                    ))}
+                  <Button onClick={() => this.addItemField()}>
+                    Add new item
+                  </Button>
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                  >
+                    Create Feast
+                  </Button>
+                </List>
+              </Fragment>
+            )}
           </form>
         </Paper>
+        <MobileStepper
+          variant="dots"
+          steps={3}
+          position="bottom"
+          activeStep={this.state.step}
+          className={classes.root}
+          nextButton={
+            <Button
+              size="small"
+              onClick={this.nextStep}
+              disabled={this.state.step === 2}
+            >
+              Next
+              {theme.direction === 'rtl' ? (
+                <KeyboardArrowLeft />
+              ) : (
+                <KeyboardArrowRight />
+              )}
+            </Button>
+          }
+          backButton={
+            <Button
+              size="small"
+              onClick={this.prevStep}
+              disabled={this.state.step === 0}
+            >
+              {theme.direction === 'rtl' ? (
+                <KeyboardArrowRight />
+              ) : (
+                <KeyboardArrowLeft />
+              )}
+              Back
+            </Button>
+          }
+        />
       </Fragment>
     )
   }
@@ -199,9 +364,10 @@ const mapStateToProps = state => ({
 })
 
 export default connect(mapStateToProps, mapDispatch)(
-  withStyles(styles)(AddParty)
+  withStyles(styles, {withTheme: true})(AddParty)
 )
 
 AddParty.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  theme: PropTypes.object.isRequired
 }
