@@ -33,13 +33,12 @@ router.get('/party/:partyId', async (req, res, next) => {
   }
 })
 
-//PUT /api/reminders/party/:partyId
-router.put('/party/:partyId', async (req, res, next) => {
+//PUT /api/reminders/:id
+router.put('/:id', async (req, res, next) => {
   try {
-    let item = await Item.findById(req.params.id)
+    let item = await Reminder.findById(req.params.id)
     let result = await item.update(req.body)
-    let data = await Item.findById(result.id, {include: [Guest]})
-    res.json(data)
+    res.json(result)
   } catch (err) {
     next(err)
   }
