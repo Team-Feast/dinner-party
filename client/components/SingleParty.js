@@ -202,9 +202,7 @@ class SingleParty extends Component {
 
           <ExpansionPanel>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography className={classes.heading}>
-                {`Address: ${location}`}
-              </Typography>
+              <Typography className={classes.heading}>{location}</Typography>
             </ExpansionPanelSummary>
             <Map location={location} />
           </ExpansionPanel>

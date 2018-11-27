@@ -18,7 +18,7 @@ class Map extends Component {
     const map = new mapboxgl.Map({
       container: 'map',
       center: pos,
-      zoom: 13,
+      zoom: 14,
       style: 'mapbox://styles/mapbox/streets-v10'
     })
 
