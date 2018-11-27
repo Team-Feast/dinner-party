@@ -6,9 +6,9 @@ import {
   getGuestStatus,
   getGuests,
   getItems,
-  postToCalendar,
+  postToCalendar
 } from '../store'
-import {GuestList, ItemList, Gallery} from '.'
+import {GuestList, ItemList, Gallery, Map} from '.'
 import moment from 'moment'
 import history from '../history'
 import axios from 'axios'
@@ -43,14 +43,13 @@ import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked'
 import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked'
 import Create from '@material-ui/icons/Create'
 import CalendarToday from '@material-ui/icons/CalendarToday'
-import Button from '@material-ui/core/Button';
-import SaveIcon from '@material-ui/icons/Save';
+import Button from '@material-ui/core/Button'
+import SaveIcon from '@material-ui/icons/Save'
 import Avatar from '@material-ui/core/Avatar'
-import deepOrange from '@material-ui/core/colors/deepOrange';
+import deepOrange from '@material-ui/core/colors/deepOrange'
 
-
-const toonavatar = require('cartoon-avatar');
-const url = toonavatar.generate_avatar({"gender":"male"})
+const toonavatar = require('cartoon-avatar')
+const url = toonavatar.generate_avatar({gender: 'male'})
 
 const styles = theme => ({
   button: {
@@ -80,8 +79,7 @@ const styles = theme => ({
     // margin: 10,
     height: 30,
     width: 30,
-    backgroundColor: deepOrange[500],
-
+    backgroundColor: deepOrange[500]
   }
 })
 
@@ -148,7 +146,7 @@ class SingleParty extends Component {
                 <IconButton
                   onClick={() => history.push(`/parties/${id}/editparty`)}
                 >
-                <Create className={classes.icon} />
+                  <Create className={classes.icon} />
                 </IconButton>
               }
               title={title}
@@ -179,50 +177,57 @@ class SingleParty extends Component {
               <ListItem>
                 <ListItemText primary={location} />
               </ListItem>
-              {guestPartyToken && (
-                <ListItem>
-                  <ListItemText primary="Are you attending?" />
-                  <ListItemSecondaryAction>
-                    <div>
-                      <Checkbox
-                        checked={this.state.selectedValue === 'attending'}
-                        onChange={this.handleChange}
-                        value={this.state.selectedValue}
-                        name="attending"
-                        aria-label="C"
-                        classes={{
-                          root: classes.green,
-                          checked: classes.checked
-                        }}
-                      />
-                      <Checkbox
-                        checked={this.state.selectedValue === 'declined'}
-                        onChange={this.handleChange}
-                        value={this.state.selectedValue}
-                        name="declined"
-                        color="primary"
-                        classes={{
-                          root: classes.red,
-                          checked: classes.checked
-                        }}
-                        aria-label="D"
-                      />
-                    </div>
-                  </ListItemSecondaryAction>
-                </ListItem>
-              )}
+              {guestPartyToken &&
+                userId !== loggedInUser.id && (
+                  <ListItem>
+                    <ListItemText primary="Are you attending?" />
+                    <ListItemSecondaryAction>
+                      <div>
+                        <Checkbox
+                          checked={this.state.selectedValue === 'attending'}
+                          onChange={this.handleChange}
+                          value={this.state.selectedValue}
+                          name="attending"
+                          aria-label="C"
+                          classes={{
+                            root: classes.green,
+                            checked: classes.checked
+                          }}
+                        />
+
+                        <Checkbox
+                          checked={this.state.selectedValue === 'declined'}
+                          onChange={this.handleChange}
+                          value={this.state.selectedValue}
+                          name="declined"
+                          color="primary"
+                          classes={{
+                            root: classes.red,
+                            checked: classes.checked
+                          }}
+                          aria-label="D"
+                        />
+                      </div>
+                    </ListItemSecondaryAction>
+                  </ListItem>
+                )}
             </List>
           </Card>
 
           <ExpansionPanel>
-            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
-            
-               <Typography className={classes.heading}>
+            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+              <Typography className={classes.heading}>{location}</Typography>
+            </ExpansionPanelSummary>
+            <Map location={location} />
+          </ExpansionPanel>
+
+          <ExpansionPanel>
+            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+              <Typography className={classes.heading}>
                 {`Guest List (Attending: ${
                   guests.filter(guest => guest.status === 'attending').length
                 } Invited: ${guests.length})`}
               </Typography>
-
             </ExpansionPanelSummary>
             <GuestList guests={guests} />
           </ExpansionPanel>
@@ -262,7 +267,7 @@ const mapState = state => ({
   guests: state.guests,
   items: state.items,
   guestStatus: state.guestStatus,
-  loggedInUser: state.user,
+  loggedInUser: state.user
 })
 
 const mapDispatch = dispatch => ({
