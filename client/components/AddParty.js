@@ -17,14 +17,14 @@ import {
   withStyles,
   MobileStepper,
   List,
-  ListItem,
-  IconButton
+  ListItem, IconButton
 } from '@material-ui/core'
 
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
 import PhotoCamera from '@material-ui/icons/PhotoCamera'
 import LockIcon from '@material-ui/icons/LockOutlined'
+
 
 import {postParty} from '../store/party'
 
