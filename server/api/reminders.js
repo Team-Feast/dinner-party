@@ -44,8 +44,8 @@ router.put('/:id', async (req, res, next) => {
   }
 })
 
-// //PUT /api/reminders/party/:partyId
-// router.delete('/party/:partyId', async (req, res, next) => {
+//DELETE /api/reminders/:id
+// router.delete('/:id', async (req, res, next) => {
 //   try {
 //     let item = await Item.destroy({
 //       where: {
@@ -61,24 +61,30 @@ router.put('/:id', async (req, res, next) => {
 // })
 
 // //POST /api/reminders/
-// router.post('/', async (req, res, next) => {
-//   try {
-//     const {title, description, partyId} = req.body
+/*
+ Create an object
+  {
+    "timeBefore" : 99,
+    "notificationType": "email",
+    "timeBefore": 99,
+    "timeUnit": "days",
+    "partyId" : 1,
+  }
 
-//     const newItem = await Item.create({
-//       title,
-//       description,
-//       partyId
-//     })
-//     const newItemWithGuest = await Item.findOne({
-//       where: {id: newItem.id},
-//       include: [Guest]
-//     })
-
-//     res.json(newItemWithGuest)
-//   } catch (error) {
-//     next(error)
-//   }
-// })
+ */
+router.post('/', async (req, res, next) => {
+  try {
+    const {timeBefore, timeUnit, notificationType, partyId} = req.body
+    const newItem = await Reminder.create({
+      timeBefore,
+      timeUnit,
+      notificationType,
+      partyId
+    })
+    res.json(newItem)
+  } catch (error) {
+    next(error)
+  }
+})
 
 module.exports = router
