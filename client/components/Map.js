@@ -16,7 +16,7 @@ class Map extends Component {
     const pos = data.features[0].geometry.coordinates
 
     const map = new mapboxgl.Map({
-      container: 'map',
+      container: this.mapContainer,
       center: pos,
       zoom: 14,
       style: 'mapbox://styles/mapbox/streets-v10'
@@ -26,7 +26,14 @@ class Map extends Component {
   }
 
   render() {
-    return <div id="map" style={{width: '100%', height: '300px'}} />
+    // return <div id="map" style={{width: '100%', height: '300px'}} />
+    return (
+      <div
+        ref={el => (this.mapContainer = el)}
+        className="map"
+        style={{width: '100%', height: '300px'}}
+      />
+    )
   }
 }
 
