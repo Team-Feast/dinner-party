@@ -1,7 +1,5 @@
 import React, {Component} from 'react'
-
-const mapboxgl = __CLIENT__ ? require('mapbox-gl') : {}
-
+import mapboxgl from 'mapbox-gl'
 import axios from 'axios'
 
 class Map extends Component {
