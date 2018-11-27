@@ -32,9 +32,10 @@ const styles = theme => ({
 
 class SinglePicture extends Component {
   constructor(props) {
+    // const pictureId = parseInt(this.props.match.params.pictureId)
     super(props)
     this.state = {
-      activeStep: this.props.match.params.pictureId
+      activeStep: 0
     }
   }
 
@@ -77,7 +78,7 @@ class SinglePicture extends Component {
         <div className={classes.root}>
           <img
             className={classes.img}
-            src={this.props.images[this.getImageFromId(pictureId)].imageUrl}
+            src={this.props.images[this.state.activeStep].imageUrl}
           />
 
           <MobileStepper
