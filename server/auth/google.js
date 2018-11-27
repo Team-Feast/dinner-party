@@ -26,17 +26,20 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
   const googleConfig = {
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: process.env.GOOGLE_CALLBACK
+    callbackURL: process.env.GOOGLE_CALLBACK,
+    passReqToCallback: true
   }
 
   const strategy = new GoogleStrategy(
     googleConfig,
-    (token, refreshToken, profile, done) => {
+    (req, token, refreshToken, profile, done) => {
       const googleId = profile.id
       const name = profile.name
       const email = profile.emails[0].value
 
-      console.log('====', profile)
+      console.log('==req.user==', req.user)
+
+      console.log('==profile==', profile)
 
       User.findOrCreate({
         where: {
@@ -50,7 +53,7 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
         }
       })
         .then(([user]) => {
-          user.update({googleToken: token, googleId})
+          user.update({googleToken: token, googleId, email})
           done(null, user)
         })
         .catch(done)
