@@ -60,6 +60,7 @@ class ForgotPassword extends React.Component {
               <DialogContentText>
                 Please enter your email to reset your password.
               </DialogContentText>
+
               <FormControl>
                 <Input
                   autoFocus
@@ -74,8 +75,11 @@ class ForgotPassword extends React.Component {
                   fullWidth
                 />
               </FormControl>
+
+
               <Typography>{status && status.data && status.data}</Typography>
             </DialogContent>
+            
             <DialogActions>
               <Button onClick={this.handleClose} color="primary">
                 Close

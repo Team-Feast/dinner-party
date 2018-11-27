@@ -6,8 +6,7 @@ import {
   getGuestStatus,
   getGuests,
   getItems,
-  postToCalendar,
-  getImages
+  postToCalendar
 } from '../store'
 import {GuestList, ItemList, Gallery, Map} from '.'
 import moment from 'moment'
@@ -44,6 +43,13 @@ import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked'
 import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked'
 import Create from '@material-ui/icons/Create'
 import CalendarToday from '@material-ui/icons/CalendarToday'
+import Button from '@material-ui/core/Button'
+import SaveIcon from '@material-ui/icons/Save'
+import Avatar from '@material-ui/core/Avatar'
+import deepOrange from '@material-ui/core/colors/deepOrange'
+
+const toonavatar = require('cartoon-avatar')
+const url = toonavatar.generate_avatar({gender: 'male'})
 
 const styles = theme => ({
   button: {
@@ -68,6 +74,12 @@ const styles = theme => ({
   media: {
     height: 0,
     paddingTop: '56.25%' // 16:9
+  },
+  avatar: {
+    // margin: 10,
+    height: 30,
+    width: 30,
+    backgroundColor: deepOrange[500]
   }
 })
 
@@ -82,7 +94,6 @@ class SingleParty extends Component {
     this.props.getParty(partyId)
     this.props.getGuests(partyId)
     this.props.getItems(partyId)
-    this.props.getImages(partyId)
 
     if (guestPartyToken) this.props.getGuestStatus(guestPartyToken, partyId)
   }
@@ -119,7 +130,6 @@ class SingleParty extends Component {
     } = this.props.party
 
     const {guests, items, loggedInUser, images} = this.props
-
     const {guestPartyToken} = this.props.match.params
     const {classes} = this.props
 
@@ -220,6 +230,7 @@ class SingleParty extends Component {
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
               <Typography className={classes.heading}>Items</Typography>
             </ExpansionPanelSummary>
+
             <ItemList
               items={items}
               guest={guests.find(guest => {
@@ -227,18 +238,14 @@ class SingleParty extends Component {
               })}
             />
           </ExpansionPanel>
-          <ExpansionPanel>
-            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography className={classes.heading}>Gallery</Typography>
-            </ExpansionPanelSummary>
-            <Gallery
-              images={images}
-              partyId={id}
-              guest={guests.find(guest => {
-                return guest.guestPartyToken === guestPartyToken
-              })}
-            />
-          </ExpansionPanel>
+          <Button
+            color="primary"
+            variant="contained"
+            className={classes.button}
+            onClick={() => history.push(`/parties/${id}/gallery`)}
+          >
+            <SaveIcon />
+          </Button>
         </Fragment>
       )
     }
@@ -250,13 +257,11 @@ const mapState = state => ({
   guests: state.guests,
   items: state.items,
   guestStatus: state.guestStatus,
-  loggedInUser: state.user,
-  images: state.images
+  loggedInUser: state.user
 })
 
 const mapDispatch = dispatch => ({
   postToCalendar: (guestId, party) => dispatch(postToCalendar(guestId, party)),
-  getImages: partyId => dispatch(getImages(partyId)),
   getParty: partyId => dispatch(getParty(partyId)),
   getGuests: partyId => dispatch(getGuests(partyId)),
   getItems: partyId => dispatch(getItems(partyId)),

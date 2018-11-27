@@ -11,6 +11,7 @@ import {
   UserPartyList,
   AddParty,
   EditParty,
+  Gallery,
   ForgotPassword
 } from './components'
 import {me} from './store'
@@ -35,6 +36,7 @@ class Routes extends Component {
         <Route path="/forgotpassword" component={ForgotPassword} />
         <Route exact path="/addparty" component={AddParty} />
         <Route path="/parties/:id/editparty" component={EditParty} />
+        <Route path="/parties/:id/gallery" component={Gallery} />
 
         <Route
           path="/parties/:partyId/rsvp/:guestPartyToken"
