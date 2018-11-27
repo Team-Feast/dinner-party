@@ -251,7 +251,7 @@ class AddParty extends Component {
                   {this.state.guests.length &&
                     this.state.guests.map((guest, index) => (
                       <ListItem key={`guest[${index}]`}>
-                        <FormControl margin="normal">
+                        <FormControl margin="dense">
                           <InputLabel htmlFor="guest name">
                             Guest Name
                           </InputLabel>
@@ -262,7 +262,7 @@ class AddParty extends Component {
                             value={this.state.guests[index].firstName}
                           />
                         </FormControl>
-                        <FormControl margin="normal">
+                        <FormControl margin="dense">
                           <InputLabel htmlFor="location">
                             Guest Email
                           </InputLabel>
@@ -290,7 +290,7 @@ class AddParty extends Component {
                   {this.state.items.length &&
                     this.state.items.map((item, index) => (
                       <ListItem key={`item[${index}]`}>
-                        <FormControl margin="normal" fullWidth>
+                        <FormControl margin="dense" fullWidth>
                           <InputLabel htmlFor="Item title">Item</InputLabel>
                           <Input
                             type="text"
@@ -321,7 +321,7 @@ class AddParty extends Component {
         <MobileStepper
           variant="dots"
           steps={3}
-          position="static"
+          position="bottom"
           activeStep={this.state.step}
           className={classes.root}
           nextButton={
