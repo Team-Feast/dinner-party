@@ -1,9 +1,13 @@
 import React, {Component} from 'react'
 import {withStyles} from '@material-ui/core/styles'
-import {MenuItem, TextField, Button} from '@material-ui/core/'
+import {MenuItem, TextField, Button, DialogTitle, DialogContent, FormControl, DialogActions} from '@material-ui/core/'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {postItem} from '../store'
+
+import Dialog from '@material-ui/core/Dialog'
+import DialogContentText from '@material-ui/core/DialogContentText'
+import Input from '@material-ui/core/Input'
 
 const styles = theme => ({
   container: {
@@ -20,6 +24,9 @@ const styles = theme => ({
   },
   menu: {
     width: 200
+  },
+  submit: {
+    marginTop: theme.spacing.unit * 3
   }
 })
 class AddItem extends Component {
@@ -29,8 +36,17 @@ class AddItem extends Component {
     this.state = {
       title: '',
       description: '',
-      partyId: this.props.partyId
+      partyId: this.props.partyId,
+      open: false
     }
+  }
+
+  handleClickOpen = () => {
+    this.setState({open: true})
+  }
+
+  handleClose = () => {
+    this.setState({open: false})
   }
 
   handleChange = event => {
@@ -39,7 +55,6 @@ class AddItem extends Component {
 
   handleSubmit = event => {
     event.preventDefault()
-
     this.props.postItem(this.state)
   }
 
@@ -47,25 +62,55 @@ class AddItem extends Component {
     const {classes} = this.props
 
     return (
-      <form className={classes.container} onSubmit={this.handleSubmit}>
-        <TextField
-          placeholder="Item"
+      <div>
+      <Button className={classes.submit} onClick={this.handleClickOpen}>
+      ADD ITEM
+      </Button>
+
+      <Dialog
+        open={this.state.open}
+        onClose={this.handleClose}
+        aria-labelledby="form-dialog-title"
+      >
+       <form className={classes.container} onSubmit={this.handleSubmit}>
+       <DialogTitle id="form-dialog-title">Single Item</DialogTitle>
+       <DialogContent>
+           <DialogContentText>
+                Please add item
+          </DialogContentText>
+        </DialogContent>
+
+        <FormControl>
+        <Input
+          autoFocus
+          margin="dense"
+          placeholder="Item Name"
           name="title"
           className={classes.textField}
-          value={this.state.title}
           onChange={this.handleChange}
-          margin="normal"
         />
-        <TextField
+        <Input
+          autoFocus
           placeholder="Description"
           name="description"
           className={classes.textField}
-          value={this.state.description}
           onChange={this.handleChange}
-          margin="normal"
+          margin="dense"
         />
-        <Button type="Submit">Add</Button>
+        </FormControl>
+        <DialogActions>
+          <Button onClick={this.handleClose}
+              type="Submit"
+          >
+           Add
+          </Button>
+          <Button onClick={this.handleClose}
+            type="Submit"
+          >Cancel</Button>
+        </DialogActions>
       </form>
+      </Dialog>
+      </div>
     )
   }
 }
