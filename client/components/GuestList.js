@@ -2,6 +2,7 @@ import React from 'react'
 import {List, ListItem, ListItemText} from '@material-ui/core'
 import Avatar from '@material-ui/core/Avatar'
 import Grid from '@material-ui/core/Grid'
+import {Icon, ThumbDown, ThumbUp} from '@material-ui/icons'
 
 const GuestList = props => {
   return (
@@ -16,11 +17,13 @@ const GuestList = props => {
                 <Avatar src="/images/womanAvatar.png" />
               )}
             </Grid>
-            <Grid item xs={6}>
-              <ListItemText primary={`${guest.email}`} />
+            <Grid item xs={9}>
+              <ListItemText primary={`${guest.firstName}`} />
             </Grid>
-            <Grid item >
-              <ListItemText primary={`${guest.status}`} />
+
+            <Grid item>
+              {guest.status === 'attending' && <ThumbUp />}
+              {/* <ListItemText primary={`${guest.status}`} /> */}
             </Grid>
           </Grid>
         </ListItem>
