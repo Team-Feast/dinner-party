@@ -65,13 +65,14 @@ class ItemList extends Component {
             <ListItem key={item.id}>
               <Grid container alignItems="center">
 
-              <Grid item xs={3}>
+              <Grid item xs={16}>
               <ListItemText primary={`${item.title}`} />
               </Grid>
 
               <ListItemText primary={`${item.guest !== null ? item.guest.email : ''}`}/>
 
               <ListItemSecondaryAction>
+                <Grid item xs={16}>
                 {item.guest && guest ? (
                   item.guest.id === guest.id ? (
 
@@ -79,25 +80,23 @@ class ItemList extends Component {
                       aria-label="Remove"
                       onClick={this.toggleRemoveGuestFromItem.bind(this, item)}
                     >
-                    <Grid item xs={5}>
                       <RemoveCircleOutlineIcon />
-                    </Grid>
                     </IconButton>
                   ) : (
                     <span />
                     )
                     ) : (
-                      <Grid item xs={3}>
                       <IconButton
                       aria-label="Add"
                       onClick={this.toggleAddGuestToItem.bind(this, item)}
                       >
+                      <Grid item xs={16}>
                     <AddCircleOutlineIcon />
+                     </Grid>
                   </IconButton>
-                  </Grid>
                 )}
+                </Grid>
               </ListItemSecondaryAction>
-
 
             </Grid>
             </ListItem>

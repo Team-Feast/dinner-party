@@ -161,7 +161,6 @@ class AddParty extends Component {
                 }}
               />
             </FormControl>
-
             <FormControl margin="normal" fullWidth>
               <InputLabel htmlFor="location">
                 Guest Emails (separated by , )

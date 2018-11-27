@@ -195,7 +195,6 @@ class SingleParty extends Component {
                           checked: classes.checked
                         }}
                       />
-
                       <Checkbox
                         checked={this.state.selectedValue === 'declined'}
                         onChange={this.handleChange}
@@ -242,7 +241,7 @@ class SingleParty extends Component {
                 return guest.guestPartyToken === guestPartyToken
               })}
             />
-            
+
           </ExpansionPanel>
             <Button
                color='primary'
