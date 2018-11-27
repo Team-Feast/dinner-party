@@ -44,21 +44,21 @@ router.put('/:id', async (req, res, next) => {
   }
 })
 
-//DELETE /api/reminders/:id
-// router.delete('/:id', async (req, res, next) => {
-//   try {
-//     let item = await Item.destroy({
-//       where: {
-//         id: req.params.id
-//       }
-//     })
-//     if (item) {
-//       res.status(200).send()
-//     }
-//   } catch (err) {
-//     next(err)
-//   }
-// })
+// DELETE /api/reminders/:id
+router.delete('/:id', async (req, res, next) => {
+  try {
+    let reminder = await Reminder.destroy({
+      where: {
+        id: req.params.id
+      }
+    })
+    if (reminder) {
+      res.status(200).send()
+    }
+  } catch (err) {
+    next(err)
+  }
+})
 
 // //POST /api/reminders/
 /*
