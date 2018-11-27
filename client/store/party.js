@@ -38,23 +38,19 @@ export const getParty = id => async dispatch => {
   }
 }
 
-export const postParty = ({info, guestEmails}) => {
+export const postParty = ({info, guests}) => {
   return async dispatch => {
     try {
       const {data: party} = await axios.post('/api/parties', {
         info
       })
-
-      let email
+      const {items} = info
       const partyId = party.id
-      for (let i = 0; i < guestEmails.length; i++) {
-        email = guestEmails[i]
-        const {data: guest} = await axios.post('/api/guests/', {email, partyId})
-        await axios.post(`/api/guests/${guest.id}/invite`)
-      }
+      await axios.post('/api/guests/newfeast', {guests, partyId})
+      await axios.post('/api/items/newfeast', {items, partyId})
 
       dispatch(addParty(party))
-      history.push(`/parties/${party.id}`)
+      history.push(`/parties/${partyId}`)
     } catch (error) {
       console.error(error)
     }
