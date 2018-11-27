@@ -1,17 +1,9 @@
 import React, {Component, Fragment} from 'react'
 import {connect} from 'react-redux'
-import {
-  getParty,
-  putGuestStatus,
-  getGuestStatus,
-  getGuests,
-  getItems,
-  postToCalendar
-} from '../store'
+import {getParty, putGuest, getGuests, getItems, postToCalendar} from '../store'
 import {GuestList, ItemList, Gallery, Map} from '.'
 import moment from 'moment'
 import history from '../history'
-import axios from 'axios'
 
 // MATERIAL UI IMPORTS
 import PropTypes from 'prop-types'
@@ -20,32 +12,22 @@ import CardHeader from '@material-ui/core/CardHeader'
 import CardMedia from '@material-ui/core/CardMedia'
 import CardContent from '@material-ui/core/CardContent'
 import IconButton from '@material-ui/core/IconButton'
-import MoreVertIcon from '@material-ui/icons/MoreVert'
 import {withStyles} from '@material-ui/core/styles'
 import ExpansionPanel from '@material-ui/core/ExpansionPanel'
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
 import Typography from '@material-ui/core/Typography'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import Checkbox from '@material-ui/core/Checkbox'
-import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank'
-import CheckBoxIcon from '@material-ui/icons/CheckBox'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
-import Switch from '@material-ui/core/Switch'
 import green from '@material-ui/core/colors/green'
 import red from '@material-ui/core/colors/red'
-import Radio from '@material-ui/core/Radio'
-import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked'
-import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked'
 import Create from '@material-ui/icons/Create'
 import CalendarToday from '@material-ui/icons/CalendarToday'
 import Button from '@material-ui/core/Button'
 import SaveIcon from '@material-ui/icons/Save'
-import Avatar from '@material-ui/core/Avatar'
 import deepOrange from '@material-ui/core/colors/deepOrange'
 
 const toonavatar = require('cartoon-avatar')
@@ -84,33 +66,50 @@ const styles = theme => ({
 })
 
 class SingleParty extends Component {
-  state = {
-    selectedValue: 'invited'
-  }
-
-  componentDidMount() {
-    const {guestPartyToken, partyId} = this.props.match.params
-
-    this.props.getParty(partyId)
-    this.props.getGuests(partyId)
-    this.props.getItems(partyId)
-
-    if (guestPartyToken) this.props.getGuestStatus(guestPartyToken, partyId)
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.props.guestStatus !== prevProps.guestStatus) {
-      this.setState({selectedValue: this.props.guestStatus})
+  constructor(props) {
+    super(props)
+    this.state = {
+      title: '',
+      description: '',
+      location: '',
+      imageUrl: '',
+      date: '',
+      id: '',
+      userId: '',
+      status: '',
+      selectedValue: 'invited'
     }
   }
-  handleChange = event => {
-    const rsvp = event.target.name
-    this.setState({selectedValue: rsvp})
-    const {guestPartyToken} = this.props.match.params
-    this.props.putGuestStatus(guestPartyToken, rsvp)
+
+  async componentDidMount() {
+    const {guestPartyToken, partyId} = this.props.match.params
+
+    await this.props.getParty(partyId)
+    await this.props.getGuests(partyId)
+    this.props.getItems(partyId)
+
+    if (guestPartyToken) {
+      const guest = this.props.guests.find(
+        ele => ele.guestPartyToken === guestPartyToken
+      )
+
+      this.setState({...this.props.party, selectedValue: guest.status})
+    }
   }
 
-  handleAddToCalendar = async () => {
+  handleChange = event => {
+    const status = event.target.name
+    this.setState({selectedValue: status})
+    const {guestPartyToken} = this.props.match.params
+
+    const guest = this.props.guests.find(
+      ele => ele.guestPartyToken === guestPartyToken
+    )
+
+    this.props.putGuest(guest.id, {status})
+  }
+
+  handleAddToCalendar = () => {
     const {loggedInUser, party, guests} = this.props
     const guest = guests.find(ele => ele.email === loggedInUser.email)
     this.props.postToCalendar(guest.id, party)
@@ -122,12 +121,12 @@ class SingleParty extends Component {
       description,
       location,
       imageUrl,
-      status,
       user,
       date,
       id,
-      userId
-    } = this.props.party
+      userId,
+      status
+    } = this.state
 
     const {guests, items, loggedInUser, images} = this.props
     const {guestPartyToken} = this.props.match.params
@@ -135,7 +134,7 @@ class SingleParty extends Component {
 
     const guest = guests.find(ele => ele.email === loggedInUser.email)
 
-    if (!this.props.party.id) {
+    if (!this.state.id) {
       return null
     } else {
       return (
@@ -177,8 +176,8 @@ class SingleParty extends Component {
               <ListItem>
                 <ListItemText primary={location} />
               </ListItem>
-              {guestPartyToken &&
-                userId !== loggedInUser.id && (
+              {userId !== loggedInUser.id &&
+                status === 'upcoming' && (
                   <ListItem>
                     <ListItemText primary="Are you attending?" />
                     <ListItemSecondaryAction>
@@ -216,6 +215,7 @@ class SingleParty extends Component {
 
           <ExpansionPanel>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+
               <Typography className={classes.heading}>{location}</Typography>
             </ExpansionPanelSummary>
             <Map location={location} />
@@ -223,6 +223,7 @@ class SingleParty extends Component {
 
           <ExpansionPanel>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+
               <Typography className={classes.heading}>
                 {`Guest List (Attending: ${
                   guests.filter(guest => guest.status === 'attending').length
@@ -261,7 +262,6 @@ const mapState = state => ({
   party: state.party,
   guests: state.guests,
   items: state.items,
-  guestStatus: state.guestStatus,
   loggedInUser: state.user
 })
 
@@ -269,11 +269,8 @@ const mapDispatch = dispatch => ({
   postToCalendar: (guestId, party) => dispatch(postToCalendar(guestId, party)),
   getParty: partyId => dispatch(getParty(partyId)),
   getGuests: partyId => dispatch(getGuests(partyId)),
-  getItems: partyId => dispatch(getItems(partyId)),
-  putGuestStatus: (guestPartyToken, status) =>
-    dispatch(putGuestStatus(guestPartyToken, status)),
-  getGuestStatus: (guestPartyToken, partyId) =>
-    dispatch(getGuestStatus(guestPartyToken, partyId))
+  putGuest: (guestId, status) => dispatch(putGuest(guestId, status)),
+  getItems: partyId => dispatch(getItems(partyId))
 })
 
 SingleParty.propTypes = {
