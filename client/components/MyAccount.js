@@ -130,6 +130,8 @@ class MyAccount extends Component {
               Submit
             </Button>
             {isOAuth ? (
+              <span />
+            ) : (
               <Button
                 type="button"
                 fullWidth
@@ -140,8 +142,6 @@ class MyAccount extends Component {
               >
                 Connect to Google
               </Button>
-            ) : (
-              <span />
             )}
             <Button
               type="button"

@@ -161,14 +161,16 @@ class SingleParty extends Component {
                 <ListItemText
                   primary={moment(date).format('MMMM Do YYYY, h:mm A')}
                 />
-                {loggedInUser &&
-                loggedInUser.googleToken &&
-                guest &&
-                !guest.onGoogleCalendar ? (
+                {guest && !guest.onGoogleCalendar ? (
                   <ListItemSecondaryAction>
-                    <IconButton onClick={this.handleAddToCalendar}>
-                      <CalendarToday className={classes.icon} />
-                    </IconButton>
+                    <Button
+                      onClick={this.handleAddToCalendar}
+                      color="primary"
+                      variant="contained"
+                      className={classes.button}
+                    >
+                      Add to Google Calendar
+                    </Button>
                   </ListItemSecondaryAction>
                 ) : (
                   <span />

@@ -37,44 +37,51 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
       const name = profile.name
       const email = profile.emails[0].value
 
-      console.log('==req.user==', req.user)
+      //console.log('==profile==', profile)
+      //console.log('==req.session==', req.session)
 
-      console.log('==profile==', profile)
-
-      User.findOrCreate({
-        where: {
-          [Op.or]: [{googleId}, {email}]
-        },
-        defaults: {
-          firstName: name.givenName,
-          lastName: name.familyName,
-          email,
-          googleId
-        }
-      })
-        .then(([user]) => {
-          user.update({googleToken: token, googleId, email})
-          done(null, user)
+      if (req.user) {
+        req.user
+          .update({googleToken: token, googleId})
+          .then(user => {
+            done(null, user)
+          })
+          .catch(done)
+      } else {
+        User.findOrCreate({
+          where: {
+            [Op.or]: [{googleId}, {email}]
+          },
+          defaults: {
+            firstName: name.givenName,
+            lastName: name.familyName,
+            email,
+            googleId
+          }
         })
-        .catch(done)
-
-      //User.update({googleToken: token}, {where: {googleId}})
+          .then(([user]) => {
+            user.update({googleToken: token, googleId, email})
+            done(null, user)
+          })
+          .catch(done)
+      }
     }
   )
 
   passport.use(strategy)
 
-  router.get(
-    '/',
+  router.get('/', function(req, res, next) {
+    console.log('==req.headers==', req.headers)
     passport.authenticate('google', {
       scope: ['email', 'https://www.googleapis.com/auth/calendar']
-    })
-  )
+    })(req, res, next)
+  })
 
   router.get(
     '/callback',
     passport.authenticate('google', {
       successRedirect: '/home',
+
       failureRedirect: '/login'
     })
   )
