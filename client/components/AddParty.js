@@ -223,8 +223,6 @@ class AddParty extends Component {
                 </FormControl>
 
                 <FormControl margin="dense" fullWidth>
-                  {/* <InputLabel htmlFor="imageUrl">Image URL</InputLabel> */}
-
                   <div className={classes.uploadBtnWrapper}>
                     <IconButton>
                       <PhotoCamera fontSize="large" />
