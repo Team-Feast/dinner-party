@@ -32,7 +32,6 @@ class Map extends Component {
   }
 
   render() {
-    // return <div id="map" style={{width: '100%', height: '300px'}} />
     return (
       <div
         ref={el => (this.mapContainer = el)}
