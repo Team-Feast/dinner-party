@@ -63,16 +63,6 @@ router.post('/', async (req, res, next) => {
   }
 })
 
-router.get('/rsvp/:guestPartyToken', async (req, res, next) => {
-  try {
-    const {guestPartyToken} = req.params
-    let guest = await Guest.findOne({where: {guestPartyToken: guestPartyToken}})
-    res.json(guest.status)
-  } catch (error) {
-    next(error)
-  }
-})
-
 router.put('/:id', async (req, res, next) => {
   try {
     let party = await Party.findById(req.params.id)
@@ -80,20 +70,6 @@ router.put('/:id', async (req, res, next) => {
     res.json(result)
   } catch (err) {
     next(err)
-  }
-})
-
-router.put('/rsvp/:guestPartyToken', async (req, res, next) => {
-  try {
-    const {guestPartyToken} = req.params
-    const {status} = req.body
-    let guest = await Guest.findOne({where: {guestPartyToken: guestPartyToken}})
-    if (guest) {
-      await guest.update({status})
-      res.json(guest.status)
-    }
-  } catch (error) {
-    next(error)
   }
 })
 

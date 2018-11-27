@@ -7,7 +7,6 @@ import items from './items'
 import guests from './guests'
 import parties from './parties'
 import party from './party'
-import guestStatus from './guestStatus'
 import images from './images'
 
 const reducer = combineReducers({
@@ -16,7 +15,6 @@ const reducer = combineReducers({
   guests,
   party,
   parties,
-  guestStatus,
   images,
   password: passwordReducer
 })
@@ -31,5 +29,4 @@ export * from './party'
 export * from './guests'
 export * from './items'
 export * from './parties'
-export * from './guestStatus'
 export * from './images'
