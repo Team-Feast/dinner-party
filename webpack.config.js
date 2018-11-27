@@ -14,6 +14,7 @@ module.exports = {
     extensions: ['.js', '.jsx']
   },
   devtool: 'source-map',
+  devServer: {inline: true},
   module: {
     rules: [
       {
