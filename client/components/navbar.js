@@ -17,7 +17,6 @@ import MenuItem from '@material-ui/core/MenuItem'
 import MenuList from '@material-ui/core/MenuList'
 import Avatar from '@material-ui/core/Avatar'
 import {withStyles} from '@material-ui/core/styles'
-
 import MenuIcon from '@material-ui/icons/Menu'
 
 const styles = {

@@ -1,7 +1,7 @@
 'use strict'
 
 const db = require('../server/db')
-const {User, Party, Guest, Item, Category} = require('../server/db/models')
+const {User, Party, Guest, Item, Category, Image} = require('../server/db/models')
 const moment = require('moment')
 
 // Random Data Creators
@@ -187,6 +187,7 @@ const guestData = [
     guestPartyToken: '68264675-ec39-11e8-a2d2-758fc26097cb',
     id: 6,
     partyId: 4,
+    userId: 1,
     email: 'cody@email.com'
   },
   {
@@ -228,7 +229,7 @@ const categoryData = [
 const itemData = [
   {
     partyId: 1,
-    title: 'item 1',
+    title: 'Pie',
     guestId: null,
     categoryId: 1,
     description:
@@ -236,7 +237,7 @@ const itemData = [
   },
   {
     partyId: 1,
-    title: 'item 2',
+    title: 'Drinks',
     guestId: null,
     categoryId: 1,
     description:
@@ -244,7 +245,7 @@ const itemData = [
   },
   {
     partyId: 1,
-    title: 'item 3',
+    title: 'Appetizers',
     guestId: 2,
     categoryId: 3,
     description:
@@ -252,7 +253,7 @@ const itemData = [
   },
   {
     partyId: 2,
-    title: 'item 1B',
+    title: 'Kids Food',
     guestId: null,
     categoryId: 1,
     description:
@@ -260,7 +261,7 @@ const itemData = [
   },
   {
     partyId: 2,
-    title: 'item 2B',
+    title: 'Strawberries',
     guestId: null,
     categoryId: 1,
     description:
@@ -268,11 +269,134 @@ const itemData = [
   },
   {
     partyId: 2,
-    title: 'item 3B',
+    title: 'Turkey',
     guestId: 7,
     categoryId: 1,
     description:
       'Nozwiv dahupoh lulas gucebi ewik difji kasno ucetivone hahvatfuj gonter ewtibvif ri wudlowe uze ni res.'
+  }
+]
+
+const galleryData = [
+  {
+    imageUrl: '/images/images-2.jpg',
+    partyId: 1,
+    guestId: 1
+  },
+  {
+    imageUrl: '/images/images-3.jpg',
+    partyId: 1,
+    guestId: 2
+  },
+  {
+    imageUrl: '/images/images-4.jpg',
+    partyId: 1,
+    guestId: 3
+  },
+  {
+    imageUrl: '/images/images-5.jpg',
+    partyId: 1,
+    guestId: 4
+  },
+  {
+    imageUrl: '/images/images-6.jpg',
+    partyId: 1,
+    guestId: 5
+  },
+  {
+    imageUrl: '/images/images-7.jpg',
+    partyId: 1,
+    guestId: 6
+  },
+  {
+    imageUrl: '/images/images-2.jpg',
+    partyId: 2,
+    guestId: 1
+  },
+  {
+    imageUrl: '/images/images-3.jpg',
+    partyId: 2,
+    guestId: 2
+  },
+  {
+    imageUrl: '/images/images-4.jpg',
+    partyId: 2,
+    guestId: 3
+  },
+  {
+    imageUrl: '/images/images-5.jpg',
+    partyId: 2,
+    guestId: 4
+  },
+  {
+    imageUrl: '/images/images-6.jpg',
+    partyId: 2,
+    guestId: 5
+  },
+  {
+    imageUrl: '/images/images-7.jpg',
+    partyId: 2,
+    guestId: 6
+  },
+  {
+    imageUrl: '/images/images-2.jpg',
+    partyId: 3,
+    guestId: 1
+  },
+  {
+    imageUrl: '/images/images-3.jpg',
+    partyId: 3,
+    guestId: 2
+  },
+  {
+    imageUrl: '/images/images-4.jpg',
+    partyId: 3,
+    guestId: 3
+  },
+  {
+    imageUrl: '/images/images-5.jpg',
+    partyId: 3,
+    guestId: 4
+  },
+  {
+    imageUrl: '/images/images-6.jpg',
+    partyId: 3,
+    guestId: 5
+  },
+  {
+    imageUrl: '/images/images-7.jpg',
+    partyId: 3,
+    guestId: 6
+  },
+  {
+    imageUrl: '/images/images-2.jpg',
+    partyId: 4,
+    guestId: 1
+  },
+  {
+    imageUrl: '/images/images-3.jpg',
+    partyId: 4,
+    guestId: 2
+  },
+  {
+    imageUrl: '/images/images-4.jpg',
+    partyId: 4,
+    guestId: 3
+  },
+  {
+    imageUrl: '/images/images-5.jpg',
+    partyId: 4,
+    guestId: 4
+  },
+  {
+    imageUrl: '/images/images-6.jpg',
+    partyId: 4,
+    guestId: 5
+  },
+  {
+    imageUrl: '/images/images-7.jpg',
+    partyId: 4,
+    guestId: 6
   }
 ]
 
@@ -453,6 +577,11 @@ const seed = async () => {
     // await createItems()
     await Item.bulkCreate(itemData)
     console.log(`Successfully Seeded Items`)
+
+    await Image.bulkCreate(galleryData)
+    console.log(`Successfully Seeded Images`)
+
+
 
     await db.query(
       `ALTER SEQUENCE "parties_id_seq" RESTART WITH ${partyData.length + 1};`
