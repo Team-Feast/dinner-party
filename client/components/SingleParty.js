@@ -1,14 +1,6 @@
 import React, {Component, Fragment} from 'react'
 import {connect} from 'react-redux'
-import {
-  getParty,
-  putGuest,
-  putGuestStatus,
-  getGuestStatus,
-  getGuests,
-  getItems,
-  postToCalendar
-} from '../store'
+import {getParty, putGuest, getGuests, getItems, postToCalendar} from '../store'
 import {GuestList, ItemList, Gallery, Map} from '.'
 import moment from 'moment'
 import history from '../history'
@@ -257,11 +249,7 @@ const mapDispatch = dispatch => ({
   getParty: partyId => dispatch(getParty(partyId)),
   getGuests: partyId => dispatch(getGuests(partyId)),
   putGuest: (guestId, status) => dispatch(putGuest(guestId, status)),
-  getItems: partyId => dispatch(getItems(partyId)),
-  putGuestStatus: (guestPartyToken, status) =>
-    dispatch(putGuestStatus(guestPartyToken, status)),
-  getGuestStatus: (guestPartyToken, partyId) =>
-    dispatch(getGuestStatus(guestPartyToken, partyId))
+  getItems: partyId => dispatch(getItems(partyId))
 })
 
 SingleParty.propTypes = {
