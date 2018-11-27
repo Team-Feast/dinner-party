@@ -63,6 +63,9 @@ const styles = theme => ({
     left: '0',
     top: '0',
     opacity: '0'
+  },
+  textField: {
+    margin: 'dense'
   }
 })
 
@@ -170,7 +173,7 @@ class AddParty extends Component {
                 <Typography component="h6" variant="h6">
                   Feast Info
                 </Typography>
-                <FormControl margin="normal" required fullWidth>
+                <FormControl margin="dense" required fullWidth>
                   <InputLabel htmlFor="title">Title</InputLabel>
                   <Input
                     id="title"
@@ -181,7 +184,7 @@ class AddParty extends Component {
                   />
                 </FormControl>
 
-                <FormControl margin="normal" required fullWidth>
+                <FormControl margin="dense" required fullWidth>
                   <InputLabel htmlFor="description">Description</InputLabel>
                   <Input
                     name="description"
@@ -192,7 +195,7 @@ class AddParty extends Component {
                   />
                 </FormControl>
 
-                <FormControl margin="normal" required fullWidth>
+                <FormControl margin="dense" required fullWidth>
                   <InputLabel htmlFor="location">Address</InputLabel>
                   <Input
                     name="location"
@@ -203,7 +206,7 @@ class AddParty extends Component {
                   />
                 </FormControl>
 
-                <FormControl>
+                <FormControl margin="dense">
                   <TextField
                     id="date"
                     label="Date"
@@ -219,7 +222,7 @@ class AddParty extends Component {
                   />
                 </FormControl>
 
-                <FormControl margin="normal" fullWidth>
+                <FormControl margin="dense" fullWidth>
                   {/* <InputLabel htmlFor="imageUrl">Image URL</InputLabel> */}
 
                   <div className={classes.uploadBtnWrapper}>
