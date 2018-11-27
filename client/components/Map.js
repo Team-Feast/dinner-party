@@ -1,31 +1,32 @@
 import React, {Component} from 'react'
 import mapboxgl from 'mapbox-gl'
+import axios from 'axios'
 
 class Map extends Component {
-  componentDidMount() {
-    const {location} = this.props
+  async componentDidMount() {
     mapboxgl.accessToken =
       'pk.eyJ1IjoiZmVyZ2VlMzIiLCJhIjoiY2pveWxjczF1MmtsejNycm55cGIzeDV0aiJ9.FOLWH9mDuRmvEVrqgLY9WQ'
-    console.log('=====', mapboxgl.accessToken)
-    console.log('=====', mapboxgl)
+
+    const {data} = await axios.get(
+      `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
+        this.props.location
+      )}.json?access_token=${mapboxgl.accessToken}`
+    )
+
+    const pos = data.features[0].geometry.coordinates
 
     const map = new mapboxgl.Map({
       container: 'map',
-      center: [-87.6354, 41.8885],
-      zoom: 12,
+      center: pos,
+      zoom: 13,
       style: 'mapbox://styles/mapbox/streets-v10'
     })
 
-    map.addControl(
-      new MapboxGeocoder({
-        accessToken: mapboxgl.accessToken,
-        searchInput: location
-      })
-    )
+    new mapboxgl.Marker().setLngLat(pos).addTo(map)
   }
 
   render() {
-    return <div id="map" />
+    return <div id="map" style={{width: '100%', height: '300px'}} />
   }
 }
 

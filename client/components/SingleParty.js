@@ -9,7 +9,7 @@ import {
   postToCalendar,
   getImages
 } from '../store'
-import {GuestList, ItemList, Gallery} from '.'
+import {GuestList, ItemList, Gallery, Map} from '.'
 import moment from 'moment'
 import history from '../history'
 import axios from 'axios'
@@ -164,9 +164,6 @@ class SingleParty extends Component {
                   <span />
                 )}
               </ListItem>
-              <ListItem>
-                <ListItemText primary={location} />
-              </ListItem>
               {guestPartyToken && (
                 <ListItem>
                   <ListItemText primary="Are you attending?" />
@@ -203,6 +200,14 @@ class SingleParty extends Component {
             </List>
           </Card>
 
+          <ExpansionPanel>
+            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+              <Typography className={classes.heading}>
+                {`Address: ${location}`}
+              </Typography>
+            </ExpansionPanelSummary>
+            <Map location={location} />
+          </ExpansionPanel>
           <ExpansionPanel>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
               <Typography className={classes.heading}>
