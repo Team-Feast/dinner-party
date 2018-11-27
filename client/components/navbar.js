@@ -73,7 +73,7 @@ class Navbar extends Component {
               <Grid item component={Link} to="/" xs={9}>
                 <img className={classes.media} src="/images/logo-full.jpg" />
               </Grid>
-              <Grid item xs={2}>
+              <Grid item xs={2} component={Link} to="/my-account">
                 {user.id && (
                   <Avatar src={user.imageUrl} className={classes.avatar} />
                 )}
