@@ -23,8 +23,9 @@ import {
 
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
-
+import PhotoCamera from '@material-ui/icons/PhotoCamera'
 import LockIcon from '@material-ui/icons/LockOutlined'
+import IconButton from '@material-ui/core/IconButton'
 
 import {postParty} from '../store/party'
 
@@ -46,6 +47,22 @@ const styles = theme => ({
   },
   submit: {
     marginTop: theme.spacing.unit * 3
+  },
+  fileButton: {
+    width: '100%',
+    color: 'red'
+  },
+  uploadBtnWrapper: {
+    position: 'relative',
+    overflow: 'hidden',
+    display: 'inline-block'
+  },
+  uploadBtnWrapperInput: {
+    fontSize: '100px',
+    position: 'absolute',
+    left: '0',
+    top: '0',
+    opacity: '0'
   }
 })
 
@@ -186,16 +203,22 @@ class AddParty extends Component {
                   />
                 </FormControl>
 
-                <FormControl margin="normal" fullWidth>
+                <FormControl margin="normal">
                   {/* <InputLabel htmlFor="imageUrl">Image URL</InputLabel> */}
 
-                  <Input
-                    type="file"
-                    name="imageUrl"
-                    accept="image/png, image/jpeg"
-                    onChange={this.handleUploadFile}
-                    id="imageUrl"
-                  />
+                  <div className={classes.uploadBtnWrapper}>
+                    <IconButton>
+                      <PhotoCamera />
+                    </IconButton>
+                    <Input
+                      type="file"
+                      name="imageUrl"
+                      className={classes.uploadBtnWrapperInput}
+                      accept="image/png, image/jpeg"
+                      onChange={this.handleUploadFile}
+                      id="imageUrl"
+                    />
+                  </div>
                 </FormControl>
 
                 <FormControl>
