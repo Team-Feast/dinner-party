@@ -281,7 +281,7 @@ class AddParty extends Component {
             {step === 2 && (
               <Fragment>
                 <Typography component="h6" variant="h6">
-                  Add Items
+                  Items for guests to bring
                 </Typography>
                 <List dense>
                   {this.state.items.length &&
@@ -301,22 +301,13 @@ class AddParty extends Component {
                   <Button onClick={() => this.addItemField()}>
                     Add new item
                   </Button>
-                  <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    className={classes.submit}
-                  >
-                    Create Feast
-                  </Button>
                 </List>
               </Fragment>
             )}
             {step === 3 && (
               <Fragment>
                 <Typography component="h6" variant="h6">
-                  Add Items
+                  Set Reminders
                 </Typography>
                 <List dense>
                   {this.state.items.length &&
