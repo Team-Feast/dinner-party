@@ -2,6 +2,8 @@ const passport = require('passport')
 const router = require('express').Router()
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
 const {User} = require('../db/models')
+const {Op} = require('sequelize')
+
 module.exports = router
 
 /**
@@ -24,44 +26,58 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
   const googleConfig = {
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: process.env.GOOGLE_CALLBACK
+    callbackURL: process.env.GOOGLE_CALLBACK,
+    passReqToCallback: true
   }
 
   const strategy = new GoogleStrategy(
     googleConfig,
-    (token, refreshToken, profile, done) => {
+    (req, token, refreshToken, profile, done) => {
       const googleId = profile.id
       const name = profile.name
       const email = profile.emails[0].value
 
-      User.findOrCreate({
-        where: {googleId},
-        defaults: {firstName: name.givenName, lastName: name.familyName, email}
-      })
-        .then(([user]) => {
-          user.update({googleToken: token})
-          done(null, user)
+      if (req.user) {
+        req.user
+          .update({googleToken: token, googleId})
+          .then(user => {
+            done(null, user)
+          })
+          .catch(done)
+      } else {
+        User.findOrCreate({
+          where: {
+            [Op.or]: [{googleId}, {email}]
+          },
+          defaults: {
+            firstName: name.givenName,
+            lastName: name.familyName,
+            email,
+            googleId
+          }
         })
-        .catch(done)
-
-      User.update({googleToken: token}, {where: {googleId}})
+          .then(([user]) => {
+            user.update({googleToken: token, googleId, email})
+            done(null, user)
+          })
+          .catch(done)
+      }
     }
   )
 
   passport.use(strategy)
 
-  router.get(
-    '/',
+  router.get('/', function(req, res, next) {
+    req.session.redirect = req.query.redirect
     passport.authenticate('google', {
       scope: ['email', 'https://www.googleapis.com/auth/calendar']
-    })
-  )
+    })(req, res, next)
+  })
 
-  router.get(
-    '/callback',
+  router.get('/callback', function(req, res, next) {
     passport.authenticate('google', {
-      successRedirect: '/home',
-      failureRedirect: '/login'
-    })
-  )
+      successRedirect: req.session.redirect,
+      failureRedirect: '/'
+    })(req, res, next)
+  })
 }
