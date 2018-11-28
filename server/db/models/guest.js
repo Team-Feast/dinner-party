@@ -1,5 +1,4 @@
 const Sequelize = require('sequelize')
-const User = require('../models/user')
 const db = require('../db')
 const uuidv1 = require('uuid/v1')
 

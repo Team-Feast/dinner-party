@@ -1,6 +1,7 @@
 const crypto = require('crypto')
 const Sequelize = require('sequelize')
 const db = require('../db')
+const Guest = require('../models/guest')
 
 const User = db.define('user', {
   firstName: {
@@ -78,3 +79,20 @@ const setSaltAndPassword = user => {
 
 User.beforeCreate(setSaltAndPassword)
 User.beforeUpdate(setSaltAndPassword)
+
+const setUserIdOnGuests = async (user, options) => {
+  try {
+    const guests = await Guest.findAll({
+      where: {
+        email: user.email
+      }
+    })
+    for (let guest of guests) {
+      await guest.update({userId: user.id}, {transaction: options.transaction})
+    }
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+User.afterCreate(setUserIdOnGuests)

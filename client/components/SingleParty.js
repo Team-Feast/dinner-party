@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from 'react'
 import {connect} from 'react-redux'
-import {getParty, putGuest, getGuests, getItems, postToCalendar} from '../store'
-import {GuestList, ItemList, Gallery, Map} from '.'
+import {getParty, putGuest, getGuests, getItems} from '../store'
+import {GuestList, ItemList, Gallery, Map, CalendarButton} from '.'
 import moment from 'moment'
 import history from '../history'
 
@@ -29,6 +29,10 @@ import CalendarToday from '@material-ui/icons/CalendarToday'
 import Button from '@material-ui/core/Button'
 import SaveIcon from '@material-ui/icons/Save'
 import deepOrange from '@material-ui/core/colors/deepOrange'
+import PlaceIcon from '@material-ui/icons/Place'
+import AssignmentIcon from '@material-ui/icons/Assignment'
+import GroupIcon from '@material-ui/icons/Group'
+import Grid from '@material-ui/core/Grid'
 
 const toonavatar = require('cartoon-avatar')
 const url = toonavatar.generate_avatar({gender: 'male'})
@@ -62,6 +66,10 @@ const styles = theme => ({
     height: 30,
     width: 30,
     backgroundColor: deepOrange[500]
+  },
+  padding: {
+    paddingTop: '8px',
+    paddingBottom: '8px'
   }
 })
 
@@ -109,12 +117,6 @@ class SingleParty extends Component {
     this.props.putGuest(guest.id, {status})
   }
 
-  handleAddToCalendar = () => {
-    const {loggedInUser, party, guests} = this.props
-    const guest = guests.find(ele => ele.email === loggedInUser.email)
-    this.props.postToCalendar(guest.id, party)
-  }
-
   render() {
     const {
       title,
@@ -141,44 +143,41 @@ class SingleParty extends Component {
         <Fragment>
           <Card className={classes.card}>
             <CardHeader
+              className={classes.padding}
               action={
-                <IconButton
-                  onClick={() => history.push(`/parties/${id}/editparty`)}
-                >
-                  <Create className={classes.icon} />
-                </IconButton>
+                userId === loggedInUser.id && (
+                  <IconButton
+                    onClick={() => history.push(`/parties/${id}/editparty`)}
+                  >
+                    <Create className={classes.icon} />
+                  </IconButton>
+                )
               }
               title={title}
               subheader={`hosted by ${user.firstName} ${user.lastName}`}
             />
             <CardMedia className={classes.media} image={imageUrl} />
-            <CardContent>
+            <CardContent className={classes.padding}>
               <Typography component="p">{description}</Typography>
             </CardContent>
             <List>
-              <ListItem>
+              <ListItem className={classes.padding}>
                 <ListItemText
                   primary={moment(date).format('MMMM Do YYYY, h:mm A')}
                 />
-                {loggedInUser &&
-                loggedInUser.googleToken &&
-                guest &&
-                !guest.onGoogleCalendar ? (
-                  <ListItemSecondaryAction>
-                    <IconButton onClick={this.handleAddToCalendar}>
-                      <CalendarToday className={classes.icon} />
-                    </IconButton>
-                  </ListItemSecondaryAction>
-                ) : (
-                  <span />
-                )}
               </ListItem>
-              <ListItem>
-                <ListItemText primary={location} />
-              </ListItem>
+              {guest && !guest.onGoogleCalendar ? (
+                <ListItem className={classes.padding}>
+                  <CalendarButton guest={guest} />
+                </ListItem>
+              ) : (
+                <ListItem className={classes.padding}>
+                  <ListItemText primary="On Calendar" />
+                </ListItem>
+              )}
               {userId !== loggedInUser.id &&
                 status === 'upcoming' && (
-                  <ListItem>
+                  <ListItem className={classes.padding}>
                     <ListItemText primary="Are you attending?" />
                     <ListItemSecondaryAction>
                       <div>
@@ -193,7 +192,6 @@ class SingleParty extends Component {
                             checked: classes.checked
                           }}
                         />
-
                         <Checkbox
                           checked={this.state.selectedValue === 'declined'}
                           onChange={this.handleChange}
@@ -212,29 +210,48 @@ class SingleParty extends Component {
                 )}
             </List>
           </Card>
-
           <ExpansionPanel>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-
-              <Typography className={classes.heading}>{location}</Typography>
+              <Grid container alignItems="center">
+                <Grid item xs={2}>
+                  <PlaceIcon />
+                </Grid>
+                <Grid item>
+                  <Typography variant="body2">{location}</Typography>
+                </Grid>
+              </Grid>
             </ExpansionPanelSummary>
             <Map location={location} />
           </ExpansionPanel>
 
           <ExpansionPanel>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-
-              <Typography className={classes.heading}>
-                {`Guest List (Attending: ${
-                  guests.filter(guest => guest.status === 'attending').length
-                } Invited: ${guests.length})`}
-              </Typography>
+              <Grid container alignItems="center">
+                <Grid item xs={2}>
+                  <GroupIcon />
+                </Grid>
+                <Grid item>
+                  <Typography className={classes.heading}>
+                    {`Guest List (Attending: ${
+                      guests.filter(guest => guest.status === 'attending')
+                        .length
+                    } Invited: ${guests.length})`}
+                  </Typography>
+                </Grid>
+              </Grid>
             </ExpansionPanelSummary>
             <GuestList guests={guests} />
           </ExpansionPanel>
           <ExpansionPanel>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography className={classes.heading}>Items</Typography>
+              <Grid container alignItems="center">
+                <Grid item xs={2}>
+                  <AssignmentIcon />
+                </Grid>
+                <Grid item>
+                  <Typography className={classes.heading}>Items</Typography>
+                </Grid>
+              </Grid>
             </ExpansionPanelSummary>
 
             <ItemList
@@ -271,7 +288,6 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => ({
-  postToCalendar: (guestId, party) => dispatch(postToCalendar(guestId, party)),
   getParty: partyId => dispatch(getParty(partyId)),
   getGuests: partyId => dispatch(getGuests(partyId)),
   putGuest: (guestId, status) => dispatch(putGuest(guestId, status)),

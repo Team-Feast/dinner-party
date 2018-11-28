@@ -123,7 +123,7 @@ const AuthForm = props => {
               variant="contained"
               color="primary"
               className={classes.submit}
-              href="/auth/google"
+              href="/auth/google?redirect=/home"
             >
               Google {displayName}
             </Button>
