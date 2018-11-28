@@ -10,14 +10,13 @@ import Button from '@material-ui/core/Button'
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
 import Chevronleft from '@material-ui/icons/chevronleft'
-import { darkBlack } from 'material-ui/styles/colors';
 
 
 const styles = theme => ({
   root: {
     maxWidth: 400,
     flexGrow: 1,
-    
+
   },
   header: {
     display: 'flex',
@@ -38,7 +37,6 @@ const styles = theme => ({
 class SinglePicture extends Component {
   constructor(props) {
     super(props)
-    const pictureId = +this.props.match.params.pictureId
     this.state = {
       activeStep: 0,
       customImages: []
@@ -47,10 +45,7 @@ class SinglePicture extends Component {
 
   componentDidMount() {
     const partyId = this.props.match.params.partyId
-    const pictureId = this.props.match.params.pictureId
     this.props.getImages(partyId)
-
-    console.log('State', this.state)
   }
 
   componentDidUpdate(prevProps) {
@@ -101,16 +96,16 @@ class SinglePicture extends Component {
 
   render() {
     const maxSteps = this.props.images.length
-    const pictureId = this.props.match.params.pictureId
     const {classes, theme} = this.props
     const {activeStep} = this.state
+    console.log("Here", this.props)
 
     if (this.props.images.length) {
       return (
         <div className={classes.root} >
         <Paper square elevation={30} className={classes.header} >
         <Chevronleft
-         onClick={() => history.back()}
+         onClick={() => history.goBack()}
         />
         </Paper>
           <img

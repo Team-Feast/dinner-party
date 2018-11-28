@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 
 import axios from 'axios'
 import history from '../history'
-import SinglePicture from './SinglePicture'
 import {postImage, getImages, getGuests} from '../store'
 import {connect} from 'react-redux'
 
@@ -12,7 +11,6 @@ import {Input} from '@material-ui/core'
 import {withStyles} from '@material-ui/core/styles'
 import GridList from '@material-ui/core/GridList'
 import GridListTile from '@material-ui/core/GridListTile'
-import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 
 const styles = theme => ({
