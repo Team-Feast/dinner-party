@@ -188,6 +188,10 @@ class AddParty extends Component {
     this.setState({clearTimeoutVar})
   }
 
+  componentWillUnmount() {
+    clearTimeout(this.state.clearTimeoutVar)
+  }
+
   render() {
     const {step} = this.state
     const {title, description, location, date} = this.state
