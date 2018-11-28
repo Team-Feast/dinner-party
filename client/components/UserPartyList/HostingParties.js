@@ -19,6 +19,12 @@ import Avatar from '@material-ui/core/Avatar'
 const styles = theme => ({
   heading: {
     fontSize: theme.typography.pxToRem(15)
+  },
+  listItemTitle: {
+    fontSize: theme.typography.pxToRem(13)
+  },
+  listItem: {
+    fontSize: theme.typography.pxToRem(11)
   }
 })
 
@@ -44,15 +50,23 @@ const HostingEvents = props => {
                   party.guests[0].guestPartyToken
                 }`}
               >
-                <Grid container alignItems="center">
+                <Grid
+                  container
+                  alignItems="center"
+                  style={{flexWrap: 'nowrap'}}
+                >
                   <Grid item xs={2}>
                     <Avatar src={`${party.imageUrl}`} />
                   </Grid>
-                  <Grid item xs={4}>
-                    <ListItemText primary={`${party.title}`} />
+                  <Grid item xs={5}>
+                    <ListItemText
+                      className={classes.listItemTitle}
+                      primary={`${party.title}`}
+                    />
                   </Grid>
                   <Grid item>
                     <ListItemText
+                      className={classes.listItem}
                       secondary={`${moment(party.date).format(
                         'ddd, MMM DD, YYYY h:mm A'
                       )}`}

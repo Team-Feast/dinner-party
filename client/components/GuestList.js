@@ -30,14 +30,20 @@ const GuestList = props => {
         <ListItem key={guest.id} className={classes.padding}>
           <Grid container alignItems="center">
             <Grid item xs={2}>
-              {guest.id % 2 === 0 ? (
-                <Avatar src="/images/menAvatar.png" />
-              ) : (
-                <Avatar src="/images/womanAvatar.png" />
-              )}
+              <Avatar
+                style={{
+                  backgroundColor: `#${Math.random()
+                    .toString(16)
+                    .slice(2, 8)
+                    .toUpperCase()
+                    .slice(-6)}`
+                }}
+              >
+                {guest.firstName[0]}
+              </Avatar>
             </Grid>
             <Grid item xs={9}>
-              <ListItemText primary={`${guest.firstName}`} />
+              <ListItemText primary={`${guest.firstName} - ${guest.email}`} />
             </Grid>
 
             <Grid item>{guest.status === 'attending' && <ThumbUpIcon />}</Grid>

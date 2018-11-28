@@ -1,6 +1,7 @@
 import React from 'react'
 import moment from 'moment'
 import {Link} from 'react-router-dom'
+import {connect} from 'react-redux'
 
 import {withStyles} from '@material-ui/core/styles'
 import ExpansionPanel from '@material-ui/core/ExpansionPanel'
@@ -16,11 +17,17 @@ import Avatar from '@material-ui/core/Avatar'
 const styles = theme => ({
   heading: {
     fontSize: theme.typography.pxToRem(15)
+  },
+  listItemTitle: {
+    fontSize: theme.typography.pxToRem(13)
+  },
+  listItem: {
+    fontSize: theme.typography.pxToRem(11)
   }
 })
 
 const AttendingParties = props => {
-  const {attending, classes} = props
+  const {attending, classes, user} = props
   return (
     <ExpansionPanel defaultExpanded>
       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
@@ -31,42 +38,51 @@ const AttendingParties = props => {
       {attending &&
         attending.length && (
           <List dense>
-            {attending.map(party => (
-              <ListItem
-                key={party.id}
-                button
-                component={Link}
-                to={`/parties/${party.id}/rsvp/${
-                  party.guests[0].guestPartyToken
-                }`}
-              >
-                <Grid container alignItems="center">
-                  <Grid item xs={2}>
-                    <Avatar src={`${party.imageUrl}`} />
-                  </Grid>
+            {attending.map(
+              party =>
+                party.userId !== user.id && (
+                  <ListItem
+                    key={party.id}
+                    button
+                    component={Link}
+                    to={`/parties/${party.id}/rsvp/${
+                      party.guests[0].guestPartyToken
+                    }`}
+                  >
+                    <Grid container alignItems="center">
+                      <Grid item xs={2}>
+                        <Avatar src={`${party.imageUrl}`} />
+                      </Grid>
 
-                  <Grid item xs={4}>
-                    <ListItemText
-                      primary={`${party.title}`}
-                      secondary={`${party.user.firstName} ${
-                        party.user.lastName
-                      }`}
-                    />
-                  </Grid>
-                  <Grid item>
-                    <ListItemText
-                      secondary={`${moment(party.date).format(
-                        'ddd, MMM DD, YYYY h:mm A'
-                      )}`}
-                    />
-                  </Grid>
-                </Grid>
-              </ListItem>
-            ))}
+                      <Grid item xs={5}>
+                        <ListItemText
+                          className={classes.listItemTitle}
+                          primary={`${party.title}`}
+                          secondary={`${party.user.firstName} ${
+                            party.user.lastName
+                          }`}
+                        />
+                      </Grid>
+                      <Grid item>
+                        <ListItemText
+                          className={classes.listItem}
+                          secondary={`${moment(party.date).format(
+                            'ddd, MMM DD, YYYY h:mm A'
+                          )}`}
+                        />
+                      </Grid>
+                    </Grid>
+                  </ListItem>
+                )
+            )}
           </List>
         )}
     </ExpansionPanel>
   )
 }
 
-export default withStyles(styles)(AttendingParties)
+const mapStateToProps = state => ({
+  user: state.user
+})
+
+export default connect(mapStateToProps)(withStyles(styles)(AttendingParties))
