@@ -26,10 +26,6 @@ const styles = {
   grow: {
     flexGrow: 1
   },
-  menuButton: {
-    marginLeft: -12,
-    marginRight: 20
-  },
   popper: {
     marginTop: '8px',
     right: '0'
