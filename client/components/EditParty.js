@@ -28,7 +28,6 @@ import {CardHeader} from 'material-ui'
 
 const styles = theme => ({
   paper: {
-    marginTop: theme.spacing.unit * 8,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -192,6 +191,15 @@ class EditParty extends Component {
               className={classes.submit}
             >
               Submit
+            </Button>
+            <Button
+              type="button"
+              fullWidth
+              variant="contained"
+              color="secondary"
+              className={classes.submit}
+            >
+              Delete
             </Button>
           </form>
         </Paper>

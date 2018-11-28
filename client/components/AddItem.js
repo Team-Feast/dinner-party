@@ -1,6 +1,14 @@
 import React, {Component} from 'react'
 import {withStyles} from '@material-ui/core/styles'
-import {MenuItem, TextField, Button, DialogTitle, DialogContent, FormControl, DialogActions} from '@material-ui/core/'
+import {
+  MenuItem,
+  TextField,
+  Button,
+  DialogTitle,
+  DialogContent,
+  FormControl,
+  DialogActions
+} from '@material-ui/core/'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {postItem} from '../store'
@@ -63,53 +71,57 @@ class AddItem extends Component {
 
     return (
       <div>
-      <Button className={classes.submit} onClick={this.handleClickOpen}>
-      ADD ITEM
-      </Button>
+        <Button className={classes.submit} onClick={this.handleClickOpen}>
+          ADD ITEM
+        </Button>
 
-      <Dialog
-        open={this.state.open}
-        onClose={this.handleClose}
-        aria-labelledby="form-dialog-title"
-      >
-       <form className={classes.container} onSubmit={this.handleSubmit}>
-       <DialogTitle id="form-dialog-title">Single Item</DialogTitle>
-       <DialogContent>
-           <DialogContentText>
-                Please add item
-          </DialogContentText>
-        </DialogContent>
+        <Dialog
+          open={this.state.open}
+          onClose={this.handleClose}
+          aria-labelledby="form-dialog-title"
+        >
+          <form className={classes.container} onSubmit={this.handleSubmit}>
+            <DialogTitle id="form-dialog-title">Single Item</DialogTitle>
+            <DialogContent>
+              <DialogContentText>Please add item</DialogContentText>
+            </DialogContent>
 
-        <FormControl>
-        <Input
-          autoFocus
-          margin="dense"
-          placeholder="Item Name"
-          name="title"
-          className={classes.textField}
-          onChange={this.handleChange}
-        />
-        <Input
-          autoFocus
-          placeholder="Description"
-          name="description"
-          className={classes.textField}
-          onChange={this.handleChange}
-          margin="dense"
-        />
-        </FormControl>
-        <DialogActions>
-          <Button onClick={this.handleClose}
-              type="Submit"
-          >
-           Add
-          </Button>
-          <Button onClick={this.handleClose}
-            type="Submit"
-          >Cancel</Button>
-        </DialogActions>
-      </form>
-      </Dialog>
+            <FormControl>
+              <Input
+                autoFocus
+                margin="dense"
+                placeholder="Item Name"
+                name="title"
+                className={classes.textField}
+                onChange={this.handleChange}
+              />
+              {/* <Input
+                autoFocus
+                placeholder="Description"
+                name="description"
+                className={classes.textField}
+                onChange={this.handleChange}
+                margin="dense"
+              /> */}
+            </FormControl>
+            <DialogActions>
+              <Button
+                onClick={this.handleClose}
+                type="Submit"
+                className={classes.submit}
+              >
+                Add
+              </Button>
+              <Button
+                onClick={this.handleClose}
+                type="button"
+                className={classes.submit}
+              >
+                Cancel
+              </Button>
+            </DialogActions>
+          </form>
+        </Dialog>
       </div>
     )
   }
