@@ -76,6 +76,10 @@ const styles = theme => ({
   },
   textField: {
     margin: 'dense'
+  },
+  formControl: {
+    margin: theme.spacing.unit,
+    minWidth: 75
   }
 })
 
@@ -299,21 +303,41 @@ class AddParty extends Component {
                     REMINDERS.map((reminder, index) => (
                       <ListItem key={`REMINDERS[${index}]`}>
                         <FormControl className={classes.formControl}>
-                          <InputLabel htmlFor="age-simple">Age</InputLabel>
+                          <InputLabel htmlFor="notification-type">
+                            Notification
+                          </InputLabel>
                           <Select
-                            value={10}
+                            value={'email'}
                             onChange={this.handleChange}
                             inputProps={{
-                              name: 'age',
-                              id: 'age-simple'
+                              name: 'notification',
+                              id: 'notification-type'
                             }}
                           >
                             <MenuItem value="">
-                              <em>None</em>
+                              <em />
                             </MenuItem>
-                            <MenuItem value={10}>Ten</MenuItem>
-                            <MenuItem value={20}>Twenty</MenuItem>
-                            <MenuItem value={30}>Thirty</MenuItem>
+                            <MenuItem value={'email'}>Email</MenuItem>
+                            <MenuItem value={'text'}>Text</MenuItem>
+                          </Select>
+                        </FormControl>
+                        <FormControl className={classes.formControl}>
+                          <InputLabel htmlFor="notification-type">
+                            Notification
+                          </InputLabel>
+                          <Select
+                            value={'email'}
+                            onChange={this.handleChange}
+                            inputProps={{
+                              name: 'notification',
+                              id: 'notification-type'
+                            }}
+                          >
+                            <MenuItem value="">
+                              <em />
+                            </MenuItem>
+                            <MenuItem value={'email'}>Email</MenuItem>
+                            <MenuItem value={'text'}>Text</MenuItem>
                           </Select>
                         </FormControl>
                       </ListItem>
