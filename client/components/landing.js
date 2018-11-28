@@ -45,7 +45,7 @@ class Landing extends Component {
           >
             <Grid item>
               <Typography component="h1" variant="h2">
-                Welcome to Feast
+                <b>Welcome to Feast</b>
               </Typography>
             </Grid>
             <Grid item>
@@ -54,27 +54,15 @@ class Landing extends Component {
               </Typography>
             </Grid>
             <Grid item>
-              {user.id ? (
-                <Button
-                  component={Link}
-                  to="/addparty"
-                  className={classes.button}
-                  variant="contained"
-                  color="primary"
-                >
-                  Let's Feast!
-                </Button>
-              ) : (
-                <Button
-                  component={Link}
-                  to="/login"
-                  className={classes.button}
-                  variant="contained"
-                  color="primary"
-                >
-                  Let's Feast!
-                </Button>
-              )}
+              <Button
+                component={Link}
+                to={user.id ? '/addparty' : '/login'}
+                className={classes.button}
+                variant="contained"
+                color="primary"
+              >
+                Let's Feast!
+              </Button>
             </Grid>
           </Grid>
         </div>

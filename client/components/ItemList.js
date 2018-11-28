@@ -73,17 +73,11 @@ class ItemList extends Component {
                   <Typography style={{fontSize: '14px'}}>{`${
                     item.title
                   }`}</Typography>
-                  {/* <ListItemText primary={`${item.title}`} /> */}
                 </Grid>
                 <Grid item xs={1}>
                   <Typography variant="h6">{'  -  '}</Typography>
                 </Grid>
                 <Grid item xs={3}>
-                  {/* <ListItemText
-                    primary={`${
-                      item.guest !== null ? item.guest.firstName : ''
-                    }`}
-                  /> */}
                   <Typography style={{fontSize: '14px'}}>{`${
                     item.guest !== null ? item.guest.firstName : ''
                   }`}</Typography>
@@ -118,14 +112,6 @@ class ItemList extends Component {
             </ListItem>
           ))}
           <AddItem />
-          {/* {this.state.showAddItem && <AddItem />} */}
-
-          {/* <Button */}
-          {/* className={this.props.classes.button}
-            // onClick={this.toggleAddItem}
-            >
-            Add Item
-          </Button> */}
         </List>
       </Card>
     )

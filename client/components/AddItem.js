@@ -20,7 +20,8 @@ import Input from '@material-ui/core/Input'
 const styles = theme => ({
   container: {
     display: 'flex',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    justifyContent: 'center'
   },
   textField: {
     marginLeft: theme.spacing.unit,
@@ -81,11 +82,7 @@ class AddItem extends Component {
           aria-labelledby="form-dialog-title"
         >
           <form className={classes.container} onSubmit={this.handleSubmit}>
-            <DialogTitle id="form-dialog-title">Single Item</DialogTitle>
-            <DialogContent>
-              <DialogContentText>Please add item</DialogContentText>
-            </DialogContent>
-
+            <DialogTitle id="form-dialog-title">Add Item</DialogTitle>
             <FormControl>
               <Input
                 autoFocus
