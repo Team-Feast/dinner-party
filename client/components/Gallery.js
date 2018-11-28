@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { Link } from 'react-router-dom'
+import {Link} from 'react-router-dom'
 
 import axios from 'axios'
 import history from '../history'
@@ -12,8 +12,9 @@ import {Input} from '@material-ui/core'
 import {withStyles} from '@material-ui/core/styles'
 import GridList from '@material-ui/core/GridList'
 import GridListTile from '@material-ui/core/GridListTile'
-import IconButton from '@material-ui/core/IconButton';
-import PhotoCamera from '@material-ui/icons/PhotoCamera';
+import IconButton from '@material-ui/core/IconButton'
+import PhotoCamera from '@material-ui/icons/PhotoCamera'
+import Fab from '@material-ui/core/Fab'
 
 const styles = theme => ({
   root: {
@@ -39,18 +40,17 @@ const styles = theme => ({
     display: 'none'
   },
   fab: {
-    position: 'relative',
-    margin: theme.spacing.unit,
+    position: 'absolute',
+    bottom: theme.spacing.unit * 1,
+    right: theme.spacing.unit * 2
   },
   button: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing.unit
   }
 })
 const MyLink = props => <Link to="/parties/singlePicture" {...props} />
 
 class Gallery extends Component {
-
-
   componentDidMount() {
     // const partyId = this.props.match.params.id
     const partyId = this.props.partyId
@@ -60,8 +60,6 @@ class Gallery extends Component {
   toggleAddImage = () => {
     this.setState({showAddImage: !this.state.showAddImage})
   }
-
-
 
   // findGuestId = () => {
   //   const {guestPartyToken} = this.props.match.params
@@ -88,10 +86,7 @@ class Gallery extends Component {
     this.props.postImage(data.url, this.props.partyId, 1)
   }
 
-  singlePicture = () =>{
-
-  }
-
+  singlePicture = () => {}
 
   render() {
     const {classes} = this.props
@@ -101,20 +96,22 @@ class Gallery extends Component {
         {/* <ListSubheader component="div">Gallery</ListSubheader> */}
         {/* <GridList cellHeight={160} cols={3}> */}
         <GridList className={classes.gridList} cols={2.0}>
-          {
-              this.props.images.map(tile => (
-                <GridListTile key={tile.id} >
-                  <img
-                      // onClick={this.SinglePicture}
-                    onClick={() => history.push(`/parties/${this.props.partyId}/singlePicture/${tile.id}`)}
-                    key={tile.id}
-                    src={tile.imageUrl}
-                    />
-                </GridListTile>
-              ))
-          }
+          {this.props.images.map(tile => (
+            <GridListTile key={tile.id}>
+              <img
+                // onClick={this.SinglePicture}
+                onClick={() =>
+                  history.push(
+                    `/parties/${this.props.partyId}/singlePicture/${tile.id}`
+                  )
+                }
+                key={tile.id}
+                src={tile.imageUrl}
+              />
+            </GridListTile>
+          ))}
         </GridList>
-         <Input
+        <Input
           accept="image/png, image/jpeg"
           type="file"
           name="imageUrl"
@@ -122,18 +119,25 @@ class Gallery extends Component {
           id="imageUrl"
           className={classes.input}
         />
-         <label htmlFor="imageUrl">
+        <label htmlFor="imageUrl">
           {/* <Button variant="fab" color='primary'component="span" className={classes.fab}>
             <AddIcon />
           </Button> */}
-          <IconButton color="primary" className={classes.button} component="span">
+          {/* <IconButton
+            color="primary"
+            className={classes.button}
+            component="span"
+          >
             <PhotoCamera />
-        </IconButton>
+          </IconButton> */}
         </label>
         {/* <Button variant="extendedFab" color="primary" className={classes.button}
           onClick={()=> history.goBack()}
          > Back
          </Button>  */}
+        <Fab disabled aria-label="Camera" className={classes.fab}>
+          <PhotoCamera />
+        </Fab>
       </div>
     )
   }
@@ -141,7 +145,7 @@ class Gallery extends Component {
 
 const mapDispatch = dispatch => ({
   postImage: (imageUrl, partyId, guestId) =>
-  dispatch(postImage(imageUrl, partyId, guestId)),
+    dispatch(postImage(imageUrl, partyId, guestId)),
   getImages: partyId => dispatch(getImages(partyId)),
   getGuests: partyId => dispatch(getGuests(partyId))
 })
