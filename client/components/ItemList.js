@@ -70,17 +70,23 @@ class ItemList extends Component {
             <ListItem key={item.id} className={classes.padding}>
               <Grid container alignItems="center">
                 <Grid item xs={6}>
-                  <ListItemText primary={`${item.title}`} />
+                  <Typography style={{fontSize: '14px'}}>{`${
+                    item.title
+                  }`}</Typography>
+                  {/* <ListItemText primary={`${item.title}`} /> */}
                 </Grid>
                 <Grid item xs={1}>
                   <Typography variant="h6">{'  -  '}</Typography>
                 </Grid>
                 <Grid item xs={3}>
-                  <ListItemText
+                  {/* <ListItemText
                     primary={`${
                       item.guest !== null ? item.guest.firstName : ''
                     }`}
-                  />
+                  /> */}
+                  <Typography style={{fontSize: '14px'}}>{`${
+                    item.guest !== null ? item.guest.firstName : ''
+                  }`}</Typography>
                 </Grid>
                 <Grid item xs={2}>
                   <ListItemSecondaryAction>

@@ -21,7 +21,8 @@ const theme = createMuiTheme({
   },
 
   typography: {
-    useNextVariants: true
+    useNextVariants: true,
+    fontFamily: 'Baloo'
   }
 })
 

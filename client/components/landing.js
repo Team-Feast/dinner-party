@@ -45,7 +45,7 @@ class Landing extends Component {
           >
             <Grid item>
               <Typography component="h1" variant="h2">
-                <b>Welcome to Feast</b>
+                Welcome to Feast
               </Typography>
             </Grid>
             <Grid item>
