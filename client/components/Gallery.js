@@ -3,7 +3,6 @@ import {Link} from 'react-router-dom'
 
 import axios from 'axios'
 import history from '../history'
-import SinglePicture from './SinglePicture'
 import {postImage, getImages, getGuests} from '../store'
 import {connect} from 'react-redux'
 
@@ -13,8 +12,8 @@ import {withStyles} from '@material-ui/core/styles'
 import GridList from '@material-ui/core/GridList'
 import GridListTile from '@material-ui/core/GridListTile'
 import IconButton from '@material-ui/core/IconButton'
-import PhotoCamera from '@material-ui/icons/PhotoCamera'
 import Fab from '@material-ui/core/Fab'
+import PhotoCamera from '@material-ui/icons/PhotoCamera'
 
 const styles = theme => ({
   root: {
@@ -48,7 +47,6 @@ const styles = theme => ({
     margin: theme.spacing.unit
   }
 })
-const MyLink = props => <Link to="/parties/singlePicture" {...props} />
 
 class Gallery extends Component {
   componentDidMount() {
@@ -93,8 +91,6 @@ class Gallery extends Component {
 
     return (
       <div className={classes.root}>
-        {/* <ListSubheader component="div">Gallery</ListSubheader> */}
-        {/* <GridList cellHeight={160} cols={3}> */}
         <GridList className={classes.gridList} cols={2.0}>
           {this.props.images.map(tile => (
             <GridListTile key={tile.id}>
@@ -110,31 +106,35 @@ class Gallery extends Component {
               />
             </GridListTile>
           ))}
-        </GridList>
-        <Input
-          accept="image/png, image/jpeg"
-          type="file"
-          name="imageUrl"
-          onChange={this.handleUploadFile}
-          id="imageUrl"
-          className={classes.input}
-        />
-        <label htmlFor="imageUrl">
-          {/* <Button variant="fab" color='primary'component="span" className={classes.fab}>
+          <Input
+            accept="image/png, image/jpeg"
+            type="file"
+            name="imageUrl"
+            onChange={this.handleUploadFile}
+            id="imageUrl"
+            className={classes.input}
+          />
+          <label htmlFor="imageUrl">
+            {/* <Button variant="fab" color='primary'component="span" className={classes.fab}>
             <AddIcon />
           </Button> */}
-          {/* <IconButton
+            {/* <IconButton
             color="primary"
             className={classes.button}
             component="span"
           >
             <PhotoCamera />
           </IconButton> */}
-        </label>
-        {/* <Button variant="extendedFab" color="primary" className={classes.button}
+          </label>
+          {/* <Button variant="extendedFab" color="primary" className={classes.button}
           onClick={()=> history.goBack()}
          > Back
          </Button>  */}
+          />
+          <label htmlFor="imageUrl">
+            <PhotoCamera className={classes.button} />
+          </label>
+        </GridList>
         <Fab disabled aria-label="Camera" className={classes.fab}>
           <PhotoCamera />
         </Fab>

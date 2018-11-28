@@ -2,12 +2,32 @@ import React from 'react'
 import {List, ListItem, ListItemText} from '@material-ui/core'
 import Avatar from '@material-ui/core/Avatar'
 import Grid from '@material-ui/core/Grid'
+import ThumbUpIcon from '@material-ui/icons/ThumbUp'
+import green from '@material-ui/core/colors/green'
+import {withStyles} from '@material-ui/core/styles'
+import PropTypes from 'prop-types'
+import Checkbox from '@material-ui/core/Checkbox'
+
+const styles = theme => ({
+  green: {
+    color: green[600],
+    '&$checked': {
+      color: green[500]
+    }
+  },
+  checked: {},
+  padding: {
+    paddingTop: '8px',
+    paddingBottom: '8px'
+  }
+})
 
 const GuestList = props => {
+  const {classes} = props
   return (
     <List>
       {props.guests.map(guest => (
-        <ListItem key={guest.id}>
+        <ListItem key={guest.id} className={classes.padding}>
           <Grid container alignItems="center">
             <Grid item xs={2}>
               {guest.id % 2 === 0 ? (
@@ -16,12 +36,11 @@ const GuestList = props => {
                 <Avatar src="/images/womanAvatar.png" />
               )}
             </Grid>
-            <Grid item xs={6}>
-              <ListItemText primary={`${guest.email}`} />
+            <Grid item xs={9}>
+              <ListItemText primary={`${guest.firstName}`} />
             </Grid>
-            <Grid item >
-              <ListItemText primary={`${guest.status}`} />
-            </Grid>
+
+            <Grid item>{guest.status === 'attending' && <ThumbUpIcon />}</Grid>
           </Grid>
         </ListItem>
       ))}
@@ -29,4 +48,20 @@ const GuestList = props => {
   )
 }
 
-export default GuestList
+GuestList.propTypes = {
+  classes: PropTypes.object.isRequired
+}
+
+export default withStyles(styles)(GuestList)
+
+//
+
+// (
+//   <Checkbox
+//     checked
+//     classes={{
+//       root: classes.green,
+//       checked: classes.checked
+//     }}
+//   />
+// )
