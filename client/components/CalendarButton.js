@@ -7,6 +7,8 @@ import {
   DialogContent,
   DialogActions
 } from '@material-ui/core/'
+import CalendarToday from '@material-ui/icons/CalendarToday'
+import IconButton from '@material-ui/core/IconButton'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {postItem, postToCalendar} from '../store'
@@ -61,18 +63,17 @@ class CalendarButton extends Component {
 
     return (
       <div>
-        <Button
+        <IconButton
           color="primary"
           variant="contained"
-          className={classes.submit}
           onClick={
             loggedInUser && loggedInUser.googleToken
               ? this.handleAddToCalendar
               : this.handleClickOpen
           }
         >
-          Add to Google Calendar
-        </Button>
+          <CalendarToday />
+        </IconButton>
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
@@ -84,7 +85,7 @@ class CalendarButton extends Component {
             </DialogTitle>
             <DialogContent>
               <DialogContentText>
-                You'll need to sign-in with Google to preform this action
+                You'll need to sign-in with Google to perform this action
               </DialogContentText>
             </DialogContent>
             <DialogActions>

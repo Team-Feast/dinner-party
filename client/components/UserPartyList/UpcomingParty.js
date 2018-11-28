@@ -15,11 +15,12 @@ import Button from '@material-ui/core/Button'
 
 const styles = theme => ({
   heading: {
-    fontSize: theme.typography.pxToRem(15)
+    fontSize: theme.typography.pxToRem(14)
   },
   column: {
     flexBasis: '50'
   },
+
   media: {
     height: 0,
     paddingTop: '56.25%' // 16:9
@@ -31,22 +32,26 @@ const UpcomingParty = props => {
 
   return upcomingEvent.id ? (
     <ExpansionPanel defaultExpanded>
-      <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+      <ExpansionPanelSummary
+        expandIcon={<ExpandMoreIcon />}
+        style={{height: '70px'}}
+      >
         <Grid container spacing={8}>
           <Grid item xs={3}>
-            <Typography className={classes.heading} color="inherit">
+            <Typography variant="subtitle2" color="inherit">
               Next feast:
             </Typography>
           </Grid>
           <Grid item xs>
-            <Typography className={classes.heading} color="inherit">
-              {upcomingEvent.title} hosted by{' '}
+            <Typography variant="subtitle2" color="inherit">
+              {upcomingEvent.title}
+              {` - `}
               {user.id === upcomingEvent.userId
                 ? 'you'
                 : `${upcomingEvent.user.firstName}
               ${upcomingEvent.user.lastName}`}
             </Typography>
-            <Typography className={classes.heading}>
+            <Typography variant="body2">
               {`${moment(upcomingEvent.date).format(
                 'ddd, MMM DD, YYYY h:mm A'
               )}`}

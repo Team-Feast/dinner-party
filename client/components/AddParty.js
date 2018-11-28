@@ -27,6 +27,7 @@ import PhotoCamera from '@material-ui/icons/PhotoCamera'
 import LockIcon from '@material-ui/icons/LockOutlined'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
+import CakeIcon from '@material-ui/icons/Cake'
 
 import {postParty} from '../store/party'
 
@@ -180,7 +181,7 @@ class AddParty extends Component {
         <CssBaseline />
         <Paper elevation={0} className={classes.paper}>
           <Avatar className={classes.avatar}>
-            <LockIcon />
+            <CakeIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
             Create Feast

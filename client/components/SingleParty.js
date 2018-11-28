@@ -26,6 +26,7 @@ import green from '@material-ui/core/colors/green'
 import red from '@material-ui/core/colors/red'
 import Create from '@material-ui/icons/Create'
 import CalendarToday from '@material-ui/icons/CalendarToday'
+import Event from '@material-ui/icons/Event'
 import Button from '@material-ui/core/Button'
 import SaveIcon from '@material-ui/icons/Save'
 import deepOrange from '@material-ui/core/colors/deepOrange'
@@ -165,16 +166,14 @@ class SingleParty extends Component {
                 <ListItemText
                   primary={moment(date).format('MMMM Do YYYY, h:mm A')}
                 />
+                {guest && !guest.onGoogleCalendar ? (
+                  <ListItemSecondaryAction>
+                    <CalendarButton guest={guest} />
+                  </ListItemSecondaryAction>
+                ) : (
+                  <Event />
+                )}
               </ListItem>
-              {guest && !guest.onGoogleCalendar ? (
-                <ListItem className={classes.padding}>
-                  <CalendarButton guest={guest} />
-                </ListItem>
-              ) : (
-                <ListItem className={classes.padding}>
-                  <ListItemText primary="On Calendar" />
-                </ListItem>
-              )}
               {userId !== loggedInUser.id &&
                 status === 'upcoming' && (
                   <ListItem className={classes.padding}>
@@ -210,9 +209,9 @@ class SingleParty extends Component {
                 )}
             </List>
           </Card>
-          <ExpansionPanel>
+          <ExpansionPanel defaultExpanded>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-              <Grid container alignItems="center">
+              <Grid container alignItems="center" alignContent="center">
                 <Grid item xs={2}>
                   <PlaceIcon />
                 </Grid>
@@ -224,7 +223,7 @@ class SingleParty extends Component {
             <Map location={location} />
           </ExpansionPanel>
 
-          <ExpansionPanel>
+          <ExpansionPanel defaultExpanded>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
               <Grid container alignItems="center">
                 <Grid item xs={2}>
@@ -242,7 +241,7 @@ class SingleParty extends Component {
             </ExpansionPanelSummary>
             <GuestList guests={guests} />
           </ExpansionPanel>
-          <ExpansionPanel>
+          <ExpansionPanel defaultExpanded>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
               <Grid container alignItems="center">
                 <Grid item xs={2}>
