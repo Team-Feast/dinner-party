@@ -101,8 +101,10 @@ router.post('/newfeast', async (req, res, next) => {
       }
       transporter.sendMail(mailOptions)
     }
+    //sends back host to allow for redirect to new party page
+    const host = await Guest.find({where: {partyId, userId: party.userId}})
 
-    res.status(201).json()
+    res.status(201).json(host)
   } catch (err) {
     next(err)
   }

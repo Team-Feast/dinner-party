@@ -226,9 +226,7 @@ class SingleParty extends Component {
                   <PlaceIcon />
                 </Grid>
                 <Grid item>
-                  <Typography className={classes.heading}>
-                    {location}
-                  </Typography>
+                  <Typography variant="body2">{location}</Typography>
                 </Grid>
               </Grid>
             </ExpansionPanelSummary>
