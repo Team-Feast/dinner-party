@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {getImages} from '../store'
+import history from '../history'
 
 import MobileStepper from '@material-ui/core/MobileStepper'
 import {withStyles} from '@material-ui/core/styles'
@@ -8,16 +9,20 @@ import Paper from '@material-ui/core/Paper'
 import Button from '@material-ui/core/Button'
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
+import Chevronleft from '@material-ui/icons/chevronleft'
+import { darkBlack } from 'material-ui/styles/colors';
+
 
 const styles = theme => ({
   root: {
     maxWidth: 400,
-    flexGrow: 1
+    flexGrow: 1,
+    
   },
   header: {
     display: 'flex',
     alignItems: 'center',
-    height: 50,
+    height: 90,
     paddingLeft: theme.spacing.unit * 4,
     backgroundColor: theme.palette.background.default
   },
@@ -83,8 +88,6 @@ class SinglePicture extends Component {
     extracted = images.splice(theIndex, 1)
 
     newArr = [extracted[0], ...images]
-    console.log('x>>>', newArr)
-
     return newArr
   }
   getImageFromId = pictureId => {
@@ -99,16 +102,21 @@ class SinglePicture extends Component {
   render() {
     const maxSteps = this.props.images.length
     const pictureId = this.props.match.params.pictureId
+    const {classes, theme} = this.props
+    const {activeStep} = this.state
 
     if (this.props.images.length) {
-      const {classes, theme} = this.props
-      const {activeStep} = this.state
       return (
-        <div className={classes.root}>
+        <div className={classes.root} >
+        <Paper square elevation={30} className={classes.header} >
+        <Chevronleft
+         onClick={() => history.back()}
+        />
+        </Paper>
           <img
             className={classes.img}
             src={this.props.images[this.state.activeStep].imageUrl}
-          />
+            />
 
           <MobileStepper
             steps={maxSteps}
@@ -117,33 +125,33 @@ class SinglePicture extends Component {
             className={classes.mobileStepper}
             nextButton={
               <Button
-                size="small"
-                onClick={this.handleNext}
-                disabled={activeStep === maxSteps - 1}
+              size="small"
+              onClick={this.handleNext}
+              disabled={activeStep === maxSteps - 1}
               >
                 Next
                 {theme.direction === 'rtl' ? (
                   <KeyboardArrowLeft />
-                ) : (
-                  <KeyboardArrowRight />
-                )}
+                  ) : (
+                    <KeyboardArrowRight />
+                    )}
               </Button>
             }
             backButton={
               <Button
-                size="small"
-                onClick={this.handleBack}
-                disabled={activeStep === 0}
+              size="small"
+              onClick={this.handleBack}
+              disabled={activeStep === 0}
               >
                 {theme.direction === 'rtl' ? (
                   <KeyboardArrowRight />
-                ) : (
-                  <KeyboardArrowLeft />
-                )}
+                  ) : (
+                    <KeyboardArrowLeft />
+                    )}
                 Back
               </Button>
             }
-          />
+            />
         </div>
       )
     } else {

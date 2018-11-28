@@ -43,10 +43,9 @@ const styles = theme => ({
     margin: theme.spacing.unit,
   },
   button: {
-    margin: theme.spacing.unit,
+
   }
 })
-const MyLink = props => <Link to="/parties/singlePicture" {...props} />
 
 class Gallery extends Component {
 
@@ -98,8 +97,6 @@ class Gallery extends Component {
 
     return (
       <div className={classes.root}>
-        {/* <ListSubheader component="div">Gallery</ListSubheader> */}
-        {/* <GridList cellHeight={160} cols={3}> */}
         <GridList className={classes.gridList} cols={2.0}>
           {
               this.props.images.map(tile => (
@@ -113,7 +110,6 @@ class Gallery extends Component {
                 </GridListTile>
               ))
           }
-        </GridList>
          <Input
           accept="image/png, image/jpeg"
           type="file"
@@ -121,19 +117,11 @@ class Gallery extends Component {
           onChange={this.handleUploadFile}
           id="imageUrl"
           className={classes.input}
-        />
+          />
          <label htmlFor="imageUrl">
-          {/* <Button variant="fab" color='primary'component="span" className={classes.fab}>
-            <AddIcon />
-          </Button> */}
-          <IconButton color="primary" className={classes.button} component="span">
-            <PhotoCamera />
-        </IconButton>
+            <PhotoCamera className={classes.button}/>
         </label>
-        {/* <Button variant="extendedFab" color="primary" className={classes.button}
-          onClick={()=> history.goBack()}
-         > Back
-         </Button>  */}
+     </GridList>
       </div>
     )
   }
