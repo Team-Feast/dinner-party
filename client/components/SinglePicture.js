@@ -3,20 +3,22 @@ import {connect} from 'react-redux'
 import {getImages} from '../store'
 import history from '../history'
 
+
 import MobileStepper from '@material-ui/core/MobileStepper'
 import {withStyles} from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import Button from '@material-ui/core/Button'
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
-import Chevronleft from '@material-ui/icons/chevronleft'
 
 
 const styles = theme => ({
   root: {
     maxWidth: 400,
     flexGrow: 1,
-
+  },
+  button: {
+    margin: theme.spacing.unit,
   },
   header: {
     display: 'flex',
@@ -104,9 +106,10 @@ class SinglePicture extends Component {
       return (
         <div className={classes.root} >
         <Paper square elevation={30} className={classes.header} >
-        <Chevronleft
+        <Button variant="outlined" className={classes.button}
          onClick={() => history.goBack()}
-        />
+        >Back
+        </Button>
         </Paper>
           <img
             className={classes.img}
