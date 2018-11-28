@@ -67,7 +67,7 @@ class MyAccount extends Component {
   }
 
   render() {
-    const {classes, user} = this.props
+    const {classes, user, isOAuth} = this.props
 
     return (
       <Fragment>
@@ -129,6 +129,20 @@ class MyAccount extends Component {
             >
               Submit
             </Button>
+            {isOAuth ? (
+              <span />
+            ) : (
+              <Button
+                type="button"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+                href="/auth/google?redirect=/my-account"
+              >
+                Connect to Google
+              </Button>
+            )}
             <Button
               type="button"
               fullWidth
@@ -147,7 +161,8 @@ class MyAccount extends Component {
 }
 
 const mapState = state => ({
-  user: state.user
+  user: state.user,
+  isOAuth: !!state.user.googleId
 })
 
 const mapDispatch = dispatch => ({
