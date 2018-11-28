@@ -470,7 +470,7 @@ class AddParty extends Component {
           ContentProps={{
             'aria-describedby': 'message-id'
           }}
-          message={<span id="message-id">I love snacks</span>}
+          message={<span id="message-id">Your photo was uploaded!</span>}
         />
       </Fragment>
     )
