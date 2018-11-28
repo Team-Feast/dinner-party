@@ -30,15 +30,6 @@ import MenuItem from '@material-ui/core/MenuItem'
 
 import {postParty} from '../store/party'
 
-const REMINDERS = [
-  {
-    timeUnit: 'days',
-    id: 1,
-    timeBefore: 3,
-    partyId: 1,
-    notificationType: 'email'
-  }
-]
 const styles = theme => ({
   paper: {
     display: 'flex',
