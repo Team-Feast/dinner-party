@@ -34,6 +34,7 @@ import PlaceIcon from '@material-ui/icons/Place'
 import AssignmentIcon from '@material-ui/icons/Assignment'
 import GroupIcon from '@material-ui/icons/Group'
 import Grid from '@material-ui/core/Grid'
+import Divider from '@material-ui/core/Divider'
 
 const toonavatar = require('cartoon-avatar')
 const url = toonavatar.generate_avatar({gender: 'male'})
@@ -220,6 +221,7 @@ class SingleParty extends Component {
                 </Grid>
               </Grid>
             </ExpansionPanelSummary>
+            <Divider />
             <Map location={location} />
           </ExpansionPanel>
 
@@ -239,6 +241,7 @@ class SingleParty extends Component {
                 </Grid>
               </Grid>
             </ExpansionPanelSummary>
+            <Divider />
             <GuestList guests={guests} />
           </ExpansionPanel>
           <ExpansionPanel defaultExpanded>
@@ -252,7 +255,7 @@ class SingleParty extends Component {
                 </Grid>
               </Grid>
             </ExpansionPanelSummary>
-
+            <Divider />
             <ItemList
               items={items}
               guest={guests.find(guest => {

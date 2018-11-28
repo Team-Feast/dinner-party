@@ -13,6 +13,7 @@ import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import Avatar from '@material-ui/core/Avatar'
+import Divider from '@material-ui/core/Divider'
 
 const styles = theme => ({
   heading: {
@@ -35,6 +36,8 @@ const AttendingParties = props => {
           Feasts you're attending
         </Typography>
       </ExpansionPanelSummary>
+      <Divider />
+
       {attending &&
         attending.length && (
           <List dense>
