@@ -139,7 +139,7 @@ class SingleParty extends Component {
     const {guestPartyToken} = this.props.match.params
     const {classes} = this.props
 
-    const guest = guests.find(ele => ele.email === loggedInUser.email)
+    const guest = guests.find(ele => ele.guestPartyToken === guestPartyToken)
 
     if (!this.state.id) {
       return null

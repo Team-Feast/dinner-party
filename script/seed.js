@@ -92,7 +92,7 @@ const partyData = [
     userId: 5,
     id: 1,
     title: 'Friends & Family Afterparty',
-    date: '2018-12-7 18:30:00.512-06',
+    date: '2018-11-28 18:30:00.512-06',
     imageUrl: '/images/party-pic.jpg',
     updatedAt: '2018-11-28 20:30:00.512-06',
     description: `We're going to code all night! Bring food, drinks, and let's celebrate!`
@@ -158,14 +158,14 @@ const guestData = [
     email: 'cody@email.com'
   },
   {
-    status: 'attending',
+    status: 'invited',
     phone: '3678326353',
     guestPartyToken: '68264671-ec39-11e8-a2d2-758fc26097cb',
     id: 2,
     partyId: 1,
     userId: 2,
     firstName: 'Joseph',
-    email: 'joseph@email.com'
+    email: 'josephfullstack@gmail.com'
   },
   {
     status: 'attending',
