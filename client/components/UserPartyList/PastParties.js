@@ -48,7 +48,11 @@ const PastParties = props => {
                   party.guests[0].guestPartyToken
                 }`}
               >
-                <Grid container alignItems="center">
+                <Grid
+                  container
+                  alignItems="center"
+                  style={{flexWrap: 'nowrap'}}
+                >
                   <Grid item xs={2}>
                     <Avatar src={`${party.imageUrl}`} />
                   </Grid>
