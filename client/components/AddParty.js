@@ -95,7 +95,7 @@ class AddParty extends Component {
       date: moment(Date.now()).format('YYYY-MM-DDTHH:mm'),
       guests: [{firstName: '', email: ''}],
       items: [{title: ''}],
-      reminders: [{notificationType: 'email', time: 3, timeUnit: 'hours'}]
+      reminders: [{notificationType: 'email', time: 3, timeUnit: 'days'}]
     }
   }
 
@@ -124,7 +124,7 @@ class AddParty extends Component {
     this.setState({
       reminders: [
         ...this.state.reminders,
-        {notificationType: 'email', time: 1, timeUnit: 'weeks'}
+        {notificationType: 'email', time: 1, timeUnit: 'days'}
       ]
     })
   }
@@ -136,6 +136,11 @@ class AddParty extends Component {
     let itemsCopy = this.state.items.slice()
     itemsCopy[index][event.target.name] = event.target.value
     this.setState({items: itemsCopy})
+  }
+  handleReminder = (index, event) => {
+    let remindersCopy = this.state.reminders.slice()
+    remindersCopy[index][event.target.name] = event.target.value
+    this.setState({reminders: remindersCopy})
   }
 
   handleGuest = (index, event) => {
@@ -314,7 +319,9 @@ class AddParty extends Component {
                         <FormControl className={classes.formControl}>
                           <Select
                             value={reminder.notificationType}
-                            onChange={this.handleChange}
+                            onChange={event =>
+                              this.handleReminder(index, event)
+                            }
                             inputProps={{
                               name: 'notification',
                               id: 'notification-type'
@@ -337,7 +344,9 @@ class AddParty extends Component {
                               style: {textAlign: 'center'}
                             }}
                             className={classes.textField}
-                            onChange={this.handleChange}
+                            onChange={event =>
+                              this.handleReminder(index, event)
+                            }
                             required
                             value={`${reminder.time}`}
                             InputLabelProps={{
@@ -348,7 +357,9 @@ class AddParty extends Component {
                         <FormControl className={classes.formControl}>
                           <Select
                             value={`${reminder.timeUnit}`}
-                            onChange={this.handleChange}
+                            onChange={event =>
+                              this.handleReminder(index, event)
+                            }
                             inputProps={{
                               name: 'timeUnit',
                               id: 'timeUnit-type'
