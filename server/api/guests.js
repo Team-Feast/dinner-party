@@ -70,7 +70,7 @@ router.post('/newfeast', async (req, res, next) => {
         firstName,
         partyId,
         userId: user ? user.id : null,
-        status: user ? 'attending' : null
+        status: user && party.userId === user.id ? 'attending' : 'invited'
       })
 
       // sends emails on guests creation
@@ -101,7 +101,10 @@ router.post('/newfeast', async (req, res, next) => {
       }
       transporter.sendMail(mailOptions)
     }
-    res.status(201).end()
+    //sends back host to allow for redirect to new party page
+    const host = await Guest.find({where: {partyId, userId: party.userId}})
+
+    res.status(201).json(host)
   } catch (err) {
     next(err)
   }

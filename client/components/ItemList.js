@@ -16,7 +16,8 @@ import Card from '@material-ui/core/Card'
 import {AddItem} from '.'
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
 import Grid from '@material-ui/core/Grid'
-
+import MaximizeIcon from '@material-ui/icons/Maximize'
+import Typography from '@material-ui/core/Typography'
 
 import {putItem} from '../store'
 
@@ -26,6 +27,10 @@ const styles = theme => ({
   },
   input: {
     display: 'none'
+  },
+  padding: {
+    paddingTop: '8px',
+    paddingBottom: '8px'
   }
 })
 class ItemList extends Component {
@@ -57,56 +62,60 @@ class ItemList extends Component {
   }
 
   render() {
-    const {guest, items} = this.props
+    const {guest, items, classes} = this.props
     return (
       <Card>
         <List>
           {items.map(item => (
-            <ListItem key={item.id}>
+            <ListItem key={item.id} className={classes.padding}>
               <Grid container alignItems="center">
-
-              <Grid item xs={3}>
-              <ListItemText primary={`${item.title}`} />
-              </Grid>
-
-              <ListItemText primary={`${item.guest !== null ? item.guest.email : ''}`}/>
-
-              <ListItemSecondaryAction>
-                {item.guest && guest ? (
-                  item.guest.id === guest.id ? (
-
-                    <IconButton
-                      aria-label="Remove"
-                      onClick={this.toggleRemoveGuestFromItem.bind(this, item)}
-                    >
-                    <Grid item xs={5}>
-                      <RemoveCircleOutlineIcon />
-                    </Grid>
-                    </IconButton>
-                  ) : (
-                    <span />
-                    )
+                <Grid item xs={6}>
+                  <ListItemText primary={`${item.title}`} />
+                </Grid>
+                <Grid item xs={1}>
+                  <Typography variant="h6">{'  -  '}</Typography>
+                </Grid>
+                <Grid item xs={3}>
+                  <ListItemText
+                    primary={`${
+                      item.guest !== null ? item.guest.firstName : ''
+                    }`}
+                  />
+                </Grid>
+                <Grid item xs={2}>
+                  <ListItemSecondaryAction>
+                    {item.guest && guest ? (
+                      item.guest.id === guest.id ? (
+                        <IconButton
+                          aria-label="Remove"
+                          onClick={this.toggleRemoveGuestFromItem.bind(
+                            this,
+                            item
+                          )}
+                        >
+                          <RemoveCircleOutlineIcon />
+                        </IconButton>
+                      ) : (
+                        <span />
+                      )
                     ) : (
-                      <Grid item xs={3}>
                       <IconButton
-                      aria-label="Add"
-                      onClick={this.toggleAddGuestToItem.bind(this, item)}
+                        aria-label="Add"
+                        onClick={this.toggleAddGuestToItem.bind(this, item)}
                       >
-                    <AddCircleOutlineIcon />
-                  </IconButton>
-                  </Grid>
-                )}
-              </ListItemSecondaryAction>
-
-
-            </Grid>
+                        <AddCircleOutlineIcon />
+                      </IconButton>
+                    )}
+                  </ListItemSecondaryAction>
+                </Grid>
+              </Grid>
             </ListItem>
           ))}
-          <AddItem/>
+          <AddItem />
           {/* {this.state.showAddItem && <AddItem />} */}
 
           {/* <Button */}
-            {/* className={this.props.classes.button}
+          {/* className={this.props.classes.button}
             // onClick={this.toggleAddItem}
             >
             Add Item
