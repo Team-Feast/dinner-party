@@ -72,17 +72,21 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
 
   router.get('/', function(req, res, next) {
     console.log('==req.headers==', req.headers)
+    console.log('==req.query.redirect==', req.query.redirect)
+    req.session.redirect = req.query.redirect
     passport.authenticate('google', {
       scope: ['email', 'https://www.googleapis.com/auth/calendar']
     })(req, res, next)
   })
 
-  router.get(
-    '/callback',
+  router.get('/callback', function(req, res, next) {
+    console.log('==req.query==', req.query)
+    console.log('==req.session==', req.session)
+
     passport.authenticate('google', {
-      successRedirect: '/home',
+      successRedirect: req.session.redirect,
 
       failureRedirect: '/login'
-    })
-  )
+    })(req, res, next)
+  })
 }
