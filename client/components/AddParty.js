@@ -28,6 +28,8 @@ import LockIcon from '@material-ui/icons/LockOutlined'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 import CakeIcon from '@material-ui/icons/Cake'
+import Slide from '@material-ui/core/Slide'
+import Snackbar from '@material-ui/core/Snackbar'
 
 import {postParty} from '../store/party'
 
@@ -75,6 +77,9 @@ const styles = theme => ({
   }
 })
 
+function TransitionUp(props) {
+  return <Slide {...props} direction="up" />
+}
 class AddParty extends Component {
   constructor() {
     super()
@@ -87,7 +92,10 @@ class AddParty extends Component {
       date: moment(Date.now()).format('YYYY-MM-DDTHH:mm'),
       guests: [{firstName: '', email: ''}],
       items: [{title: ''}],
-      reminders: [{notificationType: 'email', time: 3, timeUnit: 'days'}]
+      reminders: [{notificationType: 'email', time: 3, timeUnit: 'days'}],
+      clearTimeoutVar: null,
+      open: false,
+      Transition: null
     }
   }
 
@@ -142,6 +150,8 @@ class AddParty extends Component {
   }
 
   handleUploadFile = async event => {
+    this.showSnackbar(TransitionUp)
+
     const url = 'https://api.cloudinary.com/v1_1/dhgftlgcc/image/upload'
     const formData = new FormData()
     formData.append('file', event.target.files[0])
@@ -171,6 +181,17 @@ class AddParty extends Component {
 
     await this.props.postParty({info, guests})
   }
+
+  showSnackbar = Transition => {
+    this.setState({open: true, Transition})
+    const clearTimeoutVar = setTimeout(() => this.setState({open: false}), 4000)
+    this.setState({clearTimeoutVar})
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.state.clearTimeoutVar)
+  }
+
   render() {
     const {step} = this.state
     const {title, description, location, date} = this.state
@@ -444,6 +465,16 @@ class AddParty extends Component {
               Back
             </Button>
           }
+        />
+
+        <Snackbar
+          open={this.state.open}
+          // onClose={this.handleClose}
+          TransitionComponent={this.state.Transition}
+          ContentProps={{
+            'aria-describedby': 'message-id'
+          }}
+          message={<span id="message-id">Your photo was uploaded!</span>}
         />
       </Fragment>
     )
