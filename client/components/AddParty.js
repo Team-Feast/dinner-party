@@ -17,14 +17,14 @@ import {
   withStyles,
   MobileStepper,
   List,
-  ListItem, IconButton
+  ListItem,
+  IconButton
 } from '@material-ui/core'
 
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
 import PhotoCamera from '@material-ui/icons/PhotoCamera'
 import LockIcon from '@material-ui/icons/LockOutlined'
-
 
 import {postParty} from '../store/party'
 
@@ -313,11 +313,46 @@ class AddParty extends Component {
                 </List>
               </Fragment>
             )}
+            {step === 3 && (
+              <Fragment>
+                <Typography component="h6" variant="h6">
+                  Add Items
+                </Typography>
+                <List dense>
+                  {this.state.items.length &&
+                    this.state.items.map((item, index) => (
+                      <ListItem key={`item[${index}]`}>
+                        <FormControl margin="dense" fullWidth>
+                          <InputLabel htmlFor="Item title">Item</InputLabel>
+                          <Input
+                            type="text"
+                            name="title"
+                            onChange={event => this.handleItem(index, event)}
+                            value={this.state.items[index].title}
+                          />
+                        </FormControl>
+                      </ListItem>
+                    ))}
+                  <Button onClick={() => this.addItemField()}>
+                    Add new item
+                  </Button>
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                  >
+                    Create Feast
+                  </Button>
+                </List>
+              </Fragment>
+            )}
           </form>
         </Paper>
         <MobileStepper
           variant="dots"
-          steps={3}
+          steps={4}
           position="bottom"
           activeStep={this.state.step}
           className={classes.root}
@@ -325,7 +360,7 @@ class AddParty extends Component {
             <Button
               size="small"
               onClick={this.nextStep}
-              disabled={this.state.step === 2}
+              disabled={this.state.step === 3}
             >
               Next
               {theme.direction === 'rtl' ? (
