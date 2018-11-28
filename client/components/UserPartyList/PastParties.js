@@ -24,6 +24,8 @@ const styles = theme => ({
     fontSize: theme.typography.pxToRem(10)
   }
 })
+
+const avatarColors = {}
 const PastParties = props => {
   const {pastEvents, classes} = props
 

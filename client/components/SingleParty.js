@@ -219,7 +219,7 @@ class SingleParty extends Component {
                 )}
             </List>
           </Card>
-          <ExpansionPanel>
+          <ExpansionPanel defaultExpanded>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
               <Grid container alignItems="center">
                 <Grid item xs={2}>
@@ -233,7 +233,7 @@ class SingleParty extends Component {
             <Map location={location} />
           </ExpansionPanel>
 
-          <ExpansionPanel>
+          <ExpansionPanel defaultExpanded>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
               <Grid container alignItems="center">
                 <Grid item xs={2}>
@@ -251,7 +251,7 @@ class SingleParty extends Component {
             </ExpansionPanelSummary>
             <GuestList guests={guests} />
           </ExpansionPanel>
-          <ExpansionPanel>
+          <ExpansionPanel defaultExpanded>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
               <Grid container alignItems="center">
                 <Grid item xs={2}>
