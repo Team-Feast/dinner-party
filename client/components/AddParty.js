@@ -303,9 +303,6 @@ class AddParty extends Component {
                     REMINDERS.map((reminder, index) => (
                       <ListItem key={`REMINDERS[${index}]`}>
                         <FormControl className={classes.formControl}>
-                          <InputLabel htmlFor="notification-type">
-                            Notification
-                          </InputLabel>
                           <Select
                             value={'email'}
                             onChange={this.handleChange}
@@ -321,23 +318,36 @@ class AddParty extends Component {
                             <MenuItem value={'text'}>Text</MenuItem>
                           </Select>
                         </FormControl>
+
                         <FormControl className={classes.formControl}>
-                          <InputLabel htmlFor="notification-type">
-                            Notification
-                          </InputLabel>
+                          <TextField
+                            id="time"
+                            name="time"
+                            type="number"
+                            className={classes.textField}
+                            onChange={this.handleChange}
+                            required
+                            value={'1'}
+                            InputLabelProps={{
+                              shrink: true
+                            }}
+                          />
+                        </FormControl>
+                        <FormControl className={classes.formControl}>
                           <Select
-                            value={'email'}
+                            value={'days'}
                             onChange={this.handleChange}
                             inputProps={{
-                              name: 'notification',
-                              id: 'notification-type'
+                              name: 'timeUnit',
+                              id: 'timeUnit-type'
                             }}
                           >
                             <MenuItem value="">
                               <em />
                             </MenuItem>
-                            <MenuItem value={'email'}>Email</MenuItem>
-                            <MenuItem value={'text'}>Text</MenuItem>
+                            <MenuItem value={'days'}>days</MenuItem>
+                            <MenuItem value={'weeks'}>weeks</MenuItem>
+                            <MenuItem value={'hours'}>hours</MenuItem>
                           </Select>
                         </FormControl>
                       </ListItem>
