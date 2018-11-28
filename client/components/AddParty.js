@@ -325,6 +325,9 @@ class AddParty extends Component {
                             id="time"
                             name="time"
                             type="number"
+                            inputProps={{
+                              style: {textAlign: 'center'}
+                            }}
                             className={classes.textField}
                             onChange={this.handleChange}
                             required
