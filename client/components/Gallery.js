@@ -35,13 +35,29 @@ const styles = theme => ({
   subheader: {
     width: '100%'
   },
+  uploadBtnWrapper: {
+    position: 'relative',
+    overflow: 'hidden',
+    display: 'flex',
+    flexDirection: 'column'
+  },
+  uploadBtnWrapperInput: {
+    position: 'absolute',
+    left: '0',
+    top: '0',
+    opacity: '0'
+  },
   input: {
     display: 'none'
+    // position: 'absolute',
+    // left: '0',
+    // top: '0',
+    // opacity: '0'
   },
   fab: {
     position: 'absolute',
-    bottom: theme.spacing.unit * 1,
-    right: theme.spacing.unit * 2
+    left: 0
+
   },
   button: {
     margin: theme.spacing.unit
@@ -106,38 +122,24 @@ class Gallery extends Component {
               />
             </GridListTile>
           ))}
+          </GridList>
+
+          {/* <div className={classes.uploadBtnWrapper}> */}
+         {/* <Fab disabled aria-label="Camera" className={classes.fab}> */}
+        <label htmlFor="imageUrl">
+          <PhotoCamera />
+          </label>
+        {/* </Fab> */}
           <Input
             accept="image/png, image/jpeg"
             type="file"
             name="imageUrl"
             onChange={this.handleUploadFile}
             id="imageUrl"
-            className={classes.input}
+            className={classes.uploadBtnWrapperInput}
           />
-          <label htmlFor="imageUrl">
-            {/* <Button variant="fab" color='primary'component="span" className={classes.fab}>
-            <AddIcon />
-          </Button> */}
-            {/* <IconButton
-            color="primary"
-            className={classes.button}
-            component="span"
-          >
-            <PhotoCamera />
-          </IconButton> */}
-          </label>
-          {/* <Button variant="extendedFab" color="primary" className={classes.button}
-          onClick={()=> history.goBack()}
-         > Back
-         </Button>  */}
-          />
-          <label htmlFor="imageUrl">
-            <PhotoCamera className={classes.button} />
-          </label>
-        </GridList>
-        <Fab disabled aria-label="Camera" className={classes.fab}>
-          <PhotoCamera />
-        </Fab>
+        {/* </div> */}
+
       </div>
     )
   }
