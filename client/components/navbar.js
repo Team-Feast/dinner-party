@@ -26,10 +26,6 @@ const styles = {
   grow: {
     flexGrow: 1
   },
-  menuButton: {
-    marginLeft: -12,
-    marginRight: 20
-  },
   popper: {
     marginTop: '8px',
     right: '0'
@@ -70,7 +66,7 @@ class Navbar extends Component {
         <AppBar className={classes.root} position="sticky">
           <Toolbar>
             <Grid container justify="space-between" alignItems="center">
-              <Grid item component={Link} to="/home" xs={9}>
+              <Grid item component={Link} to="/" xs={9}>
                 <img className={classes.media} src="/images/logo-full.jpg" />
               </Grid>
               <Grid item xs={2} component={Link} to="/my-account">

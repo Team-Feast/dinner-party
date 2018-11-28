@@ -27,7 +27,8 @@ class Landing extends Component {
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             overflow: 'hidden',
-            height: '672px',
+            position: 'fixed',
+            height: '100vh',
             textAlign: 'center',
             display: 'flex',
             flexDirection: 'column',
@@ -53,27 +54,15 @@ class Landing extends Component {
               </Typography>
             </Grid>
             <Grid item>
-              {user.id ? (
-                <Button
-                  component={Link}
-                  to="/addparty"
-                  className={classes.button}
-                  variant="contained"
-                  color="primary"
-                >
-                  Let's Feast!
-                </Button>
-              ) : (
-                <Button
-                  component={Link}
-                  to="/login"
-                  className={classes.button}
-                  variant="contained"
-                  color="primary"
-                >
-                  Let's Feast!
-                </Button>
-              )}
+              <Button
+                component={Link}
+                to={user.id ? '/addparty' : '/login'}
+                className={classes.button}
+                variant="contained"
+                color="primary"
+              >
+                Let's Feast!
+              </Button>
             </Grid>
           </Grid>
         </div>

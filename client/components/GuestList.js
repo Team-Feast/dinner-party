@@ -7,6 +7,7 @@ import green from '@material-ui/core/colors/green'
 import {withStyles} from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
 import Checkbox from '@material-ui/core/Checkbox'
+import Typography from '@material-ui/core/Typography'
 
 const styles = theme => ({
   green: {
@@ -22,6 +23,14 @@ const styles = theme => ({
   }
 })
 
+const avatarBackgroundColor = [
+  '#266de0',
+  '#8625e0',
+  '#24e06c',
+  '#e08e24',
+  '#e0244f'
+]
+
 const GuestList = props => {
   const {classes} = props
   return (
@@ -32,18 +41,16 @@ const GuestList = props => {
             <Grid item xs={2}>
               <Avatar
                 style={{
-                  backgroundColor: `#${Math.random()
-                    .toString(16)
-                    .slice(2, 8)
-                    .toUpperCase()
-                    .slice(-6)}`
+                  backgroundColor: avatarBackgroundColor[guest.id % 5]
                 }}
               >
                 {guest.firstName[0]}
               </Avatar>
             </Grid>
             <Grid item xs={9}>
-              <ListItemText primary={`${guest.firstName} - ${guest.email}`} />
+              <Typography style={{fontSize: '14px'}}>{`${guest.firstName} - ${
+                guest.email
+              }`}</Typography>
             </Grid>
 
             <Grid item>{guest.status === 'attending' && <ThumbUpIcon />}</Grid>
