@@ -1,7 +1,15 @@
 'use strict'
 
 const db = require('../server/db')
-const {User, Party, Guest, Item, Category, Image} = require('../server/db/models')
+const {
+  User,
+  Party,
+  Guest,
+  Item,
+  Category,
+  Image,
+  Reminder
+} = require('../server/db/models')
 const moment = require('moment')
 
 // Random Data Creators
@@ -35,108 +43,111 @@ const userData = [
     googleId: null,
     password:
       '56f6c0305cd4b858cdf5196bf449e88b2f59f660edd1b1a1604e47db61134fce',
-    firstName: 'Dorothy',
-    id: 31,
+    firstName: 'Paul',
+    id: 5,
     imageUrl:
       'https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/female/58.png',
-    email: 'iwaciwe@en.im',
+    email: 'paul@email.com',
     salt: 'pj3hGQb9QLUbewVjbPlQhA==',
-    lastName: 'Benelli'
+    lastName: 'Ebreo'
   },
   {
     googleId: null,
     password:
       'b4b02880bc63ac3b91ba5f5819ee7ee684b1a2fd67111bcf5d2d9db12936cd3b',
-    firstName: 'Lillian',
+    firstName: 'Joseph',
     id: 2,
     imageUrl:
       'https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/female/13.png',
-    email: 'cod@zivu.cl',
+    email: 'joseph@email.com',
     salt: 'j0VBA5wygT0o5YjRhYkpMQ==',
-    lastName: 'Bonini'
+    lastName: 'Park'
   },
   {
     googleId: null,
     password:
       '716a057da3ee6c16e0128dc458c6fdbdff787689415e615b3ef1d63c789fa273',
-    firstName: 'Christian',
+    firstName: 'Daniel',
     id: 3,
     imageUrl:
       'https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/124.png',
-    email: 'mifco@javsul.ge',
+    email: 'daniel@email.com',
     salt: '9vQ1cjo8Pso4P9KhSXuRgQ==',
-    lastName: 'Underwood'
+    lastName: 'Casaola'
   },
   {
     googleId: null,
     password:
       '53ac53a1f8f35579b3961629f7d284766d0709963bf16b80e570000f701aa188',
-    firstName: 'Joseph',
+    firstName: 'Andrew',
     id: 4,
     imageUrl:
       'https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/7.png',
-    email: 'lat@johvidvi.tl',
+    email: 'andrew@email.com',
     salt: 'cqa8jGRL7J04RwrjIrSmlw==',
-    lastName: 'Ford'
+    lastName: 'Ferguson'
   }
 ]
 
 const partyData = [
   {
-    location: '901 Riil Ave, Kukicbav, SE, 49806',
+    location: '405 W Superior St, Chicago, IL 60654',
     status: 'upcoming',
     userId: 1,
     id: 1,
-    title: 'Party 1 - Cody',
-    date: moment()
-      .add(3, 'days')
-      .toDate(),
-    imageUrl: '/images/default-party.jpg',
-    updatedAt: '2018-11-19 11:49:55.512-06',
-    description:
-      'Vapefdov ihoizo hih boeki de begeh cukbu ko nubfuswus ve wekpiw cegu ruloglaj navkiw pelpu nikpap. Pun ji ak pentake kefjuz licikat jorkib ec tetil he ni apkifak oh netetuv welpu. Cukuke nafuci oboneg ri kemehwur fi botlepak ce le ozbom je '
+    title: 'Fullstack Graduation Dinner',
+    date: '2018-12-7 18:30:00.512-06',
+    imageUrl:
+      'http://www.nppbc.com/upgrading/wp-content/uploads/2014/05/graduation_celebration_wide_t-1024x576.jpg',
+    updatedAt: '2018-12-7 18:30:00.512-06',
+    description: `Come celebrate our graduation from Fullstack Academy's Coding Bootcamp! We did it!`
   },
   {
-    location: '901 Riil Ave, Kukicbav, OR, 49806',
+    location: '1305 S Michigan Ave, Chicago, IL 60605',
+    status: 'upcoming',
+    userId: 5,
+    id: 2,
+    title: 'Friday night dinner',
+    date: '2018-11-30 19:30:00.512-06',
+    imageUrl:
+      'http://buckinghamfarmsonline.com/wp-content/uploads/2018/08/8.17.18-dinner-848x380.jpg',
+    updatedAt: '2018-11-30 19:30:00.512-06',
+    description: `Let's just get together for potluck dinner on Friday. We'll eat, drink, and play some games.`
+  },
+  {
+    location: '401 N Wabash Ave, Chicago, IL 60611',
     status: 'upcoming',
     userId: 1,
     id: 3,
-    title: 'Party 1B (old party) - Cody',
-    date: moment()
-      .subtract(1, 'days')
-      .toDate(),
-    imageUrl: '/images/default-party.jpg',
+    title: '2018 Christmas Party Dinner',
+    date: '2018-12-24 18:30:00.512-06',
+    imageUrl: 'http://ibew2323.com/wp-content/uploads/2014/12/christmas.jpg',
     updatedAt: '2018-11-19 11:49:55.512-06',
-    description:
-      'Vapefdov ihoizo hih boeki de begeh cukbu ko nubfuswus ve wekpiw cegu ruloglaj navkiw pelpu nikpap. Pun ji ak pentake kefjuz licikat jorkib ec tetil he ni apkifak oh netetuv welpu. Cukuke nafuci oboneg ri kemehwur fi botlepak ce le ozbom je '
+    description: `HohHOHOHO it's Christmas Time! We're going to have a potluck dinner and White Elephant gift exchange! Sign up for what you'll be bringing and also bring a $15 or less gift!`
   },
   {
-    location: '208 Etodun Blvd, Gebijteh, DC, 37575',
-    status: 'completed',
-    userId: 2,
-    id: 2,
-    title: 'Party 2 (old party) - Lillian',
-    date: moment()
-      .subtract(1, 'days')
-      .toDate(),
-    imageUrl: '/images/default-party.jpg',
-    updatedAt: '2018-11-19 11:49:55.512-06',
-    description:
-      'Luttugi ginkizec ife lugo isredit fo piehjuz ivtov fuphut subobbi wepokmod virvil bo waruldo zelovo siuv fah uwuazza. Duv vipka nag runer ruve de ocibizu hikog saovufef wop fuigojip vuwivnad ot kijan zogu. Pa jufuk difji kasno '
-  },
-  {
-    location: '208 Etodun Blvd, Gebijteh, IL, 37575',
+    location: '1700 Orington Avenue, Evanston, IL 60201',
     status: 'completed',
     userId: 2,
     id: 4,
-    title: 'Party 2B (future party) - Lillian',
-    date: moment()
-      .add(1, 'days')
-      .toDate(),
-    imageUrl: '/images/default-party.jpg',
-    updatedAt: '2018-11-19 11:49:55.512-06',
-    description:
-      'Luttugi ginkizec ife lugo isredit fo piehjuz ivtov fuphut subobbi wepokmod virvil bo waruldo zelovo siuv fah uwuazza. Duv vipka nag runer ruve de ocibizu hikog saovufef wop fuigojip vuwivnad ot kijan zogu. Pa jufuk difji kasno ucetivone hahvatfuj gonter ewtibvif ri wudlowe uze ni res '
+    title: `John's 30th birthday!`,
+    date: '2018-11-23 18:30:00.512-06',
+    imageUrl:
+      'https://ih1.redbubble.net/image.563456370.8581/poster%2C210x230%2Cf8f8f8-pad%2C210x230%2Cf8f8f8.lite-1u2.jpg',
+    updatedAt: '2018-11-23 18:30:00.512-06',
+    description: `Come out and celebrate John's 30th birthday with us! We'll start with dinner and then make our way out to the city!`
+  },
+  {
+    location: '1531 N Damen Ave, Chicago, IL 60622',
+    status: 'completed',
+    userId: 5,
+    id: 5,
+    title: `Thursday Night Taco Night`,
+    date: '2018-11-22 19:30:00.512-06',
+    imageUrl:
+      'https://img1.cookinglight.timeinc.net/sites/default/files/1519665233/slow-cooker-carnitas-tacos-ck-1804p38.jpg',
+    updatedAt: '2018-11-22 19:30:00.512-06',
+    description: `We're going to have our monthly Thursday Night Taco Night!`
   }
 ]
 
@@ -147,15 +158,19 @@ const guestData = [
     guestPartyToken: '68264670-ec39-11e8-a2d2-758fc26097cb',
     id: 1,
     partyId: 1,
-    email: 'iwaciwe@en.im'
+    userId: 1,
+    firstName: 'Cody',
+    email: 'cody@email.com'
   },
   {
-    status: 'invited',
+    status: 'attending',
     phone: '3678326353',
     guestPartyToken: '68264671-ec39-11e8-a2d2-758fc26097cb',
     id: 2,
     partyId: 1,
-    email: 'cod@zivu.cl'
+    userId: 2,
+    firstName: 'Joseph',
+    email: 'joseph@email.com'
   },
   {
     status: 'attending',
@@ -163,48 +178,310 @@ const guestData = [
     guestPartyToken: '68264673-ec39-11e8-a2d2-758fc26097cb',
     id: 3,
     partyId: 1,
-    email: 'lat@johvidvi.tl'
+    userId: 3,
+    firstName: 'Daniel',
+    email: 'daniel@email.com'
   },
   {
-    status: 'declined',
+    status: 'invited',
     phone: '5324896085',
     guestPartyToken: '68264672-ec39-11e8-a2d2-758fc26097cb',
     id: 4,
     partyId: 1,
-    email: 'mifco@javsul.ge'
+    userId: 4,
+    firstName: 'Andrew',
+    email: 'andrew@email.com'
   },
   {
-    status: 'declined',
+    status: 'attending',
+    phone: '5324896085',
+    guestPartyToken: '68264679-ec39-11e8-a2d2-758fc26097cb',
+    id: 5,
+    partyId: 1,
+    userId: 5,
+    firstName: 'Paul',
+    email: 'paul@email.com'
+  },
+  {
+    status: 'invited',
     phone: '2519885065',
     guestPartyToken: '68264674-ec39-11e8-a2d2-758fc26097cb',
-    id: 5,
-    partyId: 2,
-    email: 'gabawsa@zipak.pg'
+    id: 6,
+    partyId: 1,
+    firstName: 'Nathan',
+    email: 'nathan@email.com'
+  },
+  {
+    status: 'attending',
+    phone: '5324896085',
+    guestPartyToken: '68264675-ec39-11e8-a2d2-758fc26097cb',
+    id: 7,
+    partyId: 3,
+    userId: 5,
+    firstName: 'Paul',
+    email: 'paul@email.com'
   },
   {
     status: 'attending',
     phone: '7255943268',
-    guestPartyToken: '68264675-ec39-11e8-a2d2-758fc26097cb',
-    id: 6,
-    partyId: 4,
-    userId: 1,
-    email: 'cody@email.com'
+    guestPartyToken: '68264676-ec39-11e8-a2d2-758fc26097cb',
+    id: 8,
+    partyId: 2,
+    firstName: 'Jane',
+    email: 'jane@email.com'
   },
   {
-    status: 'attending',
+    status: 'invited',
     phone: '7879734793',
-    guestPartyToken: '68264676-ec39-11e8-a2d2-758fc26097cb',
-    id: 7,
+    guestPartyToken: '68264677-ec39-11e8-a2d2-758fc26097cb',
+    id: 9,
     partyId: 2,
-    email: 'jim@jun.dk'
+    userId: 4,
+    firstName: 'Andrew',
+    email: 'andrew@email.com'
   },
   {
     status: 'attending',
     phone: '2346372441',
     guestPartyToken: '68264678-ec39-11e8-a2d2-758fc26097cb',
-    id: 8,
+    id: 10,
     partyId: 2,
-    email: 'avi@kujfit.an'
+    userId: 5,
+    firstName: 'Paul',
+    email: 'paul@email.com'
+  },
+  {
+    status: 'attending',
+    phone: '2326372441',
+    guestPartyToken: '68264979-ec39-11e8-a2d2-758fc26097cb',
+    id: 11,
+    partyId: 2,
+    userId: 3,
+    firstName: 'Daniel',
+    email: 'daniel@email.com'
+  },
+  {
+    status: 'invited',
+    phone: '3147278836',
+    guestPartyToken: '68224670-ec39-11e8-a2d2-758fc26097cb',
+    id: 32,
+    partyId: 2,
+    userId: 1,
+    firstName: 'Cody',
+    email: 'cody@email.com'
+  },
+  {
+    status: 'invited',
+    phone: '3246372441',
+    guestPartyToken: '68264980-ec39-11e8-a2d2-758fc26097cb',
+    id: 12,
+    partyId: 3,
+    firstName: 'Suzy',
+    email: 'suzy@email.com'
+  },
+  {
+    status: 'attending',
+    phone: '2533435322',
+    guestPartyToken: '68264981-ec39-11e8-a2d2-758fc26097cb',
+    id: 13,
+    partyId: 3,
+    firstName: 'Sue',
+    email: 'sue@email.com'
+  },
+  {
+    status: 'attending',
+    phone: '2326372441',
+    guestPartyToken: '68264982-ec39-11e8-a2d2-758fc26097cb',
+    id: 14,
+    partyId: 3,
+    firstName: 'Sophie',
+    email: 'sophie@email.com'
+  },
+  {
+    status: 'invited',
+    phone: '2326372441',
+    guestPartyToken: '68264983-ec39-11e8-a2d2-758fc26097cb',
+    id: 15,
+    partyId: 3,
+    firstName: 'Jenny',
+    email: 'jenny@email.com'
+  },
+  {
+    status: 'attending',
+    phone: '2326372441',
+    guestPartyToken: '68264984-ec39-11e8-a2d2-758fc26097cb',
+    id: 16,
+    partyId: 3,
+    firstName: 'Brett',
+    email: 'brett@email.com'
+  },
+  {
+    status: 'attending',
+    phone: '3147278836',
+    guestPartyToken: '68364670-ec39-11e8-a2d2-758fc26097cb',
+    id: 33,
+    partyId: 3,
+    userId: 1,
+    firstName: 'Cody',
+    email: 'cody@email.com'
+  },
+  {
+    status: 'attending',
+    phone: '2326372441',
+    guestPartyToken: '68264985-ec39-11e8-a2d2-758fc26097cb',
+    id: 17,
+    partyId: 4,
+    userId: 2,
+    firstName: 'Joseph',
+    email: 'joseph@email.com'
+  },
+  {
+    status: 'invited',
+    phone: '2326372441',
+    guestPartyToken: '68264986-ec39-11e8-a2d2-758fc26097cb',
+    id: 18,
+    partyId: 4,
+    firstName: 'John',
+    email: 'johnp@email.com'
+  },
+  {
+    status: 'attending',
+    phone: '2326372441',
+    guestPartyToken: '68264987-ec39-11e8-a2d2-758fc26097cb',
+    id: 19,
+    partyId: 4,
+    firstName: 'Ron',
+    email: 'ron@email.com'
+  },
+  {
+    status: 'invited',
+    phone: '2326372441',
+    guestPartyToken: '68264988-ec39-11e8-a2d2-758fc26097cb',
+    id: 20,
+    partyId: 4,
+    firstName: 'Collin',
+    email: 'collin@email.com'
+  },
+  {
+    status: 'invited',
+    phone: '2326372441',
+    guestPartyToken: '68264989-ec39-11e8-a2d2-758fc26097cb',
+    id: 21,
+    partyId: 4,
+    firstName: 'Hannah',
+    email: 'hannah@email.com'
+  },
+  {
+    status: 'attending',
+    phone: '2326372441',
+    guestPartyToken: '68264990-ec39-11e8-a2d2-758fc26097cb',
+    id: 22,
+    partyId: 4,
+    firstName: 'Jennifer',
+    email: 'jennifer@email.com'
+  },
+  {
+    status: 'attending',
+    phone: '2326372441',
+    guestPartyToken: '68264991-ec39-11e8-a2d2-758fc26097cb',
+    id: 23,
+    partyId: 4,
+    firstName: 'Ryan',
+    email: 'ryan@email.com'
+  },
+  {
+    status: 'attending',
+    phone: '2326372441',
+    guestPartyToken: '68264992-ec39-11e8-a2d2-758fc26097cb',
+    id: 24,
+    partyId: 4,
+    firstName: 'Eric',
+    email: 'eric@email.com'
+  },
+  {
+    status: 'attending',
+    phone: '3147278836',
+    guestPartyToken: '68234670-ec39-11e8-a2d2-758fc26097cb',
+    id: 34,
+    partyId: 4,
+    userId: 1,
+    firstName: 'Cody',
+    email: 'cody@email.com'
+  },
+  {
+    status: 'attending',
+    phone: '2326372441',
+    guestPartyToken: '68264993-ec39-11e8-a2d2-758fc26097cb',
+    id: 25,
+    partyId: 5,
+    userId: 5,
+    firstName: 'Paul',
+    email: 'paul@email.com'
+  },
+  {
+    status: 'invited',
+    phone: '2326372441',
+    guestPartyToken: '68264994-ec39-11e8-a2d2-758fc26097cb',
+    id: 26,
+    partyId: 5,
+    firstName: 'Ellie',
+    email: 'ellie@email.com'
+  },
+  {
+    status: 'invited',
+    phone: '2326372441',
+    guestPartyToken: '68264995-ec39-11e8-a2d2-758fc26097cb',
+    id: 27,
+    partyId: 5,
+    firstName: 'Janet',
+    email: 'janet@email.com'
+  },
+  {
+    status: 'invited',
+    phone: '2326372441',
+    guestPartyToken: '68264996-ec39-11e8-a2d2-758fc26097cb',
+    id: 28,
+    partyId: 5,
+    firstName: 'Pearl',
+    email: 'pearl@email.com'
+  },
+  {
+    status: 'attending',
+    phone: '2326372441',
+    guestPartyToken: '68264997-ec39-11e8-a2d2-758fc26097cb',
+    id: 29,
+    partyId: 5,
+    firstName: 'Brittney',
+    email: 'brittney@email.com'
+  },
+  {
+    status: 'attending',
+    phone: '2326372441',
+    guestPartyToken: '68264998-ec39-11e8-a2d2-758fc26097cb',
+    id: 30,
+    partyId: 5,
+    firstName: 'Jeanne',
+    email: 'jeanne@email.com'
+  },
+  {
+    status: 'invited',
+    phone: '2326372441',
+    guestPartyToken: '68264999-ec39-11e8-a2d2-758fc26097cb',
+    id: 31,
+    partyId: 5,
+    userId: 4,
+    firstName: 'Andrew',
+    email: 'andrew@email.com'
+  },
+  {
+    status: 'attending',
+    phone: '3147278836',
+    guestPartyToken: '68124670-ec39-11e8-a2d2-758fc26097cb',
+    id: 35,
+    partyId: 5,
+    userId: 1,
+    firstName: 'Cody',
+    email: 'cody@email.com'
   }
 ]
 
@@ -229,51 +506,183 @@ const categoryData = [
 const itemData = [
   {
     partyId: 1,
-    title: 'Pie',
+    title: 'Ice Cream',
     guestId: null,
     categoryId: 1,
-    description:
-      'Kicamali bobki tujtona kupioz vet ucivokhac wemi ob tu mejene du zedlaz eji.'
+    description: '3 Quarts... vanilla, chocolate, cookies and cream'
   },
   {
     partyId: 1,
-    title: 'Drinks',
+    title: 'Pizza',
     guestId: null,
     categoryId: 1,
-    description:
-      'Nozwiv dahupoh lulas gucebi ewik difji kasno ucetivone hahvatfuj gonter ewtibvif ri wudlowe uze ni res.'
+    description: 'Gonna order a couple of large from Papa Johns'
   },
   {
     partyId: 1,
-    title: 'Appetizers',
-    guestId: 2,
+    title: 'Chicken Wings',
+    guestId: 1,
     categoryId: 3,
-    description:
-      'Nozwiv dahupoh lulas gucebi ewik difji kasno ucetivone hahvatfuj gonter ewtibvif ri wudlowe uze ni res.'
+    description: 'Picking up some wings from Harolds'
   },
   {
-    partyId: 2,
-    title: 'Kids Food',
+    partyId: 1,
+    title: 'Beer',
     guestId: null,
     categoryId: 1,
-    description:
-      'Kicamali bobki tujtona kupioz vet ucivokhac wemi ob tu mejene du zedlaz eji.'
+    description: '24 pack'
+  },
+  {
+    partyId: 1,
+    title: 'Chocolate Cake',
+    guestId: 3,
+    categoryId: 1,
+    description: ''
+  },
+  {
+    partyId: 1,
+    title: 'Salad',
+    guestId: 3,
+    categoryId: 1,
+    description: ''
   },
   {
     partyId: 2,
-    title: 'Strawberries',
-    guestId: null,
+    title: 'Wings',
+    guestId: 2,
     categoryId: 1,
-    description:
-      'Nozwiv dahupoh lulas gucebi ewik difji kasno ucetivone hahvatfuj gonter ewtibvif ri wudlowe uze ni res.'
+    description: 'party platter from Buff Joes'
   },
   {
     partyId: 2,
-    title: 'Turkey',
-    guestId: 7,
+    title: 'Pizza',
+    guestId: 3,
     categoryId: 1,
-    description:
-      'Nozwiv dahupoh lulas gucebi ewik difji kasno ucetivone hahvatfuj gonter ewtibvif ri wudlowe uze ni res.'
+    description: '2 pizzas from Lou Malnatis'
+  },
+  {
+    partyId: 2,
+    title: '2 Bottles of Soda',
+    categoryId: 1,
+    description: ''
+  },
+  {
+    partyId: 2,
+    title: '1 Bottle of Wine',
+    guestId: 8,
+    categoryId: 1,
+    description: ''
+  },
+  {
+    partyId: 3,
+    title: 'Ribs',
+    guestId: 13,
+    categoryId: 1,
+    description: ''
+  },
+  {
+    partyId: 3,
+    title: 'Spaghetti',
+    guestId: 14,
+    categoryId: 1,
+    description: ''
+  },
+  {
+    partyId: 3,
+    title: 'Fruit Salad',
+
+    categoryId: 1,
+    description: ''
+  },
+  {
+    partyId: 3,
+    title: 'Chicken Wings',
+    categoryId: 1,
+    description: ''
+  },
+  {
+    partyId: 3,
+    title: 'Dessert',
+    categoryId: 1,
+    description: ''
+  },
+  {
+    partyId: 3,
+    title: 'Wine',
+    categoryId: 1,
+    description: ''
+  },
+  {
+    partyId: 3,
+    title: 'Cookies',
+    categoryId: 1,
+    description: ''
+  },
+  {
+    partyId: 4,
+    title: 'Galbi',
+    guestId: 17,
+    categoryId: 1,
+    description: ''
+  },
+  {
+    partyId: 4,
+    title: 'Beer',
+    categoryId: 1,
+    description: ''
+  },
+  {
+    partyId: 4,
+    title: 'Veggies',
+    categoryId: 1,
+    description: ''
+  },
+  {
+    partyId: 4,
+    title: 'Apple Pie',
+    categoryId: 1,
+    guestId: 19,
+    description: ''
+  },
+  {
+    partyId: 4,
+    title: 'Chicken Wings',
+    categoryId: 1,
+    description: ''
+  },
+  {
+    partyId: 5,
+    title: 'Tortillas',
+    categoryId: 1,
+    guestId: 29,
+    description: ''
+  },
+  {
+    partyId: 5,
+    title: 'Ground Beef',
+    categoryId: 1,
+    guestId: 30,
+    description: ''
+  },
+  {
+    partyId: 5,
+    title: 'Chicken',
+    categoryId: 1,
+    guestId: 19,
+    description: ''
+  },
+  {
+    partyId: 5,
+    title: 'Veggies',
+    categoryId: 1,
+    guestId: 25,
+    description: 'Lettuce, tomatos, onions, cilantro'
+  },
+  {
+    partyId: 5,
+    title: 'Cerveza',
+    categoryId: 1,
+    description: ''
   }
 ]
 
@@ -311,92 +720,99 @@ const galleryData = [
   {
     imageUrl: '/images/images-2.jpg',
     partyId: 2,
-    guestId: 1
+    guestId: 7
   },
   {
     imageUrl: '/images/images-3.jpg',
     partyId: 2,
-    guestId: 2
+    guestId: 8
   },
   {
     imageUrl: '/images/images-4.jpg',
     partyId: 2,
-    guestId: 3
+    guestId: 10
   },
   {
     imageUrl: '/images/images-5.jpg',
     partyId: 2,
-    guestId: 4
+    guestId: 11
   },
   {
     imageUrl: '/images/images-6.jpg',
     partyId: 2,
-    guestId: 5
+    guestId: 11
   },
   {
     imageUrl: '/images/images-7.jpg',
     partyId: 2,
-    guestId: 6
+    guestId: 10
   },
   {
     imageUrl: '/images/images-2.jpg',
     partyId: 3,
-    guestId: 1
+    guestId: 13
   },
   {
     imageUrl: '/images/images-3.jpg',
     partyId: 3,
-    guestId: 2
+    guestId: 13
   },
   {
     imageUrl: '/images/images-4.jpg',
     partyId: 3,
-    guestId: 3
+    guestId: 14
   },
   {
     imageUrl: '/images/images-5.jpg',
     partyId: 3,
-    guestId: 4
+    guestId: 14
   },
   {
     imageUrl: '/images/images-6.jpg',
     partyId: 3,
-    guestId: 5
+    guestId: 16
   },
   {
     imageUrl: '/images/images-7.jpg',
     partyId: 3,
-    guestId: 6
+    guestId: 16
   },
   {
     imageUrl: '/images/images-2.jpg',
     partyId: 4,
-    guestId: 1
+    guestId: 17
   },
   {
     imageUrl: '/images/images-3.jpg',
     partyId: 4,
-    guestId: 2
+    guestId: 19
   },
   {
     imageUrl: '/images/images-4.jpg',
     partyId: 4,
-    guestId: 3
+    guestId: 19
   },
   {
     imageUrl: '/images/images-5.jpg',
     partyId: 4,
-    guestId: 4
+    guestId: 22
   },
   {
     imageUrl: '/images/images-6.jpg',
     partyId: 4,
-    guestId: 5
+    guestId: 22
   },
   {
     imageUrl: '/images/images-7.jpg',
     partyId: 4,
-    guestId: 6
+    guestId: 22
+  }
+]
+
+const reminderData = [
+  {
+    timeBefore: 3,
+    partyId: 1
   }
 ]
 
@@ -581,7 +997,8 @@ const seed = async () => {
     await Image.bulkCreate(galleryData)
     console.log(`Successfully Seeded Images`)
 
-
+    await Reminder.bulkCreate(reminderData)
+    console.log(`Successfully Seeded Reminders`)
 
     await db.query(
       `ALTER SEQUENCE "parties_id_seq" RESTART WITH ${partyData.length + 1};`
@@ -598,6 +1015,10 @@ const seed = async () => {
     )
     await db.query(
       `ALTER SEQUENCE "items_id_seq" RESTART WITH ${itemData.length + 1};`
+    )
+    await db.query(
+      `ALTER SEQUENCE "reminders_id_seq" RESTART WITH ${reminderData.length +
+        1};`
     )
 
     console.log(`seeding successfully`)

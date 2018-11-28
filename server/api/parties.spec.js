@@ -59,7 +59,7 @@ describe('Party API routes', () => {
   //   })
   // }) // end describe('/api/parties')
 
-  describe('/api/parties/rsvp/:guestPartyToken', () => {
+  xdescribe('/api/parties/rsvp/:guestPartyToken', () => {
     beforeEach(() => {
       return db.sync({force: true})
     })

@@ -57,10 +57,10 @@ export const postGuest = guest => {
   }
 }
 
-export const putGuest = guest => {
+export const putGuest = (guestId, update) => {
   return async dispatch => {
     try {
-      const {data} = await axios.put(`/api/guests/${guest.id}`, guest)
+      const {data} = await axios.put(`/api/guests/${guestId}`, update)
       dispatch(editGuest(data))
     } catch (error) {
       console.error(error)

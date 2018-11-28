@@ -6,6 +6,7 @@ router.use('/parties', require('./parties'))
 router.use('/guests', require('./guests'))
 router.use('/items', require('./items'))
 router.use('/images', require('./images'))
+router.use('/reminders', require('./reminders'))
 
 router.use((req, res, next) => {
   const error = new Error('Not Found')

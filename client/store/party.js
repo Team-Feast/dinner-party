@@ -46,11 +46,13 @@ export const postParty = ({info, guests}) => {
       })
       const {items} = info
       const partyId = party.id
-      await axios.post('/api/guests/newfeast', {guests, partyId})
+      const {data: host} = await axios.post('/api/guests/newfeast', {
+        guests,
+        partyId
+      })
       await axios.post('/api/items/newfeast', {items, partyId})
-
       dispatch(addParty(party))
-      history.push(`/parties/${partyId}`)
+      history.push(`/parties/${partyId}/rsvp/${host.guestPartyToken}`)
     } catch (error) {
       console.error(error)
     }
