@@ -87,7 +87,8 @@ class AddParty extends Component {
       date: moment(Date.now()).format('YYYY-MM-DDTHH:mm'),
       guests: [{firstName: '', email: ''}],
       items: [{title: ''}],
-      reminders: [{notificationType: 'email', time: 3, timeUnit: 'days'}]
+      reminders: [{notificationType: 'email', time: 3, timeUnit: 'days'}],
+      clearTimeoutVar: null
     }
   }
 
@@ -142,6 +143,8 @@ class AddParty extends Component {
   }
 
   handleUploadFile = async event => {
+    this.showSnackbar()
+
     const url = 'https://api.cloudinary.com/v1_1/dhgftlgcc/image/upload'
     const formData = new FormData()
     formData.append('file', event.target.files[0])
@@ -171,6 +174,12 @@ class AddParty extends Component {
 
     await this.props.postParty({info, guests})
   }
+
+  showSnackbar = () => {
+    const clearTimeoutVar = setTimeout(() => console.log('hello'), 1500)
+    this.setState({clearTimeoutVar})
+  }
+
   render() {
     const {step} = this.state
     const {title, description, location, date} = this.state
