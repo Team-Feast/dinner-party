@@ -292,7 +292,7 @@ class AddParty extends Component {
             {step === 2 && (
               <Fragment>
                 <Typography component="h6" variant="h6">
-                  Items for guests to bring
+                  Set reminders
                 </Typography>
                 <List dense>
                   {REMINDERS.length &&
@@ -327,7 +327,7 @@ class AddParty extends Component {
             {step === 3 && (
               <Fragment>
                 <Typography component="h6" variant="h6">
-                  Set Reminders
+                  Items for guests to bring
                 </Typography>
                 <List dense>
                   {this.state.items.length &&
