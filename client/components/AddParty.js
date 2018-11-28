@@ -95,7 +95,7 @@ class AddParty extends Component {
       date: moment(Date.now()).format('YYYY-MM-DDTHH:mm'),
       guests: [{firstName: '', email: ''}],
       items: [{title: ''}],
-      reminders: [{notificationType: 'email', time: 2, timeUnit: 'weeks'}]
+      reminders: [{notificationType: 'email', time: 3, timeUnit: 'hours'}]
     }
   }
 
@@ -119,6 +119,14 @@ class AddParty extends Component {
 
   addItemField = () => {
     this.setState({items: [...this.state.items, {title: ''}]})
+  }
+  addReminderField = () => {
+    this.setState({
+      reminders: [
+        ...this.state.reminders,
+        {notificationType: 'email', time: 1, timeUnit: 'weeks'}
+      ]
+    })
   }
   handleChange = event => {
     this.setState({[event.target.name]: event.target.value})
@@ -339,7 +347,7 @@ class AddParty extends Component {
                         </FormControl>
                         <FormControl className={classes.formControl}>
                           <Select
-                            value={'days'}
+                            value={`${reminder.timeUnit}`}
                             onChange={this.handleChange}
                             inputProps={{
                               name: 'timeUnit',
@@ -356,7 +364,7 @@ class AddParty extends Component {
                         </FormControl>
                       </ListItem>
                     ))}
-                  <Button onClick={() => this.addItemField()}>
+                  <Button onClick={() => this.addReminderField()}>
                     Add reminder
                   </Button>
                 </List>
