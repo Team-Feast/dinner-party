@@ -27,7 +27,7 @@ class DemoSuccess extends Component {
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             overflow: 'hidden',
-            position: 'fixed',
+            // position: 'fixed',
             height: '100vh',
             textAlign: 'center',
             display: 'flex',
@@ -47,6 +47,15 @@ class DemoSuccess extends Component {
               <Typography component="h1" variant="h2">
                 <b>Feast Created!</b>
               </Typography>
+              <Grid item>
+                <Button
+                  className={classes.button}
+                  variant="contained"
+                  color="primary"
+                >
+                  Go to your feasts!
+                </Button>
+              </Grid>
             </Grid>
           </Grid>
         </div>
