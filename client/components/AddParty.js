@@ -319,6 +319,14 @@ class AddParty extends Component {
                   <Button onClick={() => this.addGuestField()}>
                     Add a guest
                   </Button>
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                  >
+                    Select from Google Contacts
+                  </Button>
                 </List>
               </Fragment>
             )}
