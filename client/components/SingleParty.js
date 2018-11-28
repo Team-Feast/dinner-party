@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from 'react'
 import {connect} from 'react-redux'
-import {getParty, putGuest, getGuests, getItems, postToCalendar} from '../store'
-import {GuestList, ItemList, Gallery, Map} from '.'
+import {getParty, putGuest, getGuests, getItems} from '../store'
+import {GuestList, ItemList, Gallery, Map, CalendarButton} from '.'
 import moment from 'moment'
 import history from '../history'
 
@@ -117,12 +117,6 @@ class SingleParty extends Component {
     this.props.putGuest(guest.id, {status})
   }
 
-  handleAddToCalendar = () => {
-    const {loggedInUser, party, guests} = this.props
-    const guest = guests.find(ele => ele.email === loggedInUser.email)
-    this.props.postToCalendar(guest.id, party)
-  }
-
   render() {
     const {
       title,
@@ -171,21 +165,16 @@ class SingleParty extends Component {
                 <ListItemText
                   primary={moment(date).format('MMMM Do YYYY, h:mm A')}
                 />
-                {guest && !guest.onGoogleCalendar ? (
-                  <ListItemSecondaryAction>
-                    <Button
-                      onClick={this.handleAddToCalendar}
-                      color="primary"
-                      variant="contained"
-                      className={classes.button}
-                    >
-                      Add to Google Calendar
-                    </Button>
-                  </ListItemSecondaryAction>
-                ) : (
-                  <span />
-                )}
               </ListItem>
+              {guest && !guest.onGoogleCalendar ? (
+                <ListItem className={classes.padding}>
+                  <CalendarButton guest={guest} />
+                </ListItem>
+              ) : (
+                <ListItem className={classes.padding}>
+                  <ListItemText primary="On Calendar" />
+                </ListItem>
+              )}
               {userId !== loggedInUser.id &&
                 status === 'upcoming' && (
                   <ListItem className={classes.padding}>
@@ -294,7 +283,6 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => ({
-  postToCalendar: (guestId, party) => dispatch(postToCalendar(guestId, party)),
   getParty: partyId => dispatch(getParty(partyId)),
   getGuests: partyId => dispatch(getGuests(partyId)),
   putGuest: (guestId, status) => dispatch(putGuest(guestId, status)),

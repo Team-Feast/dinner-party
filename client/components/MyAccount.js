@@ -138,7 +138,7 @@ class MyAccount extends Component {
                 variant="contained"
                 color="primary"
                 className={classes.submit}
-                href="/auth/google"
+                href="/auth/google?redirect=/my-account"
               >
                 Connect to Google
               </Button>
