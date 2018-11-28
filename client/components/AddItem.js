@@ -60,7 +60,6 @@ class AddItem extends Component {
 
   render() {
     const {classes} = this.props
-
     return (
       <div>
       <Button className={classes.submit} onClick={this.handleClickOpen}>

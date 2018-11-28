@@ -34,6 +34,11 @@ import PlaceIcon from '@material-ui/icons/Place'
 import AssignmentIcon from '@material-ui/icons/Assignment'
 import GroupIcon from '@material-ui/icons/Group'
 import Grid from '@material-ui/core/Grid'
+import GridListTile from '@material-ui/core/GridListTile';
+import ListSubheader from '@material-ui/core/ListSubheader';
+
+
+
 
 const toonavatar = require('cartoon-avatar')
 const url = toonavatar.generate_avatar({gender: 'male'})
@@ -71,7 +76,7 @@ const styles = theme => ({
   padding: {
     paddingTop: '8px',
     paddingBottom: '8px'
-  }
+  },
 })
 
 class SingleParty extends Component {
@@ -260,14 +265,19 @@ class SingleParty extends Component {
               })}
             />
           </ExpansionPanel>
-          <Button
-            color="primary"
-            variant="contained"
-            className={classes.button}
-            onClick={() => history.push(`/parties/${id}/gallery`)}
-          >
-            <SaveIcon />
-          </Button>
+          <Card>
+            <Gallery partyId={id}/>
+          </Card>
+            {/* <Button
+               color='primary'
+               variant="contained"
+               className={classes.button}
+               onClick={()=> history.push(`/parties/${id}/gallery`)}
+               >
+              <SaveIcon />
+             </Button> */}
+
+
         </Fragment>
       )
     }
