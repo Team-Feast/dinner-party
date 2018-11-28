@@ -94,7 +94,8 @@ class AddParty extends Component {
       imageUrl: '',
       date: moment(Date.now()).format('YYYY-MM-DDTHH:mm'),
       guests: [{firstName: '', email: ''}],
-      items: [{title: ''}]
+      items: [{title: ''}],
+      reminders: [{notificationType: 'email', time: 2, timeUnit: 'weeks'}]
     }
   }
 
@@ -299,12 +300,12 @@ class AddParty extends Component {
                   Set reminders
                 </Typography>
                 <List dense>
-                  {REMINDERS.length &&
-                    REMINDERS.map((reminder, index) => (
-                      <ListItem key={`REMINDERS[${index}]`}>
+                  {this.state.reminders.length &&
+                    this.state.reminders.map((reminder, index) => (
+                      <ListItem key={`reminder[${index}]`}>
                         <FormControl className={classes.formControl}>
                           <Select
-                            value={'email'}
+                            value={reminder.notificationType}
                             onChange={this.handleChange}
                             inputProps={{
                               name: 'notification',
@@ -327,7 +328,7 @@ class AddParty extends Component {
                             className={classes.textField}
                             onChange={this.handleChange}
                             required
-                            value={'1'}
+                            value={`${reminder.time}`}
                             InputLabelProps={{
                               shrink: true
                             }}
