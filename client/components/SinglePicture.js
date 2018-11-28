@@ -32,10 +32,11 @@ const styles = theme => ({
 
 class SinglePicture extends Component {
   constructor(props) {
-    // const pictureId = parseInt(this.props.match.params.pictureId)
     super(props)
+    const pictureId = +this.props.match.params.pictureId
     this.state = {
-      activeStep: 0
+      activeStep: 0,
+      customImages: []
     }
   }
 
@@ -45,6 +46,16 @@ class SinglePicture extends Component {
     this.props.getImages(partyId)
 
     console.log('State', this.state)
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.images !== this.props.images) {
+      let newImages = this.moveToFront(
+        this.props.match.params.pictureId,
+        this.props.images
+      )
+      this.setState({customImages: newImages})
+    }
   }
 
   handleNext = () => {
@@ -57,6 +68,24 @@ class SinglePicture extends Component {
     this.setState(prevState => ({
       activeStep: prevState.activeStep - 1
     }))
+  }
+
+  moveToFront = (firstPictureId, images) => {
+    let newArr = []
+    let theIndex = null
+    let extracted = null
+    for (let i = 0; i < images.length; i++) {
+      if (+firstPictureId === images[i].id) {
+        theIndex = i
+        break
+      }
+    }
+    extracted = images.splice(theIndex, 1)
+
+    newArr = [extracted[0], ...images]
+    console.log('x>>>', newArr)
+
+    return newArr
   }
   getImageFromId = pictureId => {
     console.log('id>>.', pictureId)
