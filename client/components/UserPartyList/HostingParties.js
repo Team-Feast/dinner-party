@@ -21,10 +21,10 @@ const styles = theme => ({
     fontSize: theme.typography.pxToRem(15)
   },
   listItemTitle: {
-    fontSize: theme.typography.pxToRem(11)
+    fontSize: theme.typography.pxToRem(13)
   },
   listItem: {
-    fontSize: theme.typography.pxToRem(10)
+    fontSize: theme.typography.pxToRem(11)
   }
 })
 
@@ -50,7 +50,11 @@ const HostingEvents = props => {
                   party.guests[0].guestPartyToken
                 }`}
               >
-                <Grid container alignItems="center">
+                <Grid
+                  container
+                  alignItems="center"
+                  style={{flexWrap: 'nowrap'}}
+                >
                   <Grid item xs={2}>
                     <Avatar src={`${party.imageUrl}`} />
                   </Grid>

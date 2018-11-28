@@ -18,10 +18,10 @@ const styles = theme => ({
     fontSize: theme.typography.pxToRem(15)
   },
   listItemTitle: {
-    fontSize: theme.typography.pxToRem(11)
+    fontSize: theme.typography.pxToRem(12)
   },
   listItem: {
-    fontSize: theme.typography.pxToRem(10)
+    fontSize: theme.typography.pxToRem(11)
   }
 })
 

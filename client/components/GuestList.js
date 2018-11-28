@@ -43,10 +43,7 @@ const GuestList = props => {
               </Avatar>
             </Grid>
             <Grid item xs={9}>
-              <ListItemText
-                style={{fontSize: '2rem'}}
-                primary={`${guest.firstName} - ${guest.email}`}
-              />
+              <ListItemText primary={`${guest.firstName} - ${guest.email}`} />
             </Grid>
 
             <Grid item>{guest.status === 'attending' && <ThumbUpIcon />}</Grid>
