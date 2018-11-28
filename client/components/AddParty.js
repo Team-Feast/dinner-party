@@ -25,9 +25,20 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
 import PhotoCamera from '@material-ui/icons/PhotoCamera'
 import LockIcon from '@material-ui/icons/LockOutlined'
+import Select from '@material-ui/core/Select'
+import MenuItem from '@material-ui/core/MenuItem'
 
 import {postParty} from '../store/party'
 
+const REMINDERS = [
+  {
+    timeUnit: 'days',
+    id: 1,
+    timeBefore: 3,
+    partyId: 1,
+    notificationType: 'email'
+  }
+]
 const styles = theme => ({
   paper: {
     display: 'flex',
@@ -284,22 +295,31 @@ class AddParty extends Component {
                   Items for guests to bring
                 </Typography>
                 <List dense>
-                  {this.state.items.length &&
-                    this.state.items.map((item, index) => (
-                      <ListItem key={`item[${index}]`}>
-                        <FormControl margin="dense" fullWidth>
-                          <InputLabel htmlFor="Item title">Item</InputLabel>
-                          <Input
-                            type="text"
-                            name="title"
-                            onChange={event => this.handleItem(index, event)}
-                            value={this.state.items[index].title}
-                          />
+                  {REMINDERS.length &&
+                    REMINDERS.map((reminder, index) => (
+                      <ListItem key={`REMINDERS[${index}]`}>
+                        <FormControl className={classes.formControl}>
+                          <InputLabel htmlFor="age-simple">Age</InputLabel>
+                          <Select
+                            value={10}
+                            onChange={this.handleChange}
+                            inputProps={{
+                              name: 'age',
+                              id: 'age-simple'
+                            }}
+                          >
+                            <MenuItem value="">
+                              <em>None</em>
+                            </MenuItem>
+                            <MenuItem value={10}>Ten</MenuItem>
+                            <MenuItem value={20}>Twenty</MenuItem>
+                            <MenuItem value={30}>Thirty</MenuItem>
+                          </Select>
                         </FormControl>
                       </ListItem>
                     ))}
                   <Button onClick={() => this.addItemField()}>
-                    Add new item
+                    Add reminder
                   </Button>
                 </List>
               </Fragment>
