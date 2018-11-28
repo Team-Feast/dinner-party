@@ -17,14 +17,16 @@ import {
   withStyles,
   MobileStepper,
   List,
-  ListItem, IconButton
+  ListItem,
+  IconButton
 } from '@material-ui/core'
 
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
 import PhotoCamera from '@material-ui/icons/PhotoCamera'
 import LockIcon from '@material-ui/icons/LockOutlined'
-
+import Select from '@material-ui/core/Select'
+import MenuItem from '@material-ui/core/MenuItem'
 
 import {postParty} from '../store/party'
 
@@ -65,6 +67,10 @@ const styles = theme => ({
   },
   textField: {
     margin: 'dense'
+  },
+  formControl: {
+    margin: theme.spacing.unit,
+    minWidth: 75
   }
 })
 
@@ -79,7 +85,8 @@ class AddParty extends Component {
       imageUrl: '',
       date: moment(Date.now()).format('YYYY-MM-DDTHH:mm'),
       guests: [{firstName: '', email: ''}],
-      items: [{title: ''}]
+      items: [{title: ''}],
+      reminders: [{notificationType: 'email', time: 3, timeUnit: 'days'}]
     }
   }
 
@@ -104,6 +111,14 @@ class AddParty extends Component {
   addItemField = () => {
     this.setState({items: [...this.state.items, {title: ''}]})
   }
+  addReminderField = () => {
+    this.setState({
+      reminders: [
+        ...this.state.reminders,
+        {notificationType: 'email', time: 1, timeUnit: 'days'}
+      ]
+    })
+  }
   handleChange = event => {
     this.setState({[event.target.name]: event.target.value})
   }
@@ -112,6 +127,11 @@ class AddParty extends Component {
     let itemsCopy = this.state.items.slice()
     itemsCopy[index][event.target.name] = event.target.value
     this.setState({items: itemsCopy})
+  }
+  handleReminder = (index, event) => {
+    let remindersCopy = this.state.reminders.slice()
+    remindersCopy[index][event.target.name] = event.target.value
+    this.setState({reminders: remindersCopy})
   }
 
   handleGuest = (index, event) => {
@@ -281,7 +301,81 @@ class AddParty extends Component {
             {step === 2 && (
               <Fragment>
                 <Typography component="h6" variant="h6">
-                  Add Items
+                  Set reminders
+                </Typography>
+                <List dense>
+                  {this.state.reminders.length &&
+                    this.state.reminders.map((reminder, index) => (
+                      <ListItem key={`reminder[${index}]`}>
+                        <FormControl className={classes.formControl}>
+                          <Select
+                            value={reminder.notificationType}
+                            onChange={event =>
+                              this.handleReminder(index, event)
+                            }
+                            inputProps={{
+                              name: 'notification',
+                              id: 'notification-type'
+                            }}
+                          >
+                            <MenuItem value="">
+                              <em />
+                            </MenuItem>
+                            <MenuItem value={'email'}>Email</MenuItem>
+                            <MenuItem value={'text'}>Text</MenuItem>
+                          </Select>
+                        </FormControl>
+
+                        <FormControl className={classes.formControl}>
+                          <TextField
+                            id="time"
+                            name="time"
+                            type="number"
+                            inputProps={{
+                              style: {textAlign: 'center'}
+                            }}
+                            className={classes.textField}
+                            onChange={event =>
+                              this.handleReminder(index, event)
+                            }
+                            required
+                            value={`${reminder.time}`}
+                            InputLabelProps={{
+                              shrink: true
+                            }}
+                          />
+                        </FormControl>
+                        <FormControl className={classes.formControl}>
+                          <Select
+                            value={`${reminder.timeUnit}`}
+                            onChange={event =>
+                              this.handleReminder(index, event)
+                            }
+                            inputProps={{
+                              name: 'timeUnit',
+                              id: 'timeUnit-type'
+                            }}
+                          >
+                            <MenuItem value="">
+                              <em />
+                            </MenuItem>
+                            <MenuItem value={'days'}>days</MenuItem>
+                            <MenuItem value={'weeks'}>weeks</MenuItem>
+                            <MenuItem value={'hours'}>hours</MenuItem>
+                          </Select>
+                        </FormControl>
+                      </ListItem>
+                    ))}
+                  <Button onClick={() => this.addReminderField()}>
+                    Add reminder
+                  </Button>
+                </List>
+              </Fragment>
+            )}
+            {step === 3 && (
+              <Fragment>
+                <Typography component="h6" variant="h6">
+                  Items for guests to bring
                 </Typography>
                 <List dense>
                   {this.state.items.length &&
@@ -317,7 +411,7 @@ class AddParty extends Component {
         </Paper>
         <MobileStepper
           variant="dots"
-          steps={3}
+          steps={4}
           position="bottom"
           activeStep={this.state.step}
           className={classes.root}
@@ -325,7 +419,7 @@ class AddParty extends Component {
             <Button
               size="small"
               onClick={this.nextStep}
-              disabled={this.state.step === 2}
+              disabled={this.state.step === 3}
             >
               Next
               {theme.direction === 'rtl' ? (
