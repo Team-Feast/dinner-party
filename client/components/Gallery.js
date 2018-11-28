@@ -39,7 +39,9 @@ const styles = theme => ({
     position: 'relative',
     overflow: 'hidden',
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'row',
+    paddingTop: '8px',
+    paddingBottom: '8px'
   },
   uploadBtnWrapperInput: {
     position: 'absolute',
@@ -57,7 +59,6 @@ const styles = theme => ({
   fab: {
     position: 'absolute',
     left: 0
-
   },
   button: {
     margin: theme.spacing.unit
@@ -122,14 +123,14 @@ class Gallery extends Component {
               />
             </GridListTile>
           ))}
-          </GridList>
+        </GridList>
 
-          {/* <div className={classes.uploadBtnWrapper}> */}
-         {/* <Fab disabled aria-label="Camera" className={classes.fab}> */}
-        <label htmlFor="imageUrl">
-          <PhotoCamera />
+        <div className={classes.uploadBtnWrapper}>
+          {/* <Fab disabled aria-label="Camera" className={classes.fab}> */}
+          <label htmlFor="imageUrl">
+            <PhotoCamera />
           </label>
-        {/* </Fab> */}
+          {/* </Fab> */}
           <Input
             accept="image/png, image/jpeg"
             type="file"
@@ -138,8 +139,7 @@ class Gallery extends Component {
             id="imageUrl"
             className={classes.uploadBtnWrapperInput}
           />
-        {/* </div> */}
-
+        </div>
       </div>
     )
   }

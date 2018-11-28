@@ -37,6 +37,7 @@ import Grid from '@material-ui/core/Grid'
 import Divider from '@material-ui/core/Divider'
 import GridListTile from '@material-ui/core/GridListTile'
 import ListSubheader from '@material-ui/core/ListSubheader'
+import PhotoLibrary from '@material-ui/icons/PhotoLibrary'
 
 const toonavatar = require('cartoon-avatar')
 const url = toonavatar.generate_avatar({gender: 'male'})
@@ -265,9 +266,23 @@ class SingleParty extends Component {
               })}
             />
           </ExpansionPanel>
-          <Card>
+          <ExpansionPanel defaultExpanded>
+            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+              <Grid container alignItems="center">
+                <Grid item xs={2}>
+                  <PhotoLibrary />
+                </Grid>
+                <Grid item>
+                  <Typography className={classes.heading}>
+                    Photo Gallery
+                  </Typography>
+                </Grid>
+              </Grid>
+            </ExpansionPanelSummary>
+            <Divider />
             <Gallery partyId={id} />
-          </Card>
+          </ExpansionPanel>
+
           {/* <Button
                color='primary'
                variant="contained"
