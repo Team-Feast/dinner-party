@@ -355,6 +355,7 @@ class AddParty extends Component {
                             </MenuItem>
                             <MenuItem value={'email'}>Email</MenuItem>
                             <MenuItem value={'text'}>Text</MenuItem>
+                            <MenuItem value={'both'}>Both</MenuItem>
                           </Select>
                         </FormControl>
 
