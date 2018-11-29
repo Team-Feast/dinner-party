@@ -27,7 +27,8 @@ const styles = theme => ({
   },
   img: {
     height: 255,
-    maxWidth: 400,
+    maxWidth: 415,
+    minWidth: 415,
     overflow: 'hidden',
     display: 'block',
     width: '100%'
@@ -95,7 +96,7 @@ class SinglePicture extends Component {
   }
 
   render() {
-    const maxSteps = this.props.images.length
+    const maxSteps = this.state.customImages.length
     const {classes, theme} = this.props
     const {activeStep} = this.state
 

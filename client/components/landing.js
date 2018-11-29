@@ -50,7 +50,8 @@ class Landing extends Component {
             </Grid>
             <Grid item>
               <Typography component="h3" variant="h5">
-                The World's #1 Dinner Party Planning Tool
+                The World's #1 Dinner Party
+                <br />Planning Tool
               </Typography>
             </Grid>
             <Grid item>
