@@ -99,7 +99,9 @@ class SingleParty extends Component {
       selectedValue: 'invited',
       clearTimeoutVar: null,
       open: false,
-      Transition: null
+      Transition: null,
+      googleCalendarIsTrue: false,
+      snackBarDisplayed: false
     }
   }
 
@@ -119,16 +121,20 @@ class SingleParty extends Component {
     }
   }
   componentDidUpdate(prevProps) {
+    console.log('props change')
     if (prevProps.guests !== this.props.guests) {
+      let doAlert = false
       let googleCalendarIsTrue = false
+
       for (let i = 0; i < this.props.guests.length; i++) {
         if (this.props.guests[i].onGoogleCalendar === true) {
-          googleCalendarIsTrue = true
+          this.setState({googleCalendarIsTrue: true})
         }
       }
-      if (googleCalendarIsTrue) {
-        this.showSnackbar(TransitionUp)
-      }
+    }
+    if (this.state.googleCalendarIsTrue && !this.state.snackBarDisplayed) {
+      this.showSnackbar(TransitionUp)
+      this.setState({snackBarDisplayed: true})
     }
   }
 
