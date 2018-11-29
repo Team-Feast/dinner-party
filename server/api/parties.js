@@ -34,7 +34,8 @@ router.get('/:id/guests', async (req, res, next) => {
     const guests = await Guest.findAll({
       where: {
         partyId: req.params.id
-      }
+      },
+      include: [User]
     })
     res.json(guests)
   } catch (err) {

@@ -39,13 +39,17 @@ const GuestList = props => {
         <ListItem key={guest.id} className={classes.padding}>
           <Grid container alignItems="center">
             <Grid item xs={2}>
-              <Avatar
-                style={{
-                  backgroundColor: avatarBackgroundColor[guest.id % 5]
-                }}
-              >
-                {guest.firstName[0]}
-              </Avatar>
+              {guest.user && guest.user.id ? (
+                <Avatar src={guest.user.imageUrl} />
+              ) : (
+                <Avatar
+                  style={{
+                    backgroundColor: avatarBackgroundColor[guest.id % 5]
+                  }}
+                >
+                  {guest.firstName[0]}
+                </Avatar>
+              )}
             </Grid>
             <Grid item xs={9}>
               <Typography style={{fontSize: '14px'}}>{`${guest.firstName} - ${
