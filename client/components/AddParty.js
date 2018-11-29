@@ -179,9 +179,8 @@ class AddParty extends Component {
     //adds user as a guest
     const guests = this.state.guests ? [host, ...this.state.guests] : [host]
 
-    console.log('you submitted')
-    this.props.history.push('/DemoSuccess')
-    // await this.props.postParty({info, guests})
+    // this.props.history.push('/DemoSuccess')
+    await this.props.postParty({info, guests})
   }
 
   showSnackbar = Transition => {
