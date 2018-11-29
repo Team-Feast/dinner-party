@@ -40,7 +40,10 @@ class SinglePicture extends Component {
     super(props)
     this.state = {
       activeStep: 0,
-      customImages: []
+      customImages: this.moveToFront(
+        this.props.match.params.pictureId,
+        this.props.images
+      )
     }
   }
 
@@ -96,7 +99,7 @@ class SinglePicture extends Component {
   }
 
   render() {
-    const maxSteps = this.state.customImages.length
+    const maxSteps = this.props.images.length
     const {classes, theme} = this.props
     const {activeStep} = this.state
 
@@ -114,11 +117,11 @@ class SinglePicture extends Component {
           </Paper>
           <img
             className={classes.img}
-            src={this.props.images[this.state.activeStep].imageUrl}
+            src={this.state.customImages[this.state.activeStep].imageUrl}
           />
 
           <MobileStepper
-            steps={maxSteps}
+            steps={this.state.customImages.length}
             position="static"
             activeStep={activeStep}
             className={classes.mobileStepper}
@@ -126,7 +129,7 @@ class SinglePicture extends Component {
               <Button
                 size="small"
                 onClick={this.handleNext}
-                disabled={activeStep === maxSteps - 1}
+                disabled={activeStep === this.state.customImages.length - 1}
               >
                 Next
                 {theme.direction === 'rtl' ? (
