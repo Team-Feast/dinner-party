@@ -186,7 +186,7 @@ class AddParty extends Component {
 
   showSnackbar = Transition => {
     this.setState({open: true, Transition})
-    const clearTimeoutVar = setTimeout(() => this.setState({open: false}), 4000)
+    const clearTimeoutVar = setTimeout(() => this.setState({open: false}), 2000)
     this.setState({clearTimeoutVar})
   }
 

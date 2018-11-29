@@ -38,6 +38,8 @@ import Divider from '@material-ui/core/Divider'
 import GridListTile from '@material-ui/core/GridListTile'
 import ListSubheader from '@material-ui/core/ListSubheader'
 import PhotoLibrary from '@material-ui/icons/PhotoLibrary'
+import Slide from '@material-ui/core/Slide'
+import Snackbar from '@material-ui/core/Snackbar'
 
 const toonavatar = require('cartoon-avatar')
 const url = toonavatar.generate_avatar({gender: 'male'})
@@ -78,6 +80,10 @@ const styles = theme => ({
   }
 })
 
+function TransitionUp(props) {
+  return <Slide {...props} direction="up" />
+}
+
 class SingleParty extends Component {
   constructor(props) {
     super(props)
@@ -91,7 +97,9 @@ class SingleParty extends Component {
       userId: '',
       status: '',
       selectedValue: 'invited',
-      googleCalendarIsTrue: false
+      clearTimeoutVar: null,
+      open: false,
+      Transition: null
     }
   }
 
@@ -119,9 +127,13 @@ class SingleParty extends Component {
         }
       }
       if (googleCalendarIsTrue) {
-        this.setState({googleCalendarIsTrue})
+        this.showSnackbar(TransitionUp)
       }
     }
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.state.clearTimeoutVar)
   }
 
   handleChange = event => {
@@ -134,6 +146,11 @@ class SingleParty extends Component {
     )
 
     this.props.putGuest(guest.id, {status})
+  }
+  showSnackbar = Transition => {
+    this.setState({open: true, Transition})
+    const clearTimeoutVar = setTimeout(() => this.setState({open: false}), 2000)
+    this.setState({clearTimeoutVar})
   }
 
   render() {
@@ -305,6 +322,17 @@ class SingleParty extends Component {
                >
               <SaveIcon />
              </Button> */}
+          <Snackbar
+            open={this.state.open}
+            // onClose={this.handleClose}
+            TransitionComponent={this.state.Transition}
+            ContentProps={{
+              'aria-describedby': 'message-id'
+            }}
+            message={
+              <span id="message-id">Event added to Google Calendar!</span>
+            }
+          />
         </Fragment>
       )
     }
