@@ -90,7 +90,8 @@ class SingleParty extends Component {
       id: '',
       userId: '',
       status: '',
-      selectedValue: 'invited'
+      selectedValue: 'invited',
+      googleCalendarIsTrue: false
     }
   }
 
@@ -107,6 +108,19 @@ class SingleParty extends Component {
       )
 
       this.setState({...this.props.party, selectedValue: guest.status})
+    }
+  }
+  componentDidUpdate(prevProps) {
+    if (prevProps.guests !== this.props.guests) {
+      let googleCalendarIsTrue = false
+      for (let i = 0; i < this.props.guests.length; i++) {
+        if (this.props.guests[i].onGoogleCalendar === true) {
+          googleCalendarIsTrue = true
+        }
+      }
+      if (googleCalendarIsTrue) {
+        this.setState({googleCalendarIsTrue})
+      }
     }
   }
 
