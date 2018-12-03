@@ -13,7 +13,8 @@ import {
   EditParty,
   Gallery,
   ForgotPassword,
-  SinglePicture
+  SinglePicture,
+  DemoSuccess
 } from './components'
 import {me} from './store'
 
@@ -33,11 +34,15 @@ class Routes extends Component {
         {/* Routes placed here are available to all visitors */}
         <Route exact path="/" component={Landing} />
         <Route path="/login" component={Login} />
+        <Route path="/demoSuccess" component={DemoSuccess} />
         <Route path="/signup" component={Signup} />
         <Route path="/forgotpassword" component={ForgotPassword} />
         <Route exact path="/addparty" component={AddParty} />
 
-        <Route path="/parties/:partyId/singlePicture/:pictureId" component={SinglePicture} />
+        <Route
+          path="/parties/:partyId/singlePicture/:pictureId"
+          component={SinglePicture}
+        />
         <Route path="/parties/:id/editparty" component={EditParty} />
         <Route path="/parties/:id/gallery" component={Gallery} />
         <Route

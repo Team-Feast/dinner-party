@@ -37,6 +37,9 @@ import Grid from '@material-ui/core/Grid'
 import Divider from '@material-ui/core/Divider'
 import GridListTile from '@material-ui/core/GridListTile'
 import ListSubheader from '@material-ui/core/ListSubheader'
+import PhotoLibrary from '@material-ui/icons/PhotoLibrary'
+import Slide from '@material-ui/core/Slide'
+import Snackbar from '@material-ui/core/Snackbar'
 
 const toonavatar = require('cartoon-avatar')
 const url = toonavatar.generate_avatar({gender: 'male'})
@@ -77,6 +80,10 @@ const styles = theme => ({
   }
 })
 
+function TransitionUp(props) {
+  return <Slide {...props} direction="up" />
+}
+
 class SingleParty extends Component {
   constructor(props) {
     super(props)
@@ -89,7 +96,12 @@ class SingleParty extends Component {
       id: '',
       userId: '',
       status: '',
-      selectedValue: 'invited'
+      selectedValue: 'invited',
+      clearTimeoutVar: null,
+      open: false,
+      Transition: null,
+      googleCalendarIsTrue: false,
+      snackBarDisplayed: false
     }
   }
 
@@ -108,6 +120,27 @@ class SingleParty extends Component {
       this.setState({...this.props.party, selectedValue: guest.status})
     }
   }
+  componentDidUpdate(prevProps) {
+    console.log('props change')
+    if (prevProps.guests !== this.props.guests) {
+      let doAlert = false
+      let googleCalendarIsTrue = false
+
+      for (let i = 0; i < this.props.guests.length; i++) {
+        if (this.props.guests[i].onGoogleCalendar === true) {
+          this.setState({googleCalendarIsTrue: true})
+        }
+      }
+    }
+    if (this.state.googleCalendarIsTrue && !this.state.snackBarDisplayed) {
+      this.showSnackbar(TransitionUp)
+      this.setState({snackBarDisplayed: true})
+    }
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.state.clearTimeoutVar)
+  }
 
   handleChange = event => {
     const status = event.target.name
@@ -119,6 +152,11 @@ class SingleParty extends Component {
     )
 
     this.props.putGuest(guest.id, {status})
+  }
+  showSnackbar = Transition => {
+    this.setState({open: true, Transition})
+    const clearTimeoutVar = setTimeout(() => this.setState({open: false}), 2000)
+    this.setState({clearTimeoutVar})
   }
 
   render() {
@@ -138,7 +176,7 @@ class SingleParty extends Component {
     const {guestPartyToken} = this.props.match.params
     const {classes} = this.props
 
-    const guest = guests.find(ele => ele.email === loggedInUser.email)
+    const guest = guests.find(ele => ele.guestPartyToken === guestPartyToken)
 
     if (!this.state.id) {
       return null
@@ -265,9 +303,23 @@ class SingleParty extends Component {
               })}
             />
           </ExpansionPanel>
-          <Card>
+          <ExpansionPanel defaultExpanded>
+            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+              <Grid container alignItems="center">
+                <Grid item xs={2}>
+                  <PhotoLibrary />
+                </Grid>
+                <Grid item>
+                  <Typography className={classes.heading}>
+                    Photo Gallery
+                  </Typography>
+                </Grid>
+              </Grid>
+            </ExpansionPanelSummary>
+            <Divider />
             <Gallery partyId={id} />
-          </Card>
+          </ExpansionPanel>
+
           {/* <Button
                color='primary'
                variant="contained"
@@ -276,6 +328,17 @@ class SingleParty extends Component {
                >
               <SaveIcon />
              </Button> */}
+          <Snackbar
+            open={this.state.open}
+            // onClose={this.handleClose}
+            TransitionComponent={this.state.Transition}
+            ContentProps={{
+              'aria-describedby': 'message-id'
+            }}
+            message={
+              <span id="message-id">Event added to Google Calendar!</span>
+            }
+          />
         </Fragment>
       )
     }

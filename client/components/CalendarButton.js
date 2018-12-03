@@ -63,7 +63,7 @@ class CalendarButton extends Component {
 
     return (
       <div>
-        <IconButton
+        <Button
           color="primary"
           variant="contained"
           onClick={
@@ -72,8 +72,8 @@ class CalendarButton extends Component {
               : this.handleClickOpen
           }
         >
-          <CalendarToday />
-        </IconButton>
+          Add to Calendar
+        </Button>
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}

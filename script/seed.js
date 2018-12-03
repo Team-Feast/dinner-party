@@ -34,7 +34,7 @@ const userData = [
     firstName: 'Cody',
     id: 1,
     imageUrl:
-      'https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/5.png',
+      'https://user-images.githubusercontent.com/12876798/38030875-d3166276-3267-11e8-96d9-309aa8cf008b.png',
     email: 'cody@email.com',
     salt: 'WqTlTsCk94j5z+AEqFKMtg==',
     lastName: 'Puppy'
@@ -42,13 +42,12 @@ const userData = [
   {
     googleId: null,
     password:
-      '56f6c0305cd4b858cdf5196bf449e88b2f59f660edd1b1a1604e47db61134fce',
+      '0775bc0b1e5ee94fa2b1fdceca49f2a794efe7db14f62369534d35ce3f68d8f8',
     firstName: 'Paul',
     id: 5,
-    imageUrl:
-      'https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/female/58.png',
+    imageUrl: '/images/Paul.jpeg',
+    salt: 'WqTlTsCk94j5z+AEqFKMtg==',
     email: 'paul@email.com',
-    salt: 'pj3hGQb9QLUbewVjbPlQhA==',
     lastName: 'Ebreo'
   },
   {
@@ -57,10 +56,9 @@ const userData = [
       'b4b02880bc63ac3b91ba5f5819ee7ee684b1a2fd67111bcf5d2d9db12936cd3b',
     firstName: 'Joseph',
     id: 2,
-    imageUrl:
-      'https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/female/13.png',
-    email: 'joseph@email.com',
-    salt: 'j0VBA5wygT0o5YjRhYkpMQ==',
+    imageUrl: '/images/Joseph.jpeg',
+    email: 'josephfullstack@gmail.com',
+    salt: 'WqTlTsCk94j5z+AEqFKMtg==',
     lastName: 'Park'
   },
   {
@@ -69,8 +67,7 @@ const userData = [
       '716a057da3ee6c16e0128dc458c6fdbdff787689415e615b3ef1d63c789fa273',
     firstName: 'Daniel',
     id: 3,
-    imageUrl:
-      'https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/124.png',
+    imageUrl: '/images/Daniel.jpeg',
     email: 'daniel@email.com',
     salt: '9vQ1cjo8Pso4P9KhSXuRgQ==',
     lastName: 'Casaola'
@@ -81,8 +78,7 @@ const userData = [
       '53ac53a1f8f35579b3961629f7d284766d0709963bf16b80e570000f701aa188',
     firstName: 'Andrew',
     id: 4,
-    imageUrl:
-      'https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/7.png',
+    imageUrl: '/images/Andrew.jpeg',
     email: 'andrew@email.com',
     salt: 'cqa8jGRL7J04RwrjIrSmlw==',
     lastName: 'Ferguson'
@@ -93,14 +89,13 @@ const partyData = [
   {
     location: '405 W Superior St, Chicago, IL 60654',
     status: 'upcoming',
-    userId: 1,
+    userId: 5,
     id: 1,
-    title: 'Fullstack Graduation Dinner',
-    date: '2018-12-7 18:30:00.512-06',
-    imageUrl:
-      'http://www.nppbc.com/upgrading/wp-content/uploads/2014/05/graduation_celebration_wide_t-1024x576.jpg',
-    updatedAt: '2018-12-7 18:30:00.512-06',
-    description: `Come celebrate our graduation from Fullstack Academy's Coding Bootcamp! We did it!`
+    title: 'Friends & Family Afterparty',
+    date: '2018-11-28 18:30:00.512-06',
+    imageUrl: '/images/party-pic.jpg',
+    updatedAt: '2018-11-28 20:30:00.512-06',
+    description: `We're going to code all night! Bring food, drinks, and let's celebrate!`
   },
   {
     location: '1305 S Michigan Ave, Chicago, IL 60605',
@@ -163,14 +158,14 @@ const guestData = [
     email: 'cody@email.com'
   },
   {
-    status: 'attending',
+    status: 'invited',
     phone: '3678326353',
     guestPartyToken: '68264671-ec39-11e8-a2d2-758fc26097cb',
     id: 2,
     partyId: 1,
     userId: 2,
     firstName: 'Joseph',
-    email: 'joseph@email.com'
+    email: 'josephfullstack@gmail.com'
   },
   {
     status: 'attending',
@@ -482,6 +477,33 @@ const guestData = [
     userId: 1,
     firstName: 'Cody',
     email: 'cody@email.com'
+  },
+  {
+    status: 'invited',
+    phone: '2326372441',
+    guestPartyToken: '68262312-ec39-11e8-a2d2-758fc26097cb',
+    id: 36,
+    partyId: 1,
+    firstName: 'John',
+    email: 'johnj@email.com'
+  },
+  {
+    status: 'attending',
+    phone: '2326372441',
+    guestPartyToken: '68262313-ec39-11e8-a2d2-758fc26097cb',
+    id: 37,
+    partyId: 1,
+    firstName: 'Chrissy',
+    email: 'chrissy@email.com'
+  },
+  {
+    status: 'attending',
+    phone: '2326372441',
+    guestPartyToken: '68262314-ec39-11e8-a2d2-758fc26097cb',
+    id: 38,
+    partyId: 1,
+    firstName: 'Meghan',
+    email: 'meghan@email.com'
   }
 ]
 
@@ -506,35 +528,35 @@ const categoryData = [
 const itemData = [
   {
     partyId: 1,
-    title: 'Ice Cream',
+    title: '3 Pints of Ice Cream',
     guestId: null,
     categoryId: 1,
     description: '3 Quarts... vanilla, chocolate, cookies and cream'
   },
   {
     partyId: 1,
-    title: 'Pizza',
+    title: 'Lots of Pizza',
     guestId: null,
     categoryId: 1,
     description: 'Gonna order a couple of large from Papa Johns'
   },
   {
     partyId: 1,
-    title: 'Chicken Wings',
+    title: '200 Chicken Wings',
     guestId: 1,
     categoryId: 3,
     description: 'Picking up some wings from Harolds'
   },
   {
     partyId: 1,
-    title: 'Beer',
+    title: '12 Pack IPA',
     guestId: null,
     categoryId: 1,
     description: '24 pack'
   },
   {
     partyId: 1,
-    title: 'Chocolate Cake',
+    title: 'Portillos Cake',
     guestId: 3,
     categoryId: 1,
     description: ''
@@ -542,7 +564,20 @@ const itemData = [
   {
     partyId: 1,
     title: 'Salad',
-    guestId: 3,
+    categoryId: 1,
+    description: ''
+  },
+  {
+    partyId: 1,
+    title: 'Tequila',
+    guestId: 4,
+    categoryId: 1,
+    description: ''
+  },
+  {
+    partyId: 1,
+    title: 'Silverware',
+    guestId: 37,
     categoryId: 1,
     description: ''
   },

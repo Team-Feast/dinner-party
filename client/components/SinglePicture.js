@@ -3,7 +3,6 @@ import {connect} from 'react-redux'
 import {getImages} from '../store'
 import history from '../history'
 
-
 import MobileStepper from '@material-ui/core/MobileStepper'
 import {withStyles} from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
@@ -11,14 +10,13 @@ import Button from '@material-ui/core/Button'
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
 
-
 const styles = theme => ({
   root: {
     maxWidth: 400,
-    flexGrow: 1,
+    flexGrow: 1
   },
   button: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing.unit
   },
   header: {
     display: 'flex',
@@ -29,7 +27,8 @@ const styles = theme => ({
   },
   img: {
     height: 255,
-    maxWidth: 400,
+    maxWidth: 415,
+    minWidth: 415,
     overflow: 'hidden',
     display: 'block',
     width: '100%'
@@ -41,7 +40,10 @@ class SinglePicture extends Component {
     super(props)
     this.state = {
       activeStep: 0,
-      customImages: []
+      customImages: this.moveToFront(
+        this.props.match.params.pictureId,
+        this.props.images
+      )
     }
   }
 
@@ -100,56 +102,58 @@ class SinglePicture extends Component {
     const maxSteps = this.props.images.length
     const {classes, theme} = this.props
     const {activeStep} = this.state
-    console.log("Here", this.props)
 
     if (this.props.images.length) {
       return (
-        <div className={classes.root} >
-        <Paper square elevation={30} className={classes.header} >
-        <Button variant="outlined" className={classes.button}
-         onClick={() => history.goBack()}
-        >Back
-        </Button>
-        </Paper>
+        <div className={classes.root}>
+          <Paper square elevation={30} className={classes.header}>
+            <Button
+              variant="outlined"
+              className={classes.button}
+              onClick={() => history.goBack()}
+            >
+              Back
+            </Button>
+          </Paper>
           <img
             className={classes.img}
-            src={this.props.images[this.state.activeStep].imageUrl}
-            />
+            src={this.state.customImages[this.state.activeStep].imageUrl}
+          />
 
           <MobileStepper
-            steps={maxSteps}
+            steps={this.state.customImages.length}
             position="static"
             activeStep={activeStep}
             className={classes.mobileStepper}
             nextButton={
               <Button
-              size="small"
-              onClick={this.handleNext}
-              disabled={activeStep === maxSteps - 1}
+                size="small"
+                onClick={this.handleNext}
+                disabled={activeStep === this.state.customImages.length - 1}
               >
                 Next
                 {theme.direction === 'rtl' ? (
                   <KeyboardArrowLeft />
-                  ) : (
-                    <KeyboardArrowRight />
-                    )}
+                ) : (
+                  <KeyboardArrowRight />
+                )}
               </Button>
             }
             backButton={
               <Button
-              size="small"
-              onClick={this.handleBack}
-              disabled={activeStep === 0}
+                size="small"
+                onClick={this.handleBack}
+                disabled={activeStep === 0}
               >
                 {theme.direction === 'rtl' ? (
                   <KeyboardArrowRight />
-                  ) : (
-                    <KeyboardArrowLeft />
-                    )}
+                ) : (
+                  <KeyboardArrowLeft />
+                )}
                 Back
               </Button>
             }
-            />
+          />
         </div>
       )
     } else {

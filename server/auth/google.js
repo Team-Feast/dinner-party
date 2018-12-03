@@ -36,7 +36,6 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
       const googleId = profile.id
       const name = profile.name
       const email = profile.emails[0].value
-
       if (req.user) {
         req.user
           .update({googleToken: token, googleId})
@@ -53,7 +52,8 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
             firstName: name.givenName,
             lastName: name.familyName,
             email,
-            googleId
+            googleId,
+            imageUrl: profile.photos[0].value
           }
         })
           .then(([user]) => {

@@ -179,12 +179,13 @@ class AddParty extends Component {
     //adds user as a guest
     const guests = this.state.guests ? [host, ...this.state.guests] : [host]
 
+    // this.props.history.push('/DemoSuccess')
     await this.props.postParty({info, guests})
   }
 
   showSnackbar = Transition => {
     this.setState({open: true, Transition})
-    const clearTimeoutVar = setTimeout(() => this.setState({open: false}), 4000)
+    const clearTimeoutVar = setTimeout(() => this.setState({open: false}), 2000)
     this.setState({clearTimeoutVar})
   }
 
@@ -317,6 +318,14 @@ class AddParty extends Component {
                   <Button onClick={() => this.addGuestField()}>
                     Add a guest
                   </Button>
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                  >
+                    Select from Google Contacts
+                  </Button>
                 </List>
               </Fragment>
             )}
@@ -345,6 +354,7 @@ class AddParty extends Component {
                             </MenuItem>
                             <MenuItem value={'email'}>Email</MenuItem>
                             <MenuItem value={'text'}>Text</MenuItem>
+                            <MenuItem value={'both'}>Both</MenuItem>
                           </Select>
                         </FormControl>
 

@@ -11,7 +11,7 @@ import {withStyles} from '@material-ui/core/styles'
 
 const styles = {}
 
-class Landing extends Component {
+class DemoSuccess extends Component {
   state = {}
 
   render() {
@@ -27,7 +27,7 @@ class Landing extends Component {
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             overflow: 'hidden',
-            position: 'fixed',
+            // position: 'fixed',
             height: '100vh',
             textAlign: 'center',
             display: 'flex',
@@ -45,25 +45,17 @@ class Landing extends Component {
           >
             <Grid item>
               <Typography component="h1" variant="h2">
-                <b>Welcome to Feast</b>
+                <b>Feast Created!</b>
               </Typography>
-            </Grid>
-            <Grid item>
-              <Typography component="h3" variant="h5">
-                The World's #1 Dinner Party
-                <br />Planning Tool
-              </Typography>
-            </Grid>
-            <Grid item>
-              <Button
-                component={Link}
-                to={user.id ? '/addparty' : '/login'}
-                className={classes.button}
-                variant="contained"
-                color="primary"
-              >
-                Let's Feast!
-              </Button>
+              <Grid item>
+                <Button
+                  className={classes.button}
+                  variant="contained"
+                  color="primary"
+                >
+                  Go to your feasts!
+                </Button>
+              </Grid>
             </Grid>
           </Grid>
         </div>
@@ -72,7 +64,7 @@ class Landing extends Component {
   }
 }
 
-Landing.propTypes = {
+DemoSuccess.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
@@ -80,4 +72,4 @@ const mapStateToProps = state => ({
   user: state.user
 })
 
-export default connect(mapStateToProps)(withStyles(styles)(Landing))
+export default connect(mapStateToProps)(withStyles(styles)(DemoSuccess))

@@ -27,7 +27,7 @@ const styles = {
     flexGrow: 1
   },
   popper: {
-    marginTop: '8px',
+    marginTop: '5px',
     right: '0'
   },
   appBar: {
