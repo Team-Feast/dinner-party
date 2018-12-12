@@ -13,6 +13,10 @@ Feast is a mobile first app that takes the chore out of planning, organizing & i
 
 </p>
 
+## Project explanation
+
+[![Feast explainer](https://github.com/Team-Feast/dinner-party/blob/master/screenshots/video-screenshot.png)](https://www.youtube.com/watch?v=2r8pCegADbY "Feast project explanation")
+
 ## Getting Started
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
