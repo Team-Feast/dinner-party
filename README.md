@@ -5,9 +5,9 @@ Feast is a mobile first app that takes the chore out of planning, organizing & i
 
 <p>
 <img src="https://github.com/Team-Feast/dinner-party/blob/master/screenshots/screen1.gif" alt="screen 1" width="250">
-<img src="https://github.com/paulebreo/esl-words-android/blob/master/screenshots/screen2.gif" alt="screen 2" width="250">
+<img src="https://github.com/Team-Feast/dinner-party/blob/master/screenshots/screen2.gif" alt="screen 2" width="250">
 <img src="https://github.com/Team-Feast/dinner-party/blob/master/screenshots/screen3.gif" alt="screen 3" width="250">
-<img src="hhttps://github.com/Team-Feast/dinner-party/blob/master/screenshots/screen4.gif" alt="screen 4" width="250">
+<img src="https://github.com/Team-Feast/dinner-party/blob/master/screenshots/screen4.gif" alt="screen 4" width="250">
 <img src="https://github.com/Team-Feast/dinner-party/blob/master/screenshots/screen5.gif" alt="screen 5" width="250">
 <img src="https://github.com/Team-Feast/dinner-party/blob/master/screenshots/screen6.gif" alt="screen 6" width="250">
 
