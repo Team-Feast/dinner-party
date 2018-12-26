@@ -59,20 +59,31 @@ describe('Party API routes', () => {
   //   })
   // }) // end describe('/api/parties')
 
-  xdescribe('/api/parties/rsvp/:guestPartyToken', () => {
+  describe('/api/parties/:id', () => {
     beforeEach(() => {
       return db.sync({force: true})
     })
-    it('should return an invited status', async () => {
-      const guest = await Guest.create({
-        email: 'test@test.com'
+
+    it.only('should return selected party', async () => {
+      const host = await User.create({
+        firstName: 'Cody',
+        lastName: 'Puppy',
+        email: 'test@test.com',
+        password: 'test'
       })
 
+      const party = await Party.create({
+        title: 'Test Party'
+      })
+
+      party.setUser(host)
+
       const agent = request.agent(app)
-      const res = await agent
-        .get(`/api/parties/rsvp/${guest.guestPartyToken}`)
-        .expect(200)
-      expect(res.body).to.be.equal('invited')
+      const res = await agent.get(`/api/parties/1`).expect(200)
+
+      expect(res.body.title).to.be.equal('Test Party')
+      expect(res.body.userId).to.be.equal(1)
+      expect(res.body.user.firstName).to.be.equal('Cody')
     })
   })
 }) // end describe('Party routes')

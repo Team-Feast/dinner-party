@@ -27,7 +27,7 @@ class Landing extends Component {
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             overflow: 'hidden',
-            position: 'fixed',
+            // position: 'fixed',
             height: '100vh',
             textAlign: 'center',
             display: 'flex',
