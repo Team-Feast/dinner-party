@@ -42,11 +42,11 @@ const userData = [
   {
     googleId: null,
     password:
-      '70ef721085a8fc6225db7d3583a04af49962114c0ea5c53830fc572a0b43e1bc',
+      '0775bc0b1e5ee94fa2b1fdceca49f2a794efe7db14f62369534d35ce3f68d8f8',
     firstName: 'Paul',
     id: 5,
     imageUrl: '/images/Paul.jpeg',
-    salt: 's6nRHgYri45Wjw+6gcA4Pw==',
+    salt: 'WqTlTsCk94j5z+AEqFKMtg==',
     email: 'paul@email.com',
     lastName: 'Ebreo'
   },
@@ -92,7 +92,7 @@ const partyData = [
     userId: 5,
     id: 1,
     title: 'Friends & Family Afterparty',
-    date: '2019-05-28 18:30:00.512-06',
+    date: '2018-11-28 18:30:00.512-06',
     imageUrl: '/images/party-pic.jpg',
     updatedAt: '2018-11-28 20:30:00.512-06',
     description: `We're going to code all night! Bring food, drinks, and let's celebrate!`
