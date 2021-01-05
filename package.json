@@ -39,7 +39,7 @@
   "dependencies": {
     "@material-ui/core": "^3.6.0",
     "@material-ui/icons": "^3.0.1",
-    "axios": "^0.18.1",
+    "axios": "^0.21.1",
     "bluebird": "^3.5.3",
     "cartoon-avatar": "^1.0.2",
     "chai-enzyme": "^1.0.0-beta.1",
